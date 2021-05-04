@@ -1,11 +1,11 @@
 import React from 'react'
 
-function GroceryList() {
+function Cal() {
     return (
         <div>
-            Grocery
+            Cal
         </div>
     )
 }
 
-export default GroceryList
+export default Cal
