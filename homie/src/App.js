@@ -5,7 +5,7 @@ import Cal from './components/Calculator/Cal';
 import GroceryList from './components/Grocery List/GroceryList';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
-import Todo from './components/Todo/Todo';
+import Todos from './components/Todo/Todos';
 import Weather from './components/Weather/Weather';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/calander' component={Calanader} />
           <Route path='/grocery' component={GroceryList} />
-          <Route path='/todo' component={Todo} />
+          <Route path='/todo' component={Todos} />
           <Route path='/weather' component={Weather} />
           <Route path='/cal' component={Cal} />
         </Switch>

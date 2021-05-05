@@ -1,10 +1,9 @@
 import React from 'react'
+import './Todo.css'
 
-function Todo() {
+function Todo({ text }) {
     return (
-        <div>
-            Todo
-        </div>
+        <div></div>
     )
 }
 
