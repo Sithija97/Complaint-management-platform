@@ -13,7 +13,7 @@ function Todo({ title, description}) {
   return (
     <div>
       <List>
-        <ListItem button>
+        <ListItem>
           <ListItemIcon>
             <CheckCircleIcon color="primary" />
           </ListItemIcon>

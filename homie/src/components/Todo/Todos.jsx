@@ -27,6 +27,10 @@ function Todos() {
     // writing todos
     e.preventDefault();
     console.log("title:" + title, "description:" + description);
+    db.collection('todos').add({
+      title: title,
+      description: description
+    })
   };
 
   return (
