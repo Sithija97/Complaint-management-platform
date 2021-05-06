@@ -9,7 +9,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-function Todo({ text }) {
+function Todo({ title, description}) {
   return (
     <div>
       <List>
@@ -17,7 +17,7 @@ function Todo({ text }) {
           <ListItemIcon>
             <CheckCircleIcon color="primary" />
           </ListItemIcon>
-          <ListItemText primary="primary" />
+          <ListItemText primary={title} secondary={description}/>
           <ListItemSecondaryAction>
             <IconButton edge="end" aria-label="edit">
               <EditIcon />
