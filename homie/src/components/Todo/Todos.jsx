@@ -15,28 +15,29 @@ function Todos() {
 
   useEffect(() => {
     // reading todos from db
-    db.collection('todos').onSnapshot((snapshot) => {
-      setTodo(snapshot.docs.map((doc) => ({
-        id: doc.id,
-        data: doc.data()
-      })))
-    })
+    db.collection("todos").onSnapshot((snapshot) => {
+      setTodo(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
   });
 
   const handleSubmit = (e) => {
     // writing todos
     e.preventDefault();
     console.log("title:" + title, "description:" + description);
-    db.collection('todos').add({
+    db.collection("todos").add({
       title: title,
-      description: description
-    })
+      description: description,
+    });
   };
 
   return (
     <div className="App">
-      <form>
-        <Card className="CardView">
+      {/* <form>
           <FormControl>
             <TextField
               type='text'
@@ -56,18 +57,16 @@ function Todos() {
           <Button type='submit' variant="contained" color="primary" onClick={handleSubmit}>
             Add Todo
           </Button>
-        </Card>
-      </form>
+       
+      </form> */}
 
-      {
-        todos.map(todo => (
-          <Todo
-            key={todo.data.id}
-            title={todo.data.title}
-            description={todo.data.description}
-          />
-        ))
-      }
+      {todos.map((todo) => (
+        <Todo
+          key={todo.data.id}
+          title={todo.data.title}
+          description={todo.data.description}
+        />
+      ))}
     </div>
   );
 }
