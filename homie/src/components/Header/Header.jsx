@@ -7,7 +7,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import CloudIcon from '@material-ui/icons/Cloud';
-import DialpadIcon from '@material-ui/icons/Dialpad';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Caputure from "./Capture.PNG"
 
 function Header() {
@@ -47,9 +47,9 @@ function Header() {
                         <CloudIcon fontSize="large" />
                     </div>
                 </Link>
-                <Link to='/cal'>
+                <Link to='/money'>
                     <div className="header_option">
-                        <DialpadIcon fontSize="large" />
+                        <AccountBalanceWalletIcon fontSize="large" />
                     </div>
                 </Link>
             </div>

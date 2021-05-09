@@ -1,5 +1,5 @@
 import React from "react";
-import "./Todo.css";
+import "./Todos.css";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -10,16 +10,17 @@ import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { Card } from "@material-ui/core";
-function Todo({ title, description }) {
+
+function Todo({ title, description, key }) {
   return (
     <div>
       <Card className="CardView">
         <List>
           <ListItem>
             <ListItemIcon>
-              <CheckCircleIcon color="primary" />
+              <CheckCircleIcon color="primary"/>
             </ListItemIcon>
-            <ListItemText primary={title} secondary={description} />
+            <ListItemText primary={title} secondary={key} />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="edit">
                 <EditIcon />

@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css';
 import Calanader from './components/Calanader/Calanader';
-import Cal from './components/Calculator/Cal';
 import GroceryList from './components/Grocery List/GroceryList';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
+import Money from './components/MoneyManager/Money';
 import Todos from './components/Todo/Todos';
 import Weather from './components/Weather/Weather';
 
@@ -19,7 +19,7 @@ function App() {
           <Route path='/grocery' component={GroceryList} />
           <Route path='/todo' component={Todos} />
           <Route path='/weather' component={Weather} />
-          <Route path='/cal' component={Cal} />
+          <Route path='/money' component={Money} />
         </Switch>
       </div>
     </Router>
