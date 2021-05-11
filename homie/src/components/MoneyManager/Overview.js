@@ -4,19 +4,25 @@ import "./Money.css";
 
 function Overview() {
   const [events, setEvents] = useState([]);
-
-   useEffect(() => {
-
-   });
+  useEffect(() => {
+    db.collection("events").onSnapshot((snapshot) => {
+      setEvents(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
+  });
   return (
     <div>
-      {events.map((event) => {
-          return (
-            <div>
-              {/* here we need to display the data */}
-            </div>
-          );
-        })}
+      {events.map((event) => (
+        <>
+          <p>{event.data.name}</p>
+          <p>{event.data.amount}</p>
+          <p>{event.data.date}</p>
+        </>
+      ))}
     </div>
   );
 }
