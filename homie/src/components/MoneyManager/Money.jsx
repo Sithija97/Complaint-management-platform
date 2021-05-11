@@ -1,45 +1,39 @@
-import React, { useEffect, useState } from "react";
-import db from "../../firebase";
+import React from "react";
+import Form from "./Form";
+import Report from "./Report";
+import "./Money.css";
+import Overview from "./Overview";
 
 function Money() {
-  const [incomes, setIncome] = useState([]);
-  const [expenses, setExpense] = useState([]);
+  // const setArrayElement = (doc) => {
+  //   console.log(doc)
+  //   setEvents(( prevEvents ) => {
+  //     return [
+  //       {doc},
+  //       ...prevEvents
+  //     ];
+  //   })
+  //   console.log(events)
+  // }
 
-  const total_income =() => {
-    let sum = 0
-    incomes.map(income => {
-      sum += income.data.amount
-    })
-    console.log('sum: '+sum)
-  }
-  useEffect(() => {
-    db.collection("incomes").onSnapshot((snapshot) => {
-      setIncome(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      );
-    });
-    db.collection("expenses").onSnapshot((snapshot) => {
-      setExpense(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      );
-    });
-    total_income()
-  },[incomes, expenses]);
+  // useEffect(() => {
+  //   const data = db.collection("events").doc('').onSnapshot((snapshot) => {
+  //     console.log(snapshot)
+  //   })
+  //   console.log("data",data);
+  // })
+
   return (
-    <div className="App">
-      <h3>Money</h3>
-      {incomes.map((income) => (
-        <>
-          <p>{income.data.name}</p>
-          <p>{income.data.amount}</p>
-        </>
-      ))}
+    <div className="money">
+      <div className="overview">
+        <Overview />
+      </div>
+      <div className="report">
+        <Report />
+      </div>
+      <div className="form">
+        <Form />
+      </div>
     </div>
   );
 }
