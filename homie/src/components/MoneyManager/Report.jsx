@@ -1,10 +1,11 @@
 import React from 'react'
 import './Money.css'
+import "./InnerStyles.css";
 
 function Report() {
     return (
         <div>
-            Report
+            <h3>Report</h3>
         </div>
     )
 }

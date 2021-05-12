@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import db from "../../firebase";
 import "./Money.css";
+import "./InnerStyles.css";
 
 function Overview() {
   const [events, setEvents] = useState([]);
@@ -16,6 +17,7 @@ function Overview() {
   });
   return (
     <div>
+      <h3>Overview</h3>
       {events.map((event) => (
         <>
           <p>{event.data.name}</p>

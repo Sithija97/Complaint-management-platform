@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import "./Money.css";
+import "./InnerStyles.css";
 import db from "../../firebase";
 
 const Form = (props) => {
@@ -38,7 +39,7 @@ const Form = (props) => {
     };
 
     return (
-      <div>
+      <div className='container'>
         <h3>Form</h3>
         <form>
           <TextField
