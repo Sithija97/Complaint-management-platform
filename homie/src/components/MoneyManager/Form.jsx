@@ -42,6 +42,68 @@ const Form = (props) => {
     setEvents({ ...initialStateValues });
   };
 
+  const gettingCategory = (type) => {
+    switch (type) {
+      case "income":
+        console.log("income");
+        return (
+          <div>
+            <InputLabel id="demo-simple-select-label">
+              income categories
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="category"
+              value={events.category}
+              onChange={handleInputChange}
+            >
+              <MenuItem value={"selling"}>selling</MenuItem>
+              <MenuItem value={"award"}>award</MenuItem>
+              <MenuItem value={"interest"}>interest</MenuItem>
+              <MenuItem value={"salary"}>salary</MenuItem>
+              <MenuItem value={"gifts"}>gifts</MenuItem>
+              <MenuItem value={"other"}>other</MenuItem>
+            </Select>
+          </div>
+        );
+      case "expense":
+        console.log("expense");
+        return (
+          <div>
+            <InputLabel id="demo-simple-select-label">
+              expense categories
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="category"
+              value={events.category}
+              onChange={handleInputChange}
+            >
+              <MenuItem value={"food"}>food</MenuItem>
+              <MenuItem value={"bills"}>bills</MenuItem>
+              <MenuItem value={"transportation"}>transportation</MenuItem>
+              <MenuItem value={"shopping"}>shopping</MenuItem>
+              <MenuItem value={"entertainment"}>entertainment</MenuItem>
+              <MenuItem value={"travel"}>travel</MenuItem>
+              <MenuItem value={"health"}>health</MenuItem>
+              <MenuItem value={"familiy"}>familiy</MenuItem>
+              <MenuItem value={"education"}>education</MenuItem>
+              <MenuItem value={"fees"}>fees</MenuItem>
+              <MenuItem value={"business"}>business</MenuItem>
+              <MenuItem value={"other"}>other</MenuItem>
+            </Select>
+          </div>
+        );
+      case "saving":
+        console.log("savings");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="container">
       <h3>Form</h3>
@@ -72,55 +134,7 @@ const Form = (props) => {
           <MenuItem value={"saving"}>savings</MenuItem>
         </Select>
 
-        {events.type == "" || "savings" ? (
-          <div></div>
-        ) : events.type == "income" ? (
-          <div>
-            <InputLabel id="demo-simple-select-label">
-              income categories
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name="category"
-              value={events.category}
-              onChange={handleInputChange}
-            >
-              <MenuItem value={"selling"}>selling</MenuItem>
-              <MenuItem value={"award"}>award</MenuItem>
-              <MenuItem value={"interest"}>interest</MenuItem>
-              <MenuItem value={"salary"}>salary</MenuItem>
-              <MenuItem value={"gifts"}>gifts</MenuItem>
-              <MenuItem value={"other"}>other</MenuItem>
-            </Select>
-          </div>
-        ) : (
-          <div>
-            <InputLabel id="demo-simple-select-label">
-              expense categories
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name="category"
-              value={events.category}
-              onChange={handleInputChange}
-            >
-              <MenuItem value={"food"}>food</MenuItem>
-              <MenuItem value={"bills"}>bills</MenuItem>
-              <MenuItem value={"transportation"}>transportation</MenuItem>
-              <MenuItem value={"shopping"}>shopping</MenuItem>
-              <MenuItem value={"entertainment"}>entertainment</MenuItem>
-              <MenuItem value={"travel"}>travel</MenuItem>
-              <MenuItem value={"health"}>health</MenuItem>
-              <MenuItem value={"familiy"}>familiy</MenuItem>
-              <MenuItem value={"education"}>education</MenuItem>
-              <MenuItem value={"fees"}>fees</MenuItem>
-              <MenuItem value={"business"}>business</MenuItem>
-              <MenuItem value={"other"}>other</MenuItem>
-            </Select>
-          </div>
-        )}
+        {gettingCategory(events.type)}
 
         <TextField
           id="date"
