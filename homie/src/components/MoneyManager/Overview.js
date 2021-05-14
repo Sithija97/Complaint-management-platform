@@ -6,19 +6,6 @@ import "./InnerStyles.css";
 function Overview() {
   const [events, setEvents] = useState([]);
 
-  const gettingOverview = () => {
-    events.map(event => {
-      switch (event.data.name) {
-        case 'savings':
-          console.log('yes it has')
-          break;
-      
-        default:
-          break;
-      }
-    })
-  }
-
   useEffect(() => {
     db.collection("events")
       .orderBy("date", "desc")
@@ -30,15 +17,15 @@ function Overview() {
           }))
         );
       });
-    gettingOverview()
-  });
+  },[events]);
+
   return (
     <>
       <div className="container">
         <h3>Overview</h3>
-        <p>inflows : 6000</p>
-        <p>outflows : 2000</p>
-        <p>savings : 1800</p>
+        <p>inflows : 600</p>
+        <p>outflows : 200</p>
+        <p>savings : 800</p>
       </div>
       <div className="container">
         <h3>Past events</h3>

@@ -5,24 +5,6 @@ import "./Money.css";
 import Overview from "./Overview";
 
 function Money() {
-  // const setArrayElement = (doc) => {
-  //   console.log(doc)
-  //   setEvents(( prevEvents ) => {
-  //     return [
-  //       {doc},
-  //       ...prevEvents
-  //     ];
-  //   })
-  //   console.log(events)
-  // }
-
-  // useEffect(() => {
-  //   const data = db.collection("events").doc('').onSnapshot((snapshot) => {
-  //     console.log(snapshot)
-  //   })
-  //   console.log("data",data);
-  // })
-
   return (
     <div className="money">
       <div className="overview">
