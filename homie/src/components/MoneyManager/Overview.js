@@ -17,7 +17,7 @@ function Overview() {
           }))
         );
       });
-  });
+  },[events]);
 
   return (
     <>
