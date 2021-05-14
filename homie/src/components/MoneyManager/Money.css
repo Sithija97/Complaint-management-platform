@@ -10,12 +10,13 @@
   flex: 0.35;
   /* background: rebeccapurple; */
   padding: 20px;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .report {
   flex: 0.4;
-  background: palevioletred;
+  padding: 20px;
+  /* background: palevioletred; */
 }
 
 .form {
