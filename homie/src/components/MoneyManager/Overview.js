@@ -27,16 +27,16 @@ function Overview() {
         <p>outflows : 200</p>
         <p>savings : 800</p>
       </div>
+      <h3>Past events</h3>
       <div className="container">
-        <h3>Past events</h3>
         {events.map((event) => (
-          <>
+          <div className='data'>
             <p>{event.data.name}</p>
             <p>{event.data.amount}</p>
             <p>{event.data.type}</p>
             <p>{event.data.category}</p>
             <p>{event.data.date}</p>
-          </>
+          </div>
         ))}
       </div>
     </>

@@ -11,3 +11,8 @@
     margin-right: auto;
     width: 200;
   }
+
+.data {
+    display: flex;
+    justify-content: space-evenly;
+}
