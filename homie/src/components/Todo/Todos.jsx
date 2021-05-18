@@ -37,28 +37,35 @@ function Todos() {
 
   return (
     <div className="todos">
-      {/* <form>
+      <Card className="CardView todoForm CardViewAdder ">
+        <form className='todoField'>
           <FormControl>
             <TextField
-              type='text'
-              label="Whats your Todo"
+              type="text"
+              label="Todo"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </FormControl>
           <FormControl>
             <TextField
-              type='text'
-              label="Add description (optional)"
+              type="text"
+              label="Add note"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </FormControl>
-          <Button type='submit' variant="contained" color="primary" onClick={handleSubmit}>
-            Add Todo
+          <Button
+            className='addButton'
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+          >
+            +
           </Button>
-       
-      </form> */}
+        </form>
+      </Card>
 
       {todos.map((todo) => (
         <Todo
