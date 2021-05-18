@@ -10,3 +10,20 @@
     display: flex;
 }
 
+.todoForm{
+  margin-bottom: 20px;
+  padding:20px
+}
+
+.todoField{
+  display: flex;
+}
+
+.addButton {
+  height: 50px !important;
+  border-radius: 60px !important;
+}
+
+.CardViewAdder {
+  border-radius: 10px !important;
+}
