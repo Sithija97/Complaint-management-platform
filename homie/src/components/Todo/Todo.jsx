@@ -10,8 +10,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { Card } from "@material-ui/core";
+import db from "../../firebase";
 
 function Todo({ title, description, key }) {
+  const deleteTodo = () => {
+    console.log(key)
+  }
   return (
     <div>
       <Card className="CardView">
@@ -26,7 +30,7 @@ function Todo({ title, description, key }) {
                 <EditIcon />
               </IconButton>
               <IconButton edge="end" aria-label="delete">
-                <DeleteIcon />
+                <DeleteIcon/>
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
