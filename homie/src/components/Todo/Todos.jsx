@@ -23,7 +23,7 @@ function Todos() {
         }))
       );
     });
-  });
+  },[db]);
 
   const handleSubmit = (e) => {
     // writing todos
@@ -38,7 +38,7 @@ function Todos() {
   return (
     <div className="todos">
       <Card className="CardView todoForm CardViewAdder ">
-        <form className='todoField'>
+        <form className="todoField">
           <FormControl>
             <TextField
               type="text"
@@ -56,7 +56,7 @@ function Todos() {
             />
           </FormControl>
           <Button
-            className='addButton'
+            className="addButton"
             type="submit"
             variant="contained"
             color="primary"
@@ -66,6 +66,9 @@ function Todos() {
           </Button>
         </form>
       </Card>
+      {todos.map((todo) => {
+        console.log(todo.data.id);
+      })}
 
       {todos.map((todo) => (
         <Todo

@@ -17,8 +17,8 @@ function Overview() {
           }))
         );
       });
-  },[events]);
-
+  },[db]);
+  console.log("events: ",events);
   return (
     <>
       <div className="container">
