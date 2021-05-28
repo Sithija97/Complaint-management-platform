@@ -25,3 +25,9 @@
   align-items: center;
   /* background: purple; */
 }
+
+.Table {
+  overflow-y: scroll !important;
+  height: 45% !important;
+  padding: 10px 10px 8px 8px;
+}

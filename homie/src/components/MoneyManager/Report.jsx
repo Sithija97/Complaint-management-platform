@@ -13,9 +13,9 @@ function Report({ income, expense, saving }) {
         label: "My First Dataset",
         data: [income, expense, saving],
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#f368e0",
+          "#341f97",
+          "#48dbfb",
         ],
         hoverOffset: 4,
       },
@@ -23,10 +23,8 @@ function Report({ income, expense, saving }) {
   };
 
   return (
-    <div className="container">
+    <div className="form_container">
       <h3>Report</h3>
-      {/* {console.log('in report')}
-          {console.log(events)} */}
       <Doughnut data={data} />
     </div>
   );

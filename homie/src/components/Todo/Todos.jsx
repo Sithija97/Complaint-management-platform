@@ -11,7 +11,6 @@ function Todos() {
 
   // todo fields - write
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
 
   useEffect(() => {
     // reading todos from db
@@ -28,10 +27,9 @@ function Todos() {
   const handleSubmit = (e) => {
     // writing todos
     e.preventDefault();
-    console.log("title:" + title, "description:" + description);
+    console.log("title:" + title);
     db.collection("todos").add({
       title: title,
-      description: description,
     });
   };
 
@@ -47,14 +45,6 @@ function Todos() {
               onChange={(e) => setTitle(e.target.value)}
             />
           </FormControl>
-          <FormControl>
-            <TextField
-              type="text"
-              label="Add note"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </FormControl>
           <Button
             className="addButton"
             type="submit"
@@ -66,15 +56,12 @@ function Todos() {
           </Button>
         </form>
       </Card>
-      {todos.map((todo) => {
-        console.log(todo.data.id);
-      })}
-
+      {console.log(todos)}
       {todos.map((todo) => (
+        console.log(todo.id),
         <Todo
-          key={todo.data.id}
+          key={todo.id}
           title={todo.data.title}
-          description={todo.data.description}
         />
       ))}
     </div>
