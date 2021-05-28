@@ -13,9 +13,9 @@ function Report({ income, expense, saving }) {
         label: "My First Dataset",
         data: [income, expense, saving],
         backgroundColor: [
-          "#f368e0",
-          "#341f97",
-          "#48dbfb",
+          "#182C61",
+          "#4bcffa",
+          "#0be881",
         ],
         hoverOffset: 4,
       },

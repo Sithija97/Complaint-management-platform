@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -10,7 +9,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 import "./Money.css";
 import "./InnerStyles.css";
@@ -169,7 +167,7 @@ const Form = (props) => {
             <ListItemText primary={"date :"} />
             <TextField
               id="date"
-              label="Date"
+              // label="Date"
               type="date"
               defaultValue="2021-05-01"
               className="textField"
@@ -182,7 +180,7 @@ const Form = (props) => {
             />
           </ListItem>
           <ListItem button className="form_elements">
-            <Button type="submit" onClick={handleSubmit}>
+            <Button disabled={!events.amount}  type="submit" onClick={handleSubmit}>
               Add
             </Button>
           </ListItem>
