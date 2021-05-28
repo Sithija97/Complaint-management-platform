@@ -12,19 +12,16 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { Card } from "@material-ui/core";
 import db from "../../firebase";
 
-function Todo({ title, description, key }) {
-  const deleteTodo = () => {
-    console.log(key)
-  }
+function Todo({ title, key }) {
   return (
     <div>
       <Card className="CardView">
         <List>
-          <ListItem>
+          <ListItem >
             <ListItemIcon>
               <CheckCircleIcon color="primary"/>
             </ListItemIcon>
-            <ListItemText primary={title} secondary={key} />
+            <ListItemText primary={title} />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="edit">
                 <EditIcon />

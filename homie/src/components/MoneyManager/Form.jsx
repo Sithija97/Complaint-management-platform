@@ -6,7 +6,12 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import LocalAtmIcon from "@material-ui/icons/LocalAtm";
+import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 import "./Money.css";
 import "./InnerStyles.css";
 import db from "../../firebase";
@@ -48,52 +53,58 @@ const Form = (props) => {
         console.log("income");
         return (
           <div>
-            <InputLabel id="demo-simple-select-label">
-              income categories
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name="category"
-              value={events.category}
-              onChange={handleInputChange}
-            >
-              <MenuItem value={"selling"}>selling</MenuItem>
-              <MenuItem value={"award"}>award</MenuItem>
-              <MenuItem value={"interest"}>interest</MenuItem>
-              <MenuItem value={"salary"}>salary</MenuItem>
-              <MenuItem value={"gifts"}>gifts</MenuItem>
-              <MenuItem value={"other"}>other</MenuItem>
-            </Select>
+            <ListItem button className="form_elements">
+              <ListItemIcon>
+                <RemoveFromQueueIcon />
+              </ListItemIcon>
+              <ListItemText primary={"income categories :"} />
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="category"
+                value={events.category}
+                onChange={handleInputChange}
+              >
+                <MenuItem value={"selling"}>selling</MenuItem>
+                <MenuItem value={"award"}>award</MenuItem>
+                <MenuItem value={"interest"}>interest</MenuItem>
+                <MenuItem value={"salary"}>salary</MenuItem>
+                <MenuItem value={"gifts"}>gifts</MenuItem>
+                <MenuItem value={"other"}>other</MenuItem>
+              </Select>
+            </ListItem>      
           </div>
         );
       case "expense":
         console.log("expense");
         return (
           <div>
-            <InputLabel id="demo-simple-select-label">
-              expense categories
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name="category"
-              value={events.category}
-              onChange={handleInputChange}
-            >
-              <MenuItem value={"food"}>food</MenuItem>
-              <MenuItem value={"bills"}>bills</MenuItem>
-              <MenuItem value={"transportation"}>transportation</MenuItem>
-              <MenuItem value={"shopping"}>shopping</MenuItem>
-              <MenuItem value={"entertainment"}>entertainment</MenuItem>
-              <MenuItem value={"travel"}>travel</MenuItem>
-              <MenuItem value={"health"}>health</MenuItem>
-              <MenuItem value={"familiy"}>familiy</MenuItem>
-              <MenuItem value={"education"}>education</MenuItem>
-              <MenuItem value={"fees"}>fees</MenuItem>
-              <MenuItem value={"business"}>business</MenuItem>
-              <MenuItem value={"other"}>other</MenuItem>
-            </Select>
+            <ListItem button className="form_elements">
+              <ListItemIcon>
+                <RemoveFromQueueIcon />
+              </ListItemIcon>
+              <ListItemText primary={"expense categories :"} />
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="category"
+                value={events.category}
+                onChange={handleInputChange}
+              >
+                <MenuItem value={"food"}>food</MenuItem>
+                <MenuItem value={"bills"}>bills</MenuItem>
+                <MenuItem value={"transportation"}>transportation</MenuItem>
+                <MenuItem value={"shopping"}>shopping</MenuItem>
+                <MenuItem value={"entertainment"}>entertainment</MenuItem>
+                <MenuItem value={"travel"}>travel</MenuItem>
+                <MenuItem value={"health"}>health</MenuItem>
+                <MenuItem value={"familiy"}>familiy</MenuItem>
+                <MenuItem value={"education"}>education</MenuItem>
+                <MenuItem value={"fees"}>fees</MenuItem>
+                <MenuItem value={"business"}>business</MenuItem>
+                <MenuItem value={"other"}>other</MenuItem>
+              </Select>
+            </ListItem>
           </div>
         );
       case "saving":
@@ -105,54 +116,77 @@ const Form = (props) => {
   };
 
   return (
-    <div className="container">
+    <div className="form_container">
       <h3>Form</h3>
       <form>
-        <TextField
-          label="name"
-          name="name"
-          value={events.name}
-          onChange={handleInputChange}
-        />
-        <TextField
-          label="value"
-          name="amount"
-          value={events.amount}
-          onChange={handleInputChange}
-        />
-
-        <InputLabel id="demo-simple-select-label">type</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          name="type"
-          value={events.type}
-          onChange={handleInputChange}
-        >
-          <MenuItem value={"income"}>income</MenuItem>
-          <MenuItem value={"expense"}>expenses</MenuItem>
-          <MenuItem value={"saving"}>savings</MenuItem>
-        </Select>
-
-        {gettingCategory(events.type)}
-
-        <TextField
-          id="date"
-          label="Date"
-          type="date"
-          defaultValue="2021-05-01"
-          className="textField"
-          name="date"
-          value={events.date}
-          onChange={handleInputChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-
-        <Button type="submit" onClick={handleSubmit}>
-          Add
-        </Button>
+        <List component="nav" aria-label="main mailbox folders">
+          <ListItem button className="form_elements">
+            <ListItemIcon>
+              <RemoveFromQueueIcon />
+            </ListItemIcon>
+            <ListItemText primary={"name :"} />
+            <TextField
+              // label="name"
+              name="name"
+              value={events.name}
+              onChange={handleInputChange}
+            />
+          </ListItem>
+          <ListItem button className="form_elements">
+            <ListItemIcon>
+              <RemoveFromQueueIcon />
+            </ListItemIcon>
+            <ListItemText primary={"amount :"} />
+            <TextField
+              //label="value"
+              name="amount"
+              value={events.amount}
+              onChange={handleInputChange}
+            />
+          </ListItem>
+          <ListItem button className="form_elements">
+            <ListItemIcon>
+              <RemoveFromQueueIcon />
+            </ListItemIcon>
+            <ListItemText primary={"type :"} />
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="type"
+              value={events.type}
+              onChange={handleInputChange}
+            >
+              <MenuItem value={"income"}>income</MenuItem>
+              <MenuItem value={"expense"}>expenses</MenuItem>
+              <MenuItem value={"saving"}>savings</MenuItem>
+            </Select>
+          </ListItem>
+          {gettingCategory(events.type)}
+          <ListItem button className="form_elements">
+            <ListItemIcon>
+              <RemoveFromQueueIcon />
+            </ListItemIcon>
+            <ListItemText primary={"date :"} />
+            <TextField
+              id="date"
+              label="Date"
+              type="date"
+              defaultValue="2021-05-01"
+              className="textField"
+              name="date"
+              value={events.date}
+              onChange={handleInputChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </ListItem>
+          <ListItem button className="form_elements">
+            <Button type="submit" onClick={handleSubmit}>
+              Add
+            </Button>
+          </ListItem>
+        </List>
       </form>
     </div>
   );
