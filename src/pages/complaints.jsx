@@ -8,7 +8,6 @@ import {
   Stack,
   Paper,
   Avatar,
-  Button,
   Popover,
   Checkbox,
   TableRow,
@@ -21,7 +20,6 @@ import {
   TableContainer,
   TablePagination,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 // components
 import Label from "../components/label";
 import Iconify from "../components/iconify";
@@ -77,8 +75,6 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function ComplaintsPage() {
-  const navigate = useNavigate();
-
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
