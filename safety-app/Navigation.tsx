@@ -5,21 +5,32 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
+import Registration from "./screens/Registration";
 
 // Stack
 const HomeStack = createStackNavigator();
 
 const HomeStackGroup = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Registration" component={Registration} />
       <HomeStack.Screen name="Login" component={Login} />
-      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="DrawerGroup" component={DrawerGroup} />
     </HomeStack.Navigator>
   );
 };
 
 // Drawer
 const Drawer = createDrawerNavigator();
+
+const DrawerGroup = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Profile" component={Home} />
+    </Drawer.Navigator>
+  );
+};
 
 const Navigation = () => {
   return (
