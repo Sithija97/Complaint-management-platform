@@ -6,6 +6,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
 import Registration from "./screens/Registration";
+import Tips from "./screens/Tips";
 
 // Stack
 const HomeStack = createStackNavigator();
@@ -27,7 +28,7 @@ const DrawerGroup = () => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Profile" component={Home} />
+      <Drawer.Screen name="Tips" component={Tips} />
     </Drawer.Navigator>
   );
 };
