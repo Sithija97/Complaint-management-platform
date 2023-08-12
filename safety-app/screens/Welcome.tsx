@@ -4,13 +4,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
 import Button from "../components/Button";
 
-export const Home = ({ navigation }: any) => {
+export const Welcome = ({ navigation }: any) => {
   return (
     <LinearGradient
       style={{
         flex: 1,
       }}
-      colors={[COLORS.white, COLORS.white]}
+      colors={[COLORS.secondary, COLORS.primary]}
     >
       <View style={{ flex: 1 }}>
         <View>
@@ -21,7 +21,6 @@ export const Home = ({ navigation }: any) => {
               width: 100,
               borderRadius: 20,
               position: "absolute",
-              opacity: 0.3,
               top: 20,
               transform: [
                 { translateX: 20 },
@@ -39,7 +38,6 @@ export const Home = ({ navigation }: any) => {
               position: "absolute",
               top: -20,
               left: 100,
-              opacity: 0.3,
               transform: [
                 { translateX: 50 },
                 { translateY: 50 },
@@ -55,7 +53,6 @@ export const Home = ({ navigation }: any) => {
               borderRadius: 20,
               position: "absolute",
               top: 140,
-              opacity: 0.3,
               left: -50,
               transform: [
                 { translateX: 50 },
@@ -74,7 +71,6 @@ export const Home = ({ navigation }: any) => {
               position: "absolute",
               top: 120,
               left: 100,
-              opacity: 0.3,
               transform: [
                 { translateX: 50 },
                 { translateY: 50 },
@@ -87,20 +83,85 @@ export const Home = ({ navigation }: any) => {
           style={{
             paddingHorizontal: 22,
             position: "absolute",
-            top: 640,
+            top: 500,
             width: "100%",
           }}
         >
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: "800",
+              color: COLORS.white,
+            }}
+          >
+            Let's Get
+          </Text>
+          <Text
+            style={{
+              fontSize: 46,
+              fontWeight: "800",
+              color: COLORS.white,
+            }}
+          >
+            Started
+          </Text>
+
+          <View style={{ marginVertical: 22 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                color: COLORS.white,
+                marginVertical: 4,
+              }}
+            >
+              Connect with each other with chatting
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                color: COLORS.white,
+              }}
+            >
+              Calling, Enjoy Safe and private texting
+            </Text>
+          </View>
+
           <Button
-            title="Inform your family"
-            color={COLORS.black}
-            filled
-            onPress={() => {}}
+            title="Join Now"
+            onPress={() => navigation.navigate("Signup")}
             style={{
               marginTop: 22,
               width: "100%",
             }}
           />
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 12,
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                color: COLORS.white,
+              }}
+            >
+              Already have an account ?
+            </Text>
+            <Pressable onPress={() => navigation.navigate("Login")}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: COLORS.white,
+                  fontWeight: "bold",
+                  marginLeft: 4,
+                }}
+              >
+                Login
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </LinearGradient>

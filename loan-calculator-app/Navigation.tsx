@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
-import Registration from "./screens/Registration";
 
 // Stack
 const HomeStack = createStackNavigator();
@@ -13,7 +12,6 @@ const HomeStack = createStackNavigator();
 const HomeStackGroup = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="Registration" component={Registration} />
       <HomeStack.Screen name="Login" component={Login} />
       <HomeStack.Screen name="DrawerGroup" component={DrawerGroup} />
     </HomeStack.Navigator>
