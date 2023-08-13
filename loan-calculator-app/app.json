@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "safety-app",
-    "slug": "safety-app",
+    "name": "loan-calculator-app",
+    "slug": "loan-calculator-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
