@@ -1,13 +1,48 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body,
+html {
+  font-family: "Poppins", sans-serif !important;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
+  font-family: "Poppins", sans-serif !important;
+}
+
+button,
+td,
+th div {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.css-n7rtur-MuiPaper-root-MuiAppBar-root {
+  background-color: #0c4bb5 !important;
+}
+
+.css-o5srbh-MuiPaper-root-MuiAppBar-root {
+  background-color: #0c4bb5 !important;
+}
+
+.css-7s014k-MuiSvgIcon-root {
+  color: #2a62c2 !important;
+}
+
+.css-qize55-MuiButtonBase-root-MuiFab-root {
+  background-color: #e4f1fc !important;
+  box-shadow: none !important;
+}
+
+.css-9rrh7h-MuiButtonBase-root-MuiFab-root {
+  background-color: #fff1f1 !important;
+  box-shadow: none !important;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"),
+    url("./assets/fonts/Poppins-Regular.ttf") format("truetype");
 }
