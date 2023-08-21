@@ -1,6 +1,4 @@
 import React from "react";
-
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
@@ -8,17 +6,11 @@ import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
-
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
-import { ListItemNode, ListNode } from "@lexical/list";
-import { CodeHighlightNode, CodeNode } from "@lexical/code";
-import { AutoLinkNode, LinkNode } from "@lexical/link";
-import { TRANSFORMERS } from "@lexical/markdown";
-import exampleTheme from "../themes/ExampleTheme";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import ToolbarPlugin from "../plugins/ToolbarPlugin";
-import { $getRoot, $createParagraphNode, $createTextNode } from "lexical";
+import { $generateHtmlFromNodes } from "@lexical/html";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $getRoot, EditorState } from "lexical";
 
 // import TreeViewPlugin from "./plugins/TreeViewPlugin";
 // import ToolbarPlugin from "./plugins/ToolbarPlugin";
@@ -30,66 +22,36 @@ function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>;
 }
 
-const prepopulatedRichText = () => {
-  const root = $getRoot();
-  const paragraph1 = $createParagraphNode();
-  const paragraph2 = $createParagraphNode();
-  const paragraph3 = $createParagraphNode();
+interface IProps {
+  setValue: (value: string) => void;
+}
 
-  const text1 = "Police Report - Sri Lanka Police";
+const Editor = ({ setValue }: IProps) => {
+  const [editor] = useLexicalComposerContext();
 
-  const node1 = $createTextNode(text1);
+  const onChange = (editorState: EditorState) => {
+    editor.update(() => {
+      const htmlString = $generateHtmlFromNodes(editor, null);
+      setValue(htmlString);
+    });
+  };
 
-  paragraph1.append(node1);
-
-  root.append(paragraph1);
-  root.append(paragraph2);
-  root.append(paragraph3);
-};
-
-const editorConfig = {
-  namespace: "MyEditor",
-  // The editor theme
-  theme: exampleTheme,
-  editorState: prepopulatedRichText,
-  // Handling of errors during update
-  onError(error: any) {
-    throw error;
-  },
-  // Any custom nodes go here
-  nodes: [
-    HeadingNode,
-    ListNode,
-    ListItemNode,
-    QuoteNode,
-    CodeNode,
-    CodeHighlightNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
-    AutoLinkNode,
-    LinkNode,
-  ],
-};
-
-const Editor = () => {
   return (
-    <LexicalComposer initialConfig={editorConfig}>
-      <div className="editor-container">
-        <ToolbarPlugin />
-        <div className="editor-inner">
-          <RichTextPlugin
-            contentEditable={<ContentEditable className="editor-input" />}
-            placeholder={<Placeholder />}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          <HistoryPlugin />
-          <AutoFocusPlugin />
-          <ListPlugin />
-          <LinkPlugin />
-        </div>
+    <div className="editor-container">
+      <ToolbarPlugin />
+      <div className="editor-inner">
+        <RichTextPlugin
+          contentEditable={<ContentEditable className="editor-input" />}
+          placeholder={<Placeholder />}
+          ErrorBoundary={LexicalErrorBoundary}
+        />
+        <HistoryPlugin />
+        <AutoFocusPlugin />
+        <ListPlugin />
+        <LinkPlugin />
+        <OnChangePlugin onChange={onChange} />
       </div>
-    </LexicalComposer>
+    </div>
   );
 };
 
