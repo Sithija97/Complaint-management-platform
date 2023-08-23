@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref } from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
@@ -52,13 +52,14 @@ const editorConfig = {
 };
 
 interface IProps {
+  reportTemplateRef: Ref<HTMLInputElement>;
   setValue: (value: string) => void;
 }
 
-export const RichtextEditor = ({ setValue }: IProps) => {
+export const RichtextEditor = ({ setValue, reportTemplateRef }: IProps) => {
   return (
     <LexicalComposer initialConfig={editorConfig}>
-      <Editor setValue={setValue} />
+      <Editor setValue={setValue} reportTemplateRef={reportTemplateRef} />
     </LexicalComposer>
   );
 };

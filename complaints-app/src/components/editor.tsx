@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref } from "react";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
@@ -23,23 +23,25 @@ function Placeholder() {
 }
 
 interface IProps {
+  reportTemplateRef: Ref<HTMLInputElement>;
   setValue: (value: string) => void;
 }
 
-const Editor = ({ setValue }: IProps) => {
+const Editor = ({ setValue, reportTemplateRef }: IProps) => {
   const [editor] = useLexicalComposerContext();
 
   const onChange = (editorState: EditorState) => {
-    editor.update(() => {
-      const htmlString = $generateHtmlFromNodes(editor, null);
-      setValue(htmlString);
-    });
+    const stringifiedEditorState = JSON.stringify(editorState.toJSON());
+    const parsedEditorState = editor.parseEditorState(stringifiedEditorState);
+    const editorStateTextString = parsedEditorState.read(() =>
+      $getRoot().getTextContent()
+    );
+    setValue(editorStateTextString);
   };
-
   return (
     <div className="editor-container">
       <ToolbarPlugin />
-      <div className="editor-inner">
+      <div ref={reportTemplateRef} className="editor-inner">
         <RichTextPlugin
           contentEditable={<ContentEditable className="editor-input" />}
           placeholder={<Placeholder />}
