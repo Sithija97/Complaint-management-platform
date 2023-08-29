@@ -5,6 +5,8 @@ import {
   Pressable,
   TextInput,
   TouchableOpacity,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,6 +18,15 @@ import Button from "../components/Button";
 export const Signup = ({ navigation }: any) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const SignUp = () => {
+    console.log(username, email, password);
+    navigation.navigate("Login");
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
@@ -71,6 +82,10 @@ export const Signup = ({ navigation }: any) => {
               style={{
                 width: "100%",
               }}
+              value={username}
+              onChange={(
+                event: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => setUsername(event.nativeEvent.text)}
             />
           </View>
         </View>
@@ -105,6 +120,10 @@ export const Signup = ({ navigation }: any) => {
               style={{
                 width: "100%",
               }}
+              value={email}
+              onChange={(
+                event: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => setEmail(event.nativeEvent.text)}
             />
           </View>
         </View>
@@ -139,6 +158,10 @@ export const Signup = ({ navigation }: any) => {
               style={{
                 width: "100%",
               }}
+              value={password}
+              onChange={(
+                event: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => setPassword(event.nativeEvent.text)}
             />
 
             <TouchableOpacity
@@ -180,7 +203,7 @@ export const Signup = ({ navigation }: any) => {
             marginTop: 18,
             marginBottom: 4,
           }}
-          onPress={() => navigation.navigate("Login")}
+          onPress={SignUp}
         />
 
         <View

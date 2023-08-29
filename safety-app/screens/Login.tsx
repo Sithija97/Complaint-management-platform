@@ -5,6 +5,8 @@ import {
   Pressable,
   TextInput,
   TouchableOpacity,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,6 +18,14 @@ import Button from "../components/Button";
 export const Login = ({ navigation }: any) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const Login = () => {
+    console.log(email, password);
+    navigation.navigate("DrawerGroup");
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
@@ -71,6 +81,10 @@ export const Login = ({ navigation }: any) => {
               style={{
                 width: "100%",
               }}
+              value={email}
+              onChange={(
+                event: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => setEmail(event.nativeEvent.text)}
             />
           </View>
         </View>
@@ -105,6 +119,10 @@ export const Login = ({ navigation }: any) => {
               style={{
                 width: "100%",
               }}
+              value={password}
+              onChange={(
+                event: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => setPassword(event.nativeEvent.text)}
             />
 
             <TouchableOpacity
@@ -130,7 +148,7 @@ export const Login = ({ navigation }: any) => {
             marginTop: 18,
             marginBottom: 4,
           }}
-          onPress={() => navigation.navigate("DrawerGroup")}
+          onPress={Login}
         />
 
         <View
