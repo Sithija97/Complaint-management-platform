@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   NativeSyntheticEvent,
   TextInputChangeEventData,
+  StyleSheet,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -27,53 +28,18 @@ export const Login = ({ navigation }: any) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      <View style={{ flex: 1, marginHorizontal: 22 }}>
+    <SafeAreaView style={styles.safeAreaContainer}>
+      <View style={styles.baseViewContainer}>
         <View style={{ marginVertical: 22 }}>
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: "bold",
-              marginVertical: 12,
-              color: COLORS.black,
-            }}
-          >
-            Create Account
-          </Text>
+          <Text style={styles.title}>Create Account</Text>
 
-          <Text
-            style={{
-              fontSize: 16,
-              color: COLORS.black,
-            }}
-          >
-            Connect with your friend today!
-          </Text>
+          <Text style={styles.subtitle}>Connect with your friend today!</Text>
         </View>
 
-        <View style={{ marginBottom: 12 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "400",
-              marginVertical: 8,
-            }}
-          >
-            Email address
-          </Text>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.inputTitle}>Email address</Text>
 
-          <View
-            style={{
-              width: "100%",
-              height: 48,
-              borderColor: COLORS.black,
-              borderWidth: 1,
-              borderRadius: 8,
-              alignItems: "center",
-              justifyContent: "center",
-              paddingLeft: 22,
-            }}
-          >
+          <View style={styles.inputContainer}>
             <TextInput
               placeholder="Enter your email address"
               placeholderTextColor={COLORS.black}
@@ -89,29 +55,10 @@ export const Login = ({ navigation }: any) => {
           </View>
         </View>
 
-        <View style={{ marginBottom: 12 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "400",
-              marginVertical: 8,
-            }}
-          >
-            Password
-          </Text>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.inputTitle}>Password</Text>
 
-          <View
-            style={{
-              width: "100%",
-              height: 48,
-              borderColor: COLORS.black,
-              borderWidth: 1,
-              borderRadius: 8,
-              alignItems: "center",
-              justifyContent: "center",
-              paddingLeft: 22,
-            }}
-          >
+          <View style={styles.inputContainer}>
             <TextInput
               placeholder="Enter your password"
               placeholderTextColor={COLORS.black}
@@ -127,10 +74,7 @@ export const Login = ({ navigation }: any) => {
 
             <TouchableOpacity
               onPress={() => setIsPasswordShown(!isPasswordShown)}
-              style={{
-                position: "absolute",
-                right: 12,
-              }}
+              style={styles.passwordVisibleIcon}
             >
               {isPasswordShown == true ? (
                 <Ionicons name="eye-off" size={24} color={COLORS.black} />
@@ -144,37 +88,81 @@ export const Login = ({ navigation }: any) => {
         <Button
           title="Sign in"
           filled
-          style={{
-            marginTop: 18,
-            marginBottom: 4,
-          }}
+          style={styles.loginButton}
           onPress={Login}
         />
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginVertical: 22,
-          }}
-        >
-          <Text style={{ fontSize: 16, color: COLORS.black }}>
+        <View style={styles.accountCreationContainer}>
+          <Text style={styles.accountCreationTitle}>
             Don't have an account ?
           </Text>
           <Pressable onPress={() => navigation.navigate("Signup")}>
-            <Text
-              style={{
-                fontSize: 16,
-                color: COLORS.primary,
-                fontWeight: "bold",
-                marginLeft: 6,
-              }}
-            >
-              Sign up
-            </Text>
+            <Text style={styles.registerButtonTitle}>Sign up</Text>
           </Pressable>
         </View>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+  },
+  baseViewContainer: {
+    flex: 1,
+    marginHorizontal: 22,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginVertical: 12,
+    color: COLORS.black,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: COLORS.black,
+  },
+  inputWrapper: {
+    marginBottom: 12,
+  },
+  inputTitle: {
+    fontSize: 16,
+    fontWeight: "400",
+    marginVertical: 8,
+  },
+  inputContainer: {
+    width: "100%",
+    height: 48,
+    borderColor: COLORS.black,
+    borderWidth: 1,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 22,
+  },
+  passwordVisibleIcon: {
+    position: "absolute",
+    right: 12,
+  },
+  loginButton: {
+    marginTop: 18,
+    marginBottom: 4,
+  },
+  accountCreationContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 22,
+  },
+  accountCreationTitle: {
+    fontSize: 16,
+    color: COLORS.black,
+  },
+  registerButtonTitle: {
+    fontSize: 16,
+    color: COLORS.primary,
+    fontWeight: "bold",
+    marginLeft: 6,
+  },
+});
