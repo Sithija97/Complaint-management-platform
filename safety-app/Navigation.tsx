@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Home, Login, Signup, Tips, Welcome } from "./screens";
 import { Ionicons } from "@expo/vector-icons";
+import { Contacts } from "./screens/Contacts";
 
 // Stack
 const HomeStack = createStackNavigator();
@@ -32,6 +33,25 @@ const DrawerGroup = () => {
         options={{
           drawerIcon: ({ focused, color, size }) => (
             <Ionicons name={"home"} size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name="Add Contacts"
+        component={Contacts}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Ionicons name={"person-add"} size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Community"
+        component={Tips}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Ionicons name={"people"} size={size} color={color} />
           ),
         }}
       />
