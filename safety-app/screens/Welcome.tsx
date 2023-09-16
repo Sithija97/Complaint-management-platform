@@ -10,7 +10,7 @@ export const Welcome = ({ navigation }: any) => {
       style={{
         flex: 1,
       }}
-      colors={[COLORS.secondary, COLORS.primary]}
+      colors={[COLORS.secondary, COLORS.secondary]}
     >
       <View style={{ flex: 1 }}>
         <View>

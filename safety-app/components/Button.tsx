@@ -17,13 +17,18 @@ interface ButtonProps {
   color?: string; // Optional: custom background color for filled button
   style?: any; // Optional: additional styles for the button
   textStyle?: StyleProp<TextStyle>; // Optional: additional styles for the button text
+  textcolor?: string;
 }
 
 const Button = (props: ButtonProps) => {
-  const filledBgColor = props.color || COLORS.primary;
+  const filledBgColor = props.color || COLORS.secondary;
   const outlinedColor = COLORS.white;
   const bgColor = props.filled ? filledBgColor : outlinedColor;
-  const textColor = props.filled ? COLORS.white : COLORS.primary;
+  const textColor = props.textcolor
+    ? props.textcolor
+    : props.filled
+    ? COLORS.white
+    : COLORS.secondary;
 
   return (
     <TouchableOpacity

@@ -9,24 +9,18 @@ import {
   ScrollView,
   Platform,
   Image,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
+import { Camera } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
-import Task from "../components/Task";
+let camera: Camera;
+export const Evidence = ({ navigation }: any) => {
+  const [startCamera, setStartCamera] = useState(false);
 
-export const Contacts = ({ navigation }: any) => {
-  const [task, setTask] = useState<string>();
-  const [taskItems, setTaskItems] = useState<string[]>([]);
-
-  const handleAddTask = () => {
-    Keyboard.dismiss();
-    if (task) {
-      setTaskItems([...taskItems, task]);
-      setTask("");
-    }
-  };
+  const handleCamera = async () => {};
   return (
     <LinearGradient
       style={styles.container}
@@ -51,51 +45,12 @@ export const Contacts = ({ navigation }: any) => {
             style={styles.image4}
           />
         </View>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={styles.tasksWrapper}>
-            <View style={styles.items}>
-              {taskItems.map((item, index) => {
-                return (
-                  <TouchableOpacity key={index}>
-                    <Task text={item} />
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-        </ScrollView>
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.writeTaskWrapper}
         >
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder={"Add contact name"}
-              value={task}
-              onChangeText={(text) => setTask(text)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder={"Add mobile number"}
-              value={task}
-              onChangeText={(text) => setTask(text)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder={"Add email address"}
-              value={task}
-              onChangeText={(text) => setTask(text)}
-            />
-          </View>
-
-          <TouchableOpacity onPress={handleAddTask}>
+          <TouchableOpacity onPress={handleCamera}>
             <View style={styles.addWrapper}>
               <Ionicons name="add-outline" size={30} color="white" />
             </View>
@@ -157,13 +112,6 @@ const styles = StyleSheet.create({
     opacity: 0.3,
     transform: [{ translateX: 50 }, { translateY: 50 }, { rotate: "-15deg" }],
   },
-  tasksWrapper: {
-    paddingTop: 70,
-    paddingHorizontal: 20,
-  },
-  items: {
-    marginTop: 30,
-  },
   writeTaskWrapper: {
     position: "absolute",
     bottom: 60,
@@ -172,16 +120,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-  input: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    borderColor: COLORS.black,
-    borderWidth: 1,
-    width: 290,
-    marginBottom: 5,
-  },
   addWrapper: {
     width: 60,
     height: 60,
@@ -189,6 +127,5 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 83,
   },
 });

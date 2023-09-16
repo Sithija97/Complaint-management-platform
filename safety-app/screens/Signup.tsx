@@ -108,16 +108,16 @@ export const Signup = ({ navigation }: any) => {
           </View>
         </View>
 
-        <View style={styles.termsConditionsContainer}>
+        {/* <View style={styles.termsConditionsContainer}>
           <Checkbox
             style={{ marginRight: 8 }}
             value={isChecked}
             onValueChange={setIsChecked}
-            color={isChecked ? COLORS.primary : undefined}
+            color={isChecked ? COLORS.secondary : undefined}
           />
 
           <Text>I aggree to the terms and conditions</Text>
-        </View>
+        </View> */}
 
         <Button
           title="Sign Up"
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   loginButtonTitle: {
     fontSize: 16,
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontWeight: "bold",
     marginLeft: 6,
   },

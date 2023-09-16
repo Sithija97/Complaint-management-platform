@@ -11,11 +11,11 @@ export const Tips = () => {
       <View
         style={{ marginHorizontal: 22, marginTop: 15, marginVertical: -35 }}
       >
-        <Text style={styles.headerTitle}>
+        {/* <Text style={styles.headerTitle}>
           "Traveling alone as a woman can be a wonderful and empowering
           experience, but it's important to prioritize safety. Here are some
           safety tips to consider:"
-        </Text>
+        </Text> */}
       </View>
       <SafeAreaView style={{ flex: 1 }}>
         <FlatList

@@ -3,9 +3,16 @@ import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Home, Login, Signup, Tips, Welcome } from "./screens";
+import {
+  Evidence,
+  Home,
+  Login,
+  Signup,
+  Tips,
+  Welcome,
+  Contacts,
+} from "./screens";
 import { Ionicons } from "@expo/vector-icons";
-import { Contacts } from "./screens/Contacts";
 
 // Stack
 const HomeStack = createStackNavigator();
@@ -56,7 +63,16 @@ const DrawerGroup = () => {
         }}
       />
       <Drawer.Screen
-        name="Tips"
+        name="Evidence"
+        component={Evidence}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Ionicons name={"camera"} size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Safety Tips"
         component={Tips}
         options={{
           drawerIcon: ({ focused, color, size }) => (
