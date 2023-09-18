@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
 import { Button, ImageSet } from "../components";
 
-export const Home = ({ navigation }: any) => {
+export const History = ({ navigation }: any) => {
   return (
     <LinearGradient
       style={styles.container}
@@ -12,15 +12,6 @@ export const Home = ({ navigation }: any) => {
     >
       <View style={styles.container}>
         <ImageSet />
-        <View style={styles.buttonContainer}>
-          <Button
-            title="Inform your family"
-            color={COLORS.black}
-            filled
-            onPress={() => {}}
-            style={{ marginTop: 22, width: "100%" }}
-          />
-        </View>
       </View>
     </LinearGradient>
   );
@@ -29,11 +20,5 @@ export const Home = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  buttonContainer: {
-    paddingHorizontal: 22,
-    position: "absolute",
-    top: 640,
-    width: "100%",
   },
 });

@@ -14,43 +14,50 @@ import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
-import Task from "../components/Task";
+import { ContactCard, ImageSet } from "../components";
+
+interface IContactPerson {
+  contactPersonsName: string;
+  contactNumber: string;
+  email: string;
+}
+
+const initialState = {
+  contactPersonsName: "",
+  contactNumber: "",
+  email: "",
+};
 
 export const Contacts = ({ navigation }: any) => {
-  const [task, setTask] = useState<string>();
-  const [taskItems, setTaskItems] = useState<string[]>([]);
+  const [contactPerson, setContactPerson] =
+    useState<IContactPerson>(initialState);
+  const [contactsGroup, setContactsGroup] = useState<IContactPerson[]>([]);
 
   const handleAddTask = () => {
-    Keyboard.dismiss();
-    if (task) {
-      setTaskItems([...taskItems, task]);
-      setTask("");
+    if (
+      contactPerson.contactPersonsName &&
+      contactPerson.contactNumber &&
+      contactPerson.email
+    ) {
+      setContactsGroup([...contactsGroup, contactPerson]);
+
+      setContactPerson({
+        contactPersonsName: "",
+        contactNumber: "",
+        email: "",
+      });
+
+      Keyboard.dismiss();
     }
   };
+
   return (
     <LinearGradient
       style={styles.container}
       colors={[COLORS.white, COLORS.white]}
     >
       <View style={styles.container}>
-        <View>
-          <Image
-            source={require("../assets/hero1.jpg")}
-            style={styles.image1}
-          />
-          <Image
-            source={require("../assets/hero3.jpg")}
-            style={styles.image2}
-          />
-          <Image
-            source={require("../assets/hero3.jpg")}
-            style={styles.image3}
-          />
-          <Image
-            source={require("../assets/hero2.jpg")}
-            style={styles.image4}
-          />
-        </View>
+        <ImageSet />
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
@@ -59,11 +66,11 @@ export const Contacts = ({ navigation }: any) => {
         >
           <View style={styles.tasksWrapper}>
             <View style={styles.items}>
-              {taskItems.map((item, index) => {
+              {contactsGroup.map((item, index) => {
                 return (
-                  <TouchableOpacity key={index}>
-                    <Task text={item} />
-                  </TouchableOpacity>
+                  // <TouchableOpacity key={index}>
+                  <ContactCard item={item} />
+                  // </TouchableOpacity>
                 );
               })}
             </View>
@@ -78,20 +85,35 @@ export const Contacts = ({ navigation }: any) => {
             <TextInput
               style={styles.input}
               placeholder={"Add contact name"}
-              value={task}
-              onChangeText={(text) => setTask(text)}
+              value={contactPerson.contactPersonsName}
+              onChangeText={(text) =>
+                setContactPerson({
+                  ...contactPerson,
+                  contactPersonsName: text,
+                })
+              }
             />
             <TextInput
               style={styles.input}
               placeholder={"Add mobile number"}
-              value={task}
-              onChangeText={(text) => setTask(text)}
+              value={contactPerson.contactNumber}
+              onChangeText={(text) =>
+                setContactPerson({
+                  ...contactPerson,
+                  contactNumber: text,
+                })
+              }
             />
             <TextInput
               style={styles.input}
               placeholder={"Add email address"}
-              value={task}
-              onChangeText={(text) => setTask(text)}
+              value={contactPerson.email}
+              onChangeText={(text) =>
+                setContactPerson({
+                  ...contactPerson,
+                  email: text,
+                })
+              }
             />
           </View>
 
@@ -109,53 +131,6 @@ export const Contacts = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  absoluteImage: {
-    height: 100,
-    width: 100,
-    borderRadius: 20,
-    position: "absolute",
-    opacity: 0.3,
-  },
-  image1: {
-    height: 100,
-    width: 100,
-    borderRadius: 20,
-    position: "absolute",
-    opacity: 0.3,
-    top: 20,
-    left: 20,
-    transform: [{ translateX: 20 }, { translateY: 50 }, { rotate: "-15deg" }],
-  },
-  image2: {
-    height: 100,
-    width: 100,
-    borderRadius: 20,
-    position: "absolute",
-    opacity: 0.3,
-    top: -20,
-    left: 100,
-    transform: [{ translateX: 50 }, { translateY: 50 }, { rotate: "-5deg" }],
-  },
-  image3: {
-    height: 100,
-    width: 100,
-    borderRadius: 20,
-    position: "absolute",
-    opacity: 0.3,
-    top: 140,
-    left: -50,
-    transform: [{ translateX: 50 }, { translateY: 50 }, { rotate: "15deg" }],
-  },
-  image4: {
-    height: 200,
-    width: 200,
-    borderRadius: 20,
-    position: "absolute",
-    top: 120,
-    left: 100,
-    opacity: 0.3,
-    transform: [{ translateX: 50 }, { translateY: 50 }, { rotate: "-15deg" }],
   },
   tasksWrapper: {
     paddingTop: 70,

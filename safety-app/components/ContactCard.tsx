@@ -1,16 +1,21 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../constants/colors";
 
-const Task = (props: any) => {
-  console.log(props);
+export const ContactCard = (props: any) => {
+  const { contactNumber, contactPersonsName, email } = props.item;
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
         <View style={styles.square}></View>
-        <Text style={styles.itemText}>{props.text}</Text>
+        <Text style={styles.itemText}>
+          {contactPersonsName} - {contactNumber}
+        </Text>
       </View>
-      {/* <View style={styles.circular}></View> */}
+      <View>
+        <MaterialIcons name="delete" size={24} color="black" />
+      </View>
     </View>
   );
 };
@@ -50,5 +55,3 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
-
-export default Task;

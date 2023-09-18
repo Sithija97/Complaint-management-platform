@@ -2,7 +2,7 @@ import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
-import Button from "../components/Button";
+import { Button } from "../components/";
 
 export const Welcome = ({ navigation }: any) => {
   return (
@@ -46,7 +46,7 @@ export const Welcome = ({ navigation }: any) => {
             }}
           />
           <Image
-            source={require("../assets/hero3.jpg")}
+            source={require("../assets/hero2.jpg")}
             style={{
               width: 100,
               height: 100,
@@ -63,7 +63,7 @@ export const Welcome = ({ navigation }: any) => {
           />
 
           <Image
-            source={require("../assets/hero2.jpg")}
+            source={require("../assets/hero3.jpg")}
             style={{
               height: 200,
               width: 200,

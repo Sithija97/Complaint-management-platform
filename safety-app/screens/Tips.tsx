@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import Card from "../components/Card";
+import { Card } from "../components/";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList } from "react-native-gesture-handler";
 import { SafetyTip, safetyTips } from "../data/safetyTips";

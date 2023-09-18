@@ -11,19 +11,25 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import { COLORS } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
-import Checkbox from "expo-checkbox";
-import Button from "../components/Button";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+});
 
 export const Login = ({ navigation }: any) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const Login = () => {
-    console.log(email, password);
+  const handleSubmit = (values: any) => {
+    console.log("Form submitted with values:", values);
     navigation.navigate("DrawerGroup");
   };
 
@@ -35,62 +41,80 @@ export const Login = ({ navigation }: any) => {
 
           <Text style={styles.subtitle}>Connect with your friend today!</Text>
         </View>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <>
+              <View style={styles.inputWrapper}>
+                <Text style={styles.inputTitle}>Email address</Text>
 
-        <View style={styles.inputWrapper}>
-          <Text style={styles.inputTitle}>Email address</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Enter your email address"
+                    placeholderTextColor={COLORS.black}
+                    keyboardType="email-address"
+                    style={{
+                      width: "100%",
+                    }}
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    value={values.email}
+                  />
+                </View>
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
+              </View>
+              <View style={styles.inputWrapper}>
+                <Text style={styles.inputTitle}>Password</Text>
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Enter your email address"
-              placeholderTextColor={COLORS.black}
-              keyboardType="email-address"
-              style={{
-                width: "100%",
-              }}
-              value={email}
-              onChange={(
-                event: NativeSyntheticEvent<TextInputChangeEventData>
-              ) => setEmail(event.nativeEvent.text)}
-            />
-          </View>
-        </View>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Enter your password"
+                    placeholderTextColor={COLORS.black}
+                    secureTextEntry={isPasswordShown}
+                    style={{
+                      width: "100%",
+                    }}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    value={values.password}
+                  />
 
-        <View style={styles.inputWrapper}>
-          <Text style={styles.inputTitle}>Password</Text>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Enter your password"
-              placeholderTextColor={COLORS.black}
-              secureTextEntry={isPasswordShown}
-              style={{
-                width: "100%",
-              }}
-              value={password}
-              onChange={(
-                event: NativeSyntheticEvent<TextInputChangeEventData>
-              ) => setPassword(event.nativeEvent.text)}
-            />
-
-            <TouchableOpacity
-              onPress={() => setIsPasswordShown(!isPasswordShown)}
-              style={styles.passwordVisibleIcon}
-            >
-              {isPasswordShown == true ? (
-                <Ionicons name="eye-off" size={24} color={COLORS.black} />
-              ) : (
-                <Ionicons name="eye" size={24} color={COLORS.black} />
-              )}
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <Button
-          title="Sign in"
-          filled
-          style={styles.loginButton}
-          onPress={Login}
-        />
+                  <TouchableOpacity
+                    onPress={() => setIsPasswordShown(!isPasswordShown)}
+                    style={styles.passwordVisibleIcon}
+                  >
+                    {isPasswordShown == true ? (
+                      <Ionicons name="eye-off" size={24} color={COLORS.black} />
+                    ) : (
+                      <Ionicons name="eye" size={24} color={COLORS.black} />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+              </View>
+              <TouchableOpacity onPress={() => handleSubmit()}>
+                <View style={styles.submitButton}>
+                  <Text style={styles.submitButtonText}>Login</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+          {/* <Button title="Sign in" filled style={styles.loginButton} /> */}
+        </Formik>
 
         <View style={styles.accountCreationContainer}>
           <Text style={styles.accountCreationTitle}>
@@ -164,5 +188,22 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
     fontWeight: "bold",
     marginLeft: 6,
+  },
+  errorText: {
+    color: "red", // You can change the color to your preferred error color
+    fontSize: 14, // You can adjust the font size as needed
+    marginTop: 5, // Add some spacing from the input field
+  },
+  submitButton: {
+    backgroundColor: COLORS.secondary, // Change the background color to your preferred color
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20, // Adjust the margin as needed
+  },
+  submitButtonText: {
+    color: "white", // Change the text color to your preferred color
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
