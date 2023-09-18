@@ -20,7 +20,7 @@ interface ButtonProps {
   textcolor?: string;
 }
 
-const Button = (props: ButtonProps) => {
+export const Button = (props: ButtonProps) => {
   const filledBgColor = props.color || COLORS.secondary;
   const outlinedColor = COLORS.white;
   const bgColor = props.filled ? filledBgColor : outlinedColor;
@@ -57,4 +57,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-export default Button;

@@ -11,8 +11,13 @@ import {
   Tips,
   Welcome,
   Contacts,
+  History,
+  Complaints,
+  Location,
+  Community,
+  Profile,
 } from "./screens";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
 // Stack
 const HomeStack = createStackNavigator();
@@ -43,7 +48,15 @@ const DrawerGroup = () => {
           ),
         }}
       />
-
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Ionicons name={"person"} size={size} color={color} />
+          ),
+        }}
+      />
       <Drawer.Screen
         name="Add Contacts"
         component={Contacts}
@@ -55,7 +68,7 @@ const DrawerGroup = () => {
       />
       <Drawer.Screen
         name="Community"
-        component={Tips}
+        component={Community}
         options={{
           drawerIcon: ({ focused, color, size }) => (
             <Ionicons name={"people"} size={size} color={color} />
@@ -71,6 +84,34 @@ const DrawerGroup = () => {
           ),
         }}
       />
+      <Drawer.Screen
+        name="  Location"
+        component={Location}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <FontAwesome5 name={"map-marker-alt"} size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Complaints"
+        component={Complaints}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <FontAwesome5 name={"pencil-alt"} size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="History"
+        component={History}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <FontAwesome5 name={"history"} size={size} color={color} />
+          ),
+        }}
+      />
+
       <Drawer.Screen
         name="Safety Tips"
         component={Tips}

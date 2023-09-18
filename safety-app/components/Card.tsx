@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafetyTip } from "../data/safetyTips";
 
-const Card = ({ safetyTip }: { safetyTip: SafetyTip }) => {
+export const Card = ({ safetyTip }: { safetyTip: SafetyTip }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.header}>{safetyTip.title}</Text>
@@ -32,5 +32,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default Card;

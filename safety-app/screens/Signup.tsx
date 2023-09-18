@@ -13,52 +13,49 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
-import Checkbox from "expo-checkbox";
-import Button from "../components/Button";
 
 export const Signup = ({ navigation }: any) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const SignUp = () => {
-    console.log(username, email, password);
-    navigation.navigate("Login");
-  };
+  const handleSubmit = () => {};
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.baseViewContainer}>
-        <View style={{ marginVertical: 22 }}>
+        <View style={{ marginVertical: 10 }}>
           <Text style={styles.title}>Create Account</Text>
-
-          <Text style={styles.subtitle}>Connect with your friend today!</Text>
         </View>
 
         <View style={styles.inputWrapper}>
-          <Text style={styles.inputTitle}>Username</Text>
-
+          <Text style={styles.inputTitle}>First Name</Text>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Enter your username"
+              placeholder="Enter your firstname"
               placeholderTextColor={COLORS.black}
               keyboardType="default"
               style={{
                 width: "100%",
               }}
-              value={username}
-              onChange={(
-                event: NativeSyntheticEvent<TextInputChangeEventData>
-              ) => setUsername(event.nativeEvent.text)}
+            />
+          </View>
+        </View>
+
+        <View style={styles.inputWrapper}>
+          <Text style={styles.inputTitle}>Second Name</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Enter your secondname"
+              placeholderTextColor={COLORS.black}
+              keyboardType="default"
+              style={{
+                width: "100%",
+              }}
             />
           </View>
         </View>
 
         <View style={styles.inputWrapper}>
           <Text style={styles.inputTitle}>Email address</Text>
-
           <View style={styles.inputContainer}>
             <TextInput
               placeholder="Enter your email address"
@@ -67,17 +64,12 @@ export const Signup = ({ navigation }: any) => {
               style={{
                 width: "100%",
               }}
-              value={email}
-              onChange={(
-                event: NativeSyntheticEvent<TextInputChangeEventData>
-              ) => setEmail(event.nativeEvent.text)}
             />
           </View>
         </View>
 
         <View style={styles.inputWrapper}>
           <Text style={styles.inputTitle}>Password</Text>
-
           <View style={styles.inputContainer}>
             <TextInput
               placeholder="Enter your password"
@@ -86,10 +78,6 @@ export const Signup = ({ navigation }: any) => {
               style={{
                 width: "100%",
               }}
-              value={password}
-              onChange={(
-                event: NativeSyntheticEvent<TextInputChangeEventData>
-              ) => setPassword(event.nativeEvent.text)}
             />
 
             <TouchableOpacity
@@ -108,23 +96,53 @@ export const Signup = ({ navigation }: any) => {
           </View>
         </View>
 
-        {/* <View style={styles.termsConditionsContainer}>
-          <Checkbox
-            style={{ marginRight: 8 }}
-            value={isChecked}
-            onValueChange={setIsChecked}
-            color={isChecked ? COLORS.secondary : undefined}
-          />
+        <View style={styles.inputWrapper}>
+          <Text style={styles.inputTitle}>Address</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Enter your address"
+              placeholderTextColor={COLORS.black}
+              keyboardType="default"
+              style={{
+                width: "100%",
+              }}
+            />
+          </View>
+        </View>
 
-          <Text>I aggree to the terms and conditions</Text>
-        </View> */}
+        <View style={styles.inputWrapper}>
+          <Text style={styles.inputTitle}>Contact Number</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Enter your email address"
+              placeholderTextColor={COLORS.black}
+              keyboardType="phone-pad"
+              style={{
+                width: "100%",
+              }}
+            />
+          </View>
+        </View>
 
-        <Button
-          title="Sign Up"
-          filled
-          style={styles.signupButton}
-          onPress={SignUp}
-        />
+        <View style={styles.inputWrapper}>
+          <Text style={styles.inputTitle}>NIC</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Enter your nic"
+              placeholderTextColor={COLORS.black}
+              keyboardType="default"
+              style={{
+                width: "100%",
+              }}
+            />
+          </View>
+        </View>
+
+        <TouchableOpacity onPress={() => handleSubmit()}>
+          <View style={styles.submitButton}>
+            <Text style={styles.submitButtonText}>Register</Text>
+          </View>
+        </TouchableOpacity>
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginTitle}>Already have an account</Text>
@@ -200,5 +218,22 @@ const styles = StyleSheet.create({
   signupButton: {
     marginTop: 18,
     marginBottom: 4,
+  },
+  errorText: {
+    color: "red", // You can change the color to your preferred error color
+    fontSize: 14, // You can adjust the font size as needed
+    marginTop: 5, // Add some spacing from the input field
+  },
+  submitButton: {
+    backgroundColor: COLORS.secondary, // Change the background color to your preferred color
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10, // Adjust the margin as needed
+  },
+  submitButtonText: {
+    color: "white", // Change the text color to your preferred color
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
