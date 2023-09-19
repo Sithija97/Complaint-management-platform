@@ -49,6 +49,7 @@ export const Evidence = ({ navigation }: any) => {
         alert("Picture saved! 🎉");
         setImage(null);
         console.log("saved successfully");
+        setStartCamera(false);
       } catch (error) {
         console.log(error);
       }
