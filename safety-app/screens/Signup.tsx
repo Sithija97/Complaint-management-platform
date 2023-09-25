@@ -27,38 +27,40 @@ export const Signup = ({ navigation }: any) => {
         </View>
 
         <View style={styles.inputWrapper}>
-          <Text style={styles.inputTitle}>First Name</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Enter your firstname"
-              placeholderTextColor={COLORS.black}
-              keyboardType="default"
-              style={{
-                width: "100%",
-              }}
-            />
-          </View>
-        </View>
+          <View style={styles.nameInputContainer}>
+            <View style={styles.nameInput1}>
+              <Text style={styles.inputTitle}>First Name</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="first name"
+                  placeholderTextColor={COLORS.black}
+                  keyboardType="default"
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              </View>
+            </View>
 
-        <View style={styles.inputWrapper}>
-          <Text style={styles.inputTitle}>Second Name</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Enter your secondname"
-              placeholderTextColor={COLORS.black}
-              keyboardType="default"
-              style={{
-                width: "100%",
-              }}
-            />
+            <View style={styles.nameInput2}>
+              <Text style={styles.inputTitle}>Second Name</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="second name"
+                  placeholderTextColor={COLORS.black}
+                  keyboardType="default"
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              </View>
+            </View>
           </View>
-        </View>
 
-        <View style={styles.inputWrapper}>
           <Text style={styles.inputTitle}>Email address</Text>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Enter your email address"
+              placeholder="email address"
               placeholderTextColor={COLORS.black}
               keyboardType="email-address"
               style={{
@@ -66,13 +68,11 @@ export const Signup = ({ navigation }: any) => {
               }}
             />
           </View>
-        </View>
 
-        <View style={styles.inputWrapper}>
           <Text style={styles.inputTitle}>Password</Text>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Enter your password"
+              placeholder="password"
               placeholderTextColor={COLORS.black}
               secureTextEntry={isPasswordShown}
               style={{
@@ -94,13 +94,37 @@ export const Signup = ({ navigation }: any) => {
               )}
             </TouchableOpacity>
           </View>
-        </View>
 
-        <View style={styles.inputWrapper}>
+          <Text style={styles.inputTitle}>Confirm Password</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="confirm password"
+              placeholderTextColor={COLORS.black}
+              secureTextEntry={isPasswordShown}
+              style={{
+                width: "100%",
+              }}
+            />
+
+            <TouchableOpacity
+              onPress={() => setIsPasswordShown(!isPasswordShown)}
+              style={{
+                position: "absolute",
+                right: 12,
+              }}
+            >
+              {isPasswordShown == true ? (
+                <Ionicons name="eye-off" size={24} color={COLORS.black} />
+              ) : (
+                <Ionicons name="eye" size={24} color={COLORS.black} />
+              )}
+            </TouchableOpacity>
+          </View>
+
           <Text style={styles.inputTitle}>Address</Text>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Enter your address"
+              placeholder=" address"
               placeholderTextColor={COLORS.black}
               keyboardType="default"
               style={{
@@ -108,13 +132,11 @@ export const Signup = ({ navigation }: any) => {
               }}
             />
           </View>
-        </View>
 
-        <View style={styles.inputWrapper}>
           <Text style={styles.inputTitle}>Contact Number</Text>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Enter your email address"
+              placeholder=" email address"
               placeholderTextColor={COLORS.black}
               keyboardType="phone-pad"
               style={{
@@ -122,13 +144,11 @@ export const Signup = ({ navigation }: any) => {
               }}
             />
           </View>
-        </View>
 
-        <View style={styles.inputWrapper}>
           <Text style={styles.inputTitle}>NIC</Text>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="Enter your nic"
+              placeholder=" nic"
               placeholderTextColor={COLORS.black}
               keyboardType="default"
               style={{
@@ -176,6 +196,19 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     marginBottom: 12,
+  },
+  nameInputContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // marginBottom: 8,
+  },
+  nameInput1: {
+    flex: 1,
+    marginRight: 8,
+  },
+  nameInput2: {
+    flex: 1,
+    marginLeft: 8,
   },
   inputTitle: {
     fontSize: 16,
