@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 
 export const Signup = ({ navigation }: any) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -69,58 +70,6 @@ export const Signup = ({ navigation }: any) => {
             />
           </View>
 
-          <Text style={styles.inputTitle}>Password</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="password"
-              placeholderTextColor={COLORS.black}
-              secureTextEntry={isPasswordShown}
-              style={{
-                width: "100%",
-              }}
-            />
-
-            <TouchableOpacity
-              onPress={() => setIsPasswordShown(!isPasswordShown)}
-              style={{
-                position: "absolute",
-                right: 12,
-              }}
-            >
-              {isPasswordShown == true ? (
-                <Ionicons name="eye-off" size={24} color={COLORS.black} />
-              ) : (
-                <Ionicons name="eye" size={24} color={COLORS.black} />
-              )}
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.inputTitle}>Confirm Password</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="confirm password"
-              placeholderTextColor={COLORS.black}
-              secureTextEntry={isPasswordShown}
-              style={{
-                width: "100%",
-              }}
-            />
-
-            <TouchableOpacity
-              onPress={() => setIsPasswordShown(!isPasswordShown)}
-              style={{
-                position: "absolute",
-                right: 12,
-              }}
-            >
-              {isPasswordShown == true ? (
-                <Ionicons name="eye-off" size={24} color={COLORS.black} />
-              ) : (
-                <Ionicons name="eye" size={24} color={COLORS.black} />
-              )}
-            </TouchableOpacity>
-          </View>
-
           <Text style={styles.inputTitle}>Address</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -133,28 +82,103 @@ export const Signup = ({ navigation }: any) => {
             />
           </View>
 
-          <Text style={styles.inputTitle}>Contact Number</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder=" email address"
-              placeholderTextColor={COLORS.black}
-              keyboardType="phone-pad"
-              style={{
-                width: "100%",
-              }}
-            />
+          <View style={styles.nameInputContainer}>
+            <View style={styles.nameInput1}>
+              <Text style={styles.inputTitle}>Contact Number</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder=" email address"
+                  placeholderTextColor={COLORS.black}
+                  keyboardType="phone-pad"
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              </View>
+            </View>
+            <View style={styles.nameInput2}>
+              <Text style={styles.inputTitle}>NIC</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder=" nic"
+                  placeholderTextColor={COLORS.black}
+                  keyboardType="default"
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              </View>
+            </View>
           </View>
 
-          <Text style={styles.inputTitle}>NIC</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder=" nic"
-              placeholderTextColor={COLORS.black}
-              keyboardType="default"
-              style={{
-                width: "100%",
-              }}
-            />
+          <View style={styles.nameInputContainer}>
+            <View style={styles.nameInput1}>
+              <Text style={styles.inputTitle}>Password</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="password"
+                  placeholderTextColor={COLORS.black}
+                  secureTextEntry={isPasswordShown}
+                  style={{
+                    width: "100%",
+                  }}
+                />
+
+                <TouchableOpacity
+                  onPress={() => setIsPasswordShown(!isPasswordShown)}
+                  style={{
+                    position: "absolute",
+                    right: 12,
+                  }}
+                >
+                  {isPasswordShown == true ? (
+                    <Ionicons name="eye-off" size={24} color={COLORS.black} />
+                  ) : (
+                    <Ionicons name="eye" size={24} color={COLORS.black} />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.nameInput2}>
+              <Text style={styles.inputTitle}>Confirm Password</Text>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="confirm password"
+                  placeholderTextColor={COLORS.black}
+                  secureTextEntry={isPasswordShown}
+                  style={{
+                    width: "100%",
+                  }}
+                />
+
+                <TouchableOpacity
+                  onPress={() => setIsPasswordShown(!isPasswordShown)}
+                  style={{
+                    position: "absolute",
+                    right: 12,
+                  }}
+                >
+                  {isPasswordShown == true ? (
+                    <Ionicons name="eye-off" size={24} color={COLORS.black} />
+                  ) : (
+                    <Ionicons name="eye" size={24} color={COLORS.black} />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          <View>
+            <Text style={styles.inputTitle}>Select a Police Station:</Text>
+            <Picker
+              selectedValue={""}
+              onValueChange={(itemValue, itemIndex) => {}}
+            >
+              <Picker.Item label="Maharagama" value={1} />
+              <Picker.Item label="Piliyandala" value={2} />
+              <Picker.Item label="Mirihana" value={3} />
+              <Picker.Item label="Homagama" value={4} />
+            </Picker>
+            <Text>Selected option: {""}</Text>
           </View>
         </View>
 
@@ -262,7 +286,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 10, // Adjust the margin as needed
+    marginTop: 40, // Adjust the margin as needed
   },
   submitButtonText: {
     color: "white", // Change the text color to your preferred color
