@@ -27,7 +27,7 @@ export const Home = ({ navigation }: any) => {
         <View style={styles.buttonContainer}>
           <Button
             title="Inform your family"
-            color={COLORS.black}
+            color={COLORS.secondary}
             filled
             onPress={getUserLocation}
             style={{ marginTop: 22, width: "100%" }}
