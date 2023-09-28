@@ -38,11 +38,11 @@ export const Login = ({ navigation }: any) => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigation, dispatch]);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     const { email, password } = values;
     try {
       const user = { email, password };
-      dispatch(login(user)).then(
+      await dispatch(login(user)).then(
         (data: any) =>
           data.meta.requestStatus === "fulfilled" &&
           navigation.navigate("DrawerGroup")
