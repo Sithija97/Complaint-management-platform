@@ -9,12 +9,14 @@ import {
   TextInputChangeEventData,
   StyleSheet,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { COLORS } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { login, reset } from "../store/auth/authSlice";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -26,12 +28,33 @@ const validationSchema = Yup.object().shape({
 });
 
 export const Login = ({ navigation }: any) => {
+  const dispatch = useAppDispatch();
+  const { user, isError, isSuccess, message } = useAppSelector(
+    (state: RootState) => state.auth
+  );
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
+  useEffect(() => {
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigation, dispatch]);
+
   const handleSubmit = (values: any) => {
-    console.log("Form submitted with values:", values);
-    navigation.navigate("DrawerGroup");
+    const { email, password } = values;
+    try {
+      const user = { email, password };
+      dispatch(login(user)).then(
+        (data: any) =>
+          data.meta.requestStatus === "fulfilled" &&
+          navigation.navigate("DrawerGroup")
+      );
+    } catch (error) {
+      console.log("login error :", error);
+    }
   };
+
+  if (isError) {
+    alert(message);
+  }
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
