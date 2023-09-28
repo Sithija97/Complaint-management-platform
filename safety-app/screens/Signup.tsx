@@ -52,7 +52,7 @@ export const Signup = ({ navigation }: any) => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigation, dispatch]);
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     if (values.password !== values.confirmPassword) {
       alert("Passwords are not matching, Please check your password !");
     } else {
@@ -79,7 +79,7 @@ export const Signup = ({ navigation }: any) => {
           password,
           policeStationId: Number(policeStationId),
         };
-        dispatch(register(user)).then(
+        await dispatch(register(user)).then(
           (data) =>
             data.meta.requestStatus === "fulfilled" &&
             navigation.navigate("Login")

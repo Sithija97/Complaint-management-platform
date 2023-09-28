@@ -24,6 +24,7 @@ interface IContactPerson {
 
 const initialState = {
   contactPersonsName: "",
+  address: "",
   contactNumber: "",
   email: "",
 };
@@ -69,7 +70,7 @@ export const Contacts = ({ navigation }: any) => {
               {contactsGroup.map((item, index) => {
                 return (
                   // <TouchableOpacity key={index}>
-                  <ContactCard item={item} />
+                  <ContactCard key={item.email} item={item} />
                   // </TouchableOpacity>
                 );
               })}
@@ -81,10 +82,21 @@ export const Contacts = ({ navigation }: any) => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.writeTaskWrapper}
         >
-          <View>
+          <View style={{ marginVertical: 45 }}>
             <TextInput
               style={styles.input}
               placeholder={"Add contact name"}
+              value={contactPerson.contactPersonsName}
+              onChangeText={(text) =>
+                setContactPerson({
+                  ...contactPerson,
+                  contactPersonsName: text,
+                })
+              }
+            />
+            <TextInput
+              style={styles.input}
+              placeholder={"Add address"}
               value={contactPerson.contactPersonsName}
               onChangeText={(text) =>
                 setContactPerson({
@@ -123,6 +135,13 @@ export const Contacts = ({ navigation }: any) => {
             </View>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+        <View style={styles.submitButtonContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate("DrawerGroup")}>
+            <View style={styles.submitButton}>
+              <Text style={styles.submitButtonText}>Login</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </LinearGradient>
   );
@@ -133,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tasksWrapper: {
-    paddingTop: 70,
+    paddingTop: 60,
     paddingHorizontal: 20,
   },
   items: {
@@ -165,5 +184,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 83,
+  },
+  submitButton: {
+    backgroundColor: COLORS.secondary, // Change the background color to your preferred color
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20, // Adjust the margin as needed
+  },
+  submitButtonText: {
+    color: "white", // Change the text color to your preferred color
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  submitButtonContainer: {
+    marginHorizontal: 16,
+    marginVertical: 40,
   },
 });

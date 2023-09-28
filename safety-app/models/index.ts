@@ -1,5 +1,5 @@
 export interface IUser {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   fullName: string;
@@ -13,8 +13,43 @@ export interface IUser {
   updatedAt?: string;
   createdAt?: string;
 }
+
+export interface IComplaint {
+  id: number;
+  title: string;
+  complaint: string;
+  category: number;
+  userId: number;
+  updatedAt?: string;
+  createdAt?: string;
+}
+
+export interface IEmergency {
+  id: number;
+  lat: string;
+  long: string;
+  userId: number;
+  updatedAt?: string;
+  createdAt?: string;
+}
 export interface IAuthInitialState {
   user: IUser | null;
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: string;
+}
+
+export interface IComplaintsInitialState {
+  complaints: IComplaint[];
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: string;
+}
+
+export interface IEmergencyInitialState {
+  emergencies: IEmergency[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -36,4 +71,12 @@ export interface IRegisterData {
 export interface ILoginData {
   email: string;
   password: string;
+}
+
+export interface IComplaintData {
+  title: string;
+  policeStationId: number;
+  complaint: string;
+  category: number;
+  userId?: number;
 }

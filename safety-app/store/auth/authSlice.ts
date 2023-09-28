@@ -6,7 +6,7 @@ import {
   IUser,
 } from "../../models";
 import localStorage from "react-native-expo-localstorage";
-import authService from "../../services/auth.service";
+import authService from "../../services/auth-service";
 
 // Get user from localStorage
 const user: IUser = localStorage.getItem("user")
