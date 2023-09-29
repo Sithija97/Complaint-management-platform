@@ -18,10 +18,13 @@ interface ButtonProps {
   style?: any; // Optional: additional styles for the button
   textStyle?: StyleProp<TextStyle>; // Optional: additional styles for the button text
   textcolor?: string;
+  disabled?: boolean;
 }
 
 export const Button = (props: ButtonProps) => {
-  const filledBgColor = props.color || COLORS.secondary;
+  const filledBgColor = props.disabled
+    ? COLORS.grey
+    : props.color || COLORS.secondary;
   const outlinedColor = COLORS.white;
   const bgColor = props.filled ? filledBgColor : outlinedColor;
   const textColor = props.textcolor
@@ -32,6 +35,7 @@ export const Button = (props: ButtonProps) => {
 
   return (
     <TouchableOpacity
+      disabled={props.disabled}
       style={{
         ...styles.button,
         ...{ backgroundColor: bgColor },
@@ -50,6 +54,8 @@ const styles = StyleSheet.create({
   button: {
     paddingBottom: 16,
     paddingVertical: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
     borderColor: COLORS.white,
     borderWidth: 2,
     borderRadius: 12,

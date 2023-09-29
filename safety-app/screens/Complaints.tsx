@@ -143,11 +143,14 @@ export const Complaints = ({ navigation }: any) => {
                   />
                 </View>
 
-                <TouchableOpacity onPress={() => handleSubmit()}>
-                  <View style={styles.submitButton}>
-                    <Text style={styles.submitButtonText}>Send Complaint</Text>
-                  </View>
-                </TouchableOpacity>
+                <View style={styles.submitButtonContainer}>
+                  <Button
+                    title="Send Complaint"
+                    filled
+                    disabled={!values.title || !values.complaint}
+                    onPress={() => handleSubmit()}
+                  />
+                </View>
               </>
             )}
           </Formik>
@@ -196,16 +199,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingLeft: 22,
   },
-  submitButton: {
-    backgroundColor: COLORS.secondary, // Change the background color to your preferred color
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 20, // Adjust the margin as needed
-  },
-  submitButtonText: {
-    color: "white", // Change the text color to your preferred color
-    fontSize: 18,
-    fontWeight: "bold",
+  submitButtonContainer: {
+    marginTop: 20,
   },
 });

@@ -32,6 +32,17 @@ export interface IEmergency {
   updatedAt?: string;
   createdAt?: string;
 }
+
+export interface IContactPerson {
+  id: number;
+  userId: number;
+  contactPersonsName: string;
+  address: string;
+  contactNumber: string;
+  email: string;
+  updatedAt?: string;
+  createdAt?: string;
+}
 export interface IAuthInitialState {
   user: IUser | null;
   isError: boolean;
@@ -50,6 +61,14 @@ export interface IComplaintsInitialState {
 
 export interface IEmergencyInitialState {
   emergencies: IEmergency[];
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: string;
+}
+
+export interface IContactsInitialState {
+  contacts: IContactPerson[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -79,4 +98,11 @@ export interface IComplaintData {
   complaint: string;
   category: number;
   userId?: number;
+}
+
+export interface IContactPersonData {
+  contactPersonsName: string;
+  address: string;
+  contactNumber: string;
+  email: string;
 }
