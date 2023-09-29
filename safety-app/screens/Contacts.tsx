@@ -11,16 +11,15 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
-import { ContactCard, ImageSet } from "../components";
-
-interface IContactPerson {
-  contactPersonsName: string;
-  contactNumber: string;
-  email: string;
-}
+import { Button, ContactCard, ImageSet } from "../components";
+import { IContactPersonData } from "../models";
+import { useAppDispatch } from "../store/store";
+import { createContactList } from "../store/contacts/contactsSlice";
 
 const initialState = {
   contactPersonsName: "",
@@ -29,27 +28,38 @@ const initialState = {
   email: "",
 };
 
+const validationSchema = Yup.object().shape({
+  contactPersonsName: Yup.string(),
+  address: Yup.string(),
+  contactNumber: Yup.string(),
+  email: Yup.string().email("Invalid email address"),
+});
+
 export const Contacts = ({ navigation }: any) => {
-  const [contactPerson, setContactPerson] =
-    useState<IContactPerson>(initialState);
-  const [contactsGroup, setContactsGroup] = useState<IContactPerson[]>([]);
+  const dispatch = useAppDispatch();
+  const [contactsGroup, setContactsGroup] = useState<IContactPersonData[]>([]);
 
-  const handleAddTask = () => {
+  const handleSubmit = (values: any) => {
     if (
-      contactPerson.contactPersonsName &&
-      contactPerson.contactNumber &&
-      contactPerson.email
+      values.contactPersonsName &&
+      values.address &&
+      values.contactNumber &&
+      values.email
     ) {
-      setContactsGroup([...contactsGroup, contactPerson]);
-
-      setContactPerson({
-        contactPersonsName: "",
-        contactNumber: "",
-        email: "",
-      });
+      const { contactPersonsName, address, contactNumber, email } = values;
+      const person = { contactPersonsName, address, contactNumber, email };
+      setContactsGroup([...contactsGroup, person]);
 
       Keyboard.dismiss();
     }
+  };
+
+  const saveContactDetails = async () => {
+    await dispatch(
+      createContactList({
+        userContactPersonData: contactsGroup,
+      })
+    );
   };
 
   return (
@@ -70,7 +80,7 @@ export const Contacts = ({ navigation }: any) => {
               {contactsGroup.map((item, index) => {
                 return (
                   // <TouchableOpacity key={index}>
-                  <ContactCard key={item.email} item={item} />
+                  <ContactCard key={index} item={item} />
                   // </TouchableOpacity>
                 );
               })}
@@ -80,68 +90,71 @@ export const Contacts = ({ navigation }: any) => {
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={styles.writeTaskWrapper}
         >
-          <View style={{ marginVertical: 45 }}>
-            <TextInput
-              style={styles.input}
-              placeholder={"Add contact name"}
-              value={contactPerson.contactPersonsName}
-              onChangeText={(text) =>
-                setContactPerson({
-                  ...contactPerson,
-                  contactPersonsName: text,
-                })
-              }
-            />
-            <TextInput
-              style={styles.input}
-              placeholder={"Add address"}
-              value={contactPerson.contactPersonsName}
-              onChangeText={(text) =>
-                setContactPerson({
-                  ...contactPerson,
-                  contactPersonsName: text,
-                })
-              }
-            />
-            <TextInput
-              style={styles.input}
-              placeholder={"Add mobile number"}
-              value={contactPerson.contactNumber}
-              onChangeText={(text) =>
-                setContactPerson({
-                  ...contactPerson,
-                  contactNumber: text,
-                })
-              }
-            />
-            <TextInput
-              style={styles.input}
-              placeholder={"Add email address"}
-              value={contactPerson.email}
-              onChangeText={(text) =>
-                setContactPerson({
-                  ...contactPerson,
-                  email: text,
-                })
-              }
-            />
-          </View>
-
-          <TouchableOpacity onPress={handleAddTask}>
-            <View style={styles.addWrapper}>
-              <Ionicons name="add-outline" size={30} color="white" />
-            </View>
-          </TouchableOpacity>
+          <Formik
+            initialValues={initialState}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <>
+                <View style={styles.writeTaskWrapper}>
+                  <View style={{ marginVertical: 20 }}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder={"Add contact name"}
+                      onChangeText={handleChange("contactPersonsName")}
+                      onBlur={handleBlur("contactPersonsName")}
+                      value={values.contactPersonsName}
+                    />
+                    <TextInput
+                      style={styles.input}
+                      placeholder={"Add address"}
+                      onChangeText={handleChange("address")}
+                      onBlur={handleBlur("address")}
+                      value={values.address}
+                    />
+                    <TextInput
+                      style={styles.input}
+                      placeholder={"Add mobile number"}
+                      keyboardType="number-pad"
+                      onChangeText={handleChange("contactNumber")}
+                      onBlur={handleBlur("contactNumber")}
+                      value={values.contactNumber}
+                    />
+                    <TextInput
+                      style={styles.input}
+                      placeholder={"Add email address"}
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                      value={values.email}
+                    />
+                  </View>
+                  <TouchableOpacity onPress={() => handleSubmit()}>
+                    <View style={styles.addWrapper}>
+                      <Ionicons name="add-outline" size={30} color="white" />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.submitButtonContainer}>
+                  <Button
+                    title={"Save Contacts"}
+                    filled
+                    disabled={contactsGroup.length < 5}
+                    onPress={() => saveContactDetails()}
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
         </KeyboardAvoidingView>
-        <View style={styles.submitButtonContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("DrawerGroup")}>
-            <View style={styles.submitButton}>
-              <Text style={styles.submitButtonText}>Login</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
       </View>
     </LinearGradient>
   );
@@ -152,7 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tasksWrapper: {
-    paddingTop: 60,
+    paddingTop: 30,
     paddingHorizontal: 20,
   },
   items: {
@@ -175,6 +188,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 290,
     marginBottom: 5,
+    height: 45,
   },
   addWrapper: {
     width: 60,
@@ -186,19 +200,26 @@ const styles = StyleSheet.create({
     marginTop: 83,
   },
   submitButton: {
-    backgroundColor: COLORS.secondary, // Change the background color to your preferred color
+    backgroundColor: COLORS.secondary,
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 20, // Adjust the margin as needed
+    marginTop: 20,
+  },
+  submitButtonDisabled: {
+    backgroundColor: COLORS.grey,
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20,
   },
   submitButtonText: {
-    color: "white", // Change the text color to your preferred color
+    color: "white",
     fontSize: 18,
     fontWeight: "bold",
   },
   submitButtonContainer: {
     marginHorizontal: 16,
-    marginVertical: 40,
+    marginVertical: 10,
   },
 });

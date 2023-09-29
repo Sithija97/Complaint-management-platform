@@ -13,7 +13,7 @@ const initialState: IEmergencyInitialState = {
 
 // notify emergency
 export const notifyEmergencyAlert = createAsyncThunk(
-  "complaints/createComplaints",
+  "emergency/notifyEmergencyAlert",
   async (emergencyData: { lat: string; long: string }, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
@@ -21,6 +21,25 @@ export const notifyEmergencyAlert = createAsyncThunk(
         emergencyData,
         user?.token!
       );
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// get emergency history
+export const getEmergencyAlertHistory = createAsyncThunk(
+  "emergency/getEmergencyAlertHistory",
+  async (_, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await emergencyService.getEmergencyHistory(user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -44,7 +63,22 @@ const emergencySlice = createSlice({
       state.message = "";
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getEmergencyAlertHistory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getEmergencyAlertHistory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.emergencies = action.payload!;
+      })
+      .addCase(getEmergencyAlertHistory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+      });
+  },
 });
 
 export const { reset } = emergencySlice.actions;

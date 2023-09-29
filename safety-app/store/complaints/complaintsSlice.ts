@@ -33,6 +33,25 @@ export const createComplaints = createAsyncThunk(
   }
 );
 
+// get all complaint
+export const getAllComplaints = createAsyncThunk(
+  "complaints/getAllComplaints",
+  async (_, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await complaintService.getComplaints(user?.token!);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const complaintSlice = createSlice({
   name: "complaints",
   initialState,
@@ -44,7 +63,22 @@ const complaintSlice = createSlice({
       state.message = "";
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllComplaints.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllComplaints.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.complaints = action.payload!;
+      })
+      .addCase(getAllComplaints.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+      });
+  },
 });
 
 export const { reset } = complaintSlice.actions;

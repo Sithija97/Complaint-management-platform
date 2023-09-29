@@ -1,24 +1,26 @@
-import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import React from "react";
+import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
 import { Button, ImageSet } from "../components";
+import { RootState, useAppSelector } from "../store/store";
 
 export const Profile = ({ navigation }: any) => {
+  const user = useAppSelector((state: RootState) => state.auth.user);
   return (
     <LinearGradient
       style={styles.container}
       colors={[COLORS.white, COLORS.white]}
     >
       <ImageSet />
+      <Image source={require("../assets/hero3.jpg")} style={styles.userImage} />
       <View style={styles.header}>
-        <Text style={styles.username}>John Doe</Text>
-        <Text style={styles.email}>john.doe@example.com</Text>
+        <Text style={styles.username}>{user?.fullName || `Test User`}</Text>
+        <Text style={styles.email}>{user?.email || `user@example.com`}</Text>
       </View>
-
       <View style={styles.body}>
         <Text style={styles.sectionTitle}>My Profile</Text>
-        <Text style={styles.sectionTitle}>Settings</Text>
+        {/* <Text style={styles.sectionTitle}>Settings</Text> */}
       </View>
     </LinearGradient>
   );
@@ -27,6 +29,13 @@ export const Profile = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  userImage: {
+    width: 150, // Adjust the width and height as needed
+    height: 150,
+    borderRadius: 50, // To make it a circular image
+    alignSelf: "center", // To center the image horizontally
+    marginTop: 20, // Add some top margin to separate from the text
   },
   header: {
     alignItems: "center",
