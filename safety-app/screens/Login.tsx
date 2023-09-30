@@ -134,7 +134,9 @@ export const Login = ({ navigation }: any) => {
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
               </View>
-              <TouchableOpacity onPress={() => handleSubmit()}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("DrawerGroup")}
+              >
                 <View style={styles.submitButton}>
                   <Text style={styles.submitButtonText}>Login</Text>
                 </View>

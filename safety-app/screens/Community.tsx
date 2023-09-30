@@ -1,65 +1,159 @@
 import {
   View,
   Text,
-  Image,
-  Pressable,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
-import { Button, ImageSet } from "../components";
-import { Ionicons } from "@expo/vector-icons";
+import { ImageSetTwo } from "../components";
 import TweetCard from "../components/TweetCard";
+import { CommunityPost } from "../models";
+import { getAllCommunityPosts } from "../store/community/communitySlice";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 
 export const Community = ({ navigation }: any) => {
-  const [inputText, setInputText] = useState<string>("");
-  const [tweets, setTweets] = useState<{ text: string; liked: boolean }[]>([]);
+  const dispatch = useAppDispatch();
+  const communityPosts = useAppSelector(
+    (state: RootState) => state.community.posts
+  );
+
+  console.log("communityPosts : ", communityPosts);
+
+  const [titleText, setTitleText] = useState<string>("");
+  const [descriptionText, setDescriptionText] = useState<string>("");
+
+  // Assuming tweets is now an array of CommunityPost objects
+  const [tweets, setTweets] = useState<CommunityPost[]>(communityPosts || []);
 
   const handleAddTweet = () => {
-    if (inputText) {
-      setTweets([{ text: inputText, liked: false }, ...tweets]);
-      setInputText("");
+    if (titleText && descriptionText) {
+      const newPost: CommunityPost = {
+        id: tweets?.length + 1, // Generate a unique ID here
+        title: titleText,
+        description: descriptionText,
+        userId: 1, // Replace with the actual user ID
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        likeCount: 0,
+        likedByCurrentUser: 0,
+        CommunityPostComments: [],
+      };
+
+      setTweets([newPost, ...tweets]);
+      setTitleText("");
+      setDescriptionText("");
     }
   };
 
-  const handleLikeToggle = (index: number) => {
-    const updatedTweets = [...tweets];
-    updatedTweets[index].liked = !updatedTweets[index].liked;
+  const handleLikeToggle = (postId: number) => {
+    const updatedTweets = tweets.map((tweet) => {
+      if (tweet.id === postId) {
+        return {
+          ...tweet,
+          likedByCurrentUser: tweet.likedByCurrentUser === 1 ? 0 : 1,
+          likeCount:
+            tweet.likedByCurrentUser === 1
+              ? tweet.likeCount - 1
+              : tweet.likeCount + 1,
+        };
+      }
+      return tweet;
+    });
+
     setTweets(updatedTweets);
+  };
+
+  const [replyText, setReplyText] = useState<string>("");
+  const [showReplyInput, setShowReplyInput] = useState<boolean>(false);
+  const [currentPostId, setCurrentPostId] = useState<number | null>(null);
+
+  const handleReply = (postId: number) => {
+    setCurrentPostId(postId);
+    setShowReplyInput(true);
+  };
+
+  const handlePostComment = () => {
+    if (currentPostId !== null && replyText) {
+      const updatedTweets = tweets.map((tweet) => {
+        if (tweet.id === currentPostId) {
+          return {
+            ...tweet,
+            CommunityPostComments: [
+              ...tweet.CommunityPostComments,
+              {
+                id: tweet.CommunityPostComments?.length + 1, // Generate a unique comment ID here
+                communityPostId: currentPostId,
+                commentedBy: 1, // Replace with the actual user ID
+                comment: replyText,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                User: {
+                  id: 1, // Replace with the actual user ID
+                  firstName: "John", // Replace with the actual user's name
+                  lastName: "Doe",
+                  fullName: "John Doe",
+                },
+              },
+            ],
+          };
+        }
+        return tweet;
+      });
+
+      setTweets(updatedTweets);
+      setCurrentPostId(null);
+      setReplyText("");
+    }
   };
   return (
     <LinearGradient
       style={styles.container}
       colors={[COLORS.white, COLORS.white]}
     >
-      <View style={styles.container}>
-        <ImageSet />
-      </View>
-
+      <ImageSetTwo />
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="What's happening?"
-          value={inputText}
-          onChangeText={(text) => setInputText(text)}
+          placeholder="Title"
+          value={titleText}
+          onChangeText={(text) => setTitleText(text)}
+          multiline={true}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Description"
+          value={descriptionText}
+          onChangeText={(text) => setDescriptionText(text)}
+          multiline={true}
         />
         <TouchableOpacity style={styles.addButton} onPress={handleAddTweet}>
-          <Text style={styles.addButtonText}>Tweet</Text>
+          <Text style={styles.addButtonText}>Post</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={tweets}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View style={styles.tweetContainer}>
-            <TweetCard />
-          </View>
-        )}
-      />
+
+      <View style={styles.container}>
+        <FlatList
+          data={tweets}
+          keyExtractor={(item) => item?.id?.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.tweetContainer}>
+              <TweetCard
+                post={item}
+                onLikeToggle={() => handleLikeToggle(item.id)}
+                onReply={() => handleReply(item.id)}
+                showReplyInput={showReplyInput && currentPostId === item.id}
+                replyText={replyText}
+                setReplyText={setReplyText}
+                handlePostComment={handlePostComment}
+              />
+            </View>
+          )}
+        />
+      </View>
     </LinearGradient>
   );
 };
@@ -69,23 +163,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputContainer: {
-    flexDirection: "row",
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
+    marginTop: 10,
     marginHorizontal: 22,
     elevation: 5,
   },
   input: {
-    flex: 1,
+    marginBottom: 10,
   },
   addButton: {
     backgroundColor: COLORS.secondary,
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginLeft: 10,
+    marginLeft: 270,
   },
   addButtonText: {
     color: "#fff",
@@ -100,5 +194,27 @@ const styles = StyleSheet.create({
   },
   likeButton: {
     marginLeft: 10,
+  },
+  replyInputContainer: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 5,
+  },
+  replyInput: {
+    flex: 1,
+  },
+  replyButton: {
+    backgroundColor: COLORS.secondary,
+    borderRadius: 30,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginLeft: 10,
+    alignSelf: "flex-end",
+  },
+  replyButtonText: {
+    color: "#fff",
+    fontSize: 14,
   },
 });

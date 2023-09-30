@@ -79,12 +79,12 @@ export const Signup = ({ navigation }: any) => {
           password,
           policeStationId: Number(policeStationId),
         };
+        console.log(user);
         await dispatch(register(user)).then(
           (data) =>
             data.meta.requestStatus === "fulfilled" &&
             navigation.navigate("Login")
         );
-        console.log(user);
       } catch (error) {
         console.log("registration error :", error);
       }
@@ -110,7 +110,7 @@ export const Signup = ({ navigation }: any) => {
               nic: "",
               password: "",
               confirmPassword: "",
-              policeStationId: "1",
+              policeStationId: "",
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}

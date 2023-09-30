@@ -57,9 +57,9 @@ export const Complaints = ({ navigation }: any) => {
           <Formik
             initialValues={{
               title: "",
-              policeStationId: "1",
+              policeStationId: "",
               complaint: "",
-              category: "2",
+              category: "",
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -92,7 +92,7 @@ export const Complaints = ({ navigation }: any) => {
                 <View>
                   <Text style={styles.inputTitle}>Select category:</Text>
                   <Picker
-                    selectedValue={"1"}
+                    selectedValue={values.category}
                     onValueChange={(itemValue: any, itemIndex) => {
                       handleChange("category")(itemValue);
                     }}
@@ -113,7 +113,7 @@ export const Complaints = ({ navigation }: any) => {
                     Select a Police Station:
                   </Text>
                   <Picker
-                    selectedValue={"1"}
+                    selectedValue={values.policeStationId}
                     onValueChange={(itemValue: any, itemIndex) => {
                       handleChange("policeStationId")(itemValue);
                     }}
@@ -135,7 +135,7 @@ export const Complaints = ({ navigation }: any) => {
                     numberOfLines={10}
                     style={{
                       width: "100%",
-                      height: 250,
+                      height: 150,
                     }}
                     onChangeText={handleChange("complaint")}
                     onBlur={handleBlur("complaint")}
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   },
   textareaContainer: {
     width: "100%",
-    height: 250,
+    height: 150,
     borderColor: COLORS.black,
     borderWidth: 1,
     borderRadius: 8,
