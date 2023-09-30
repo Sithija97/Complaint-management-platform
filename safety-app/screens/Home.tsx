@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import * as location from "expo-location";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,9 +6,18 @@ import { COLORS } from "../constants/colors";
 import { Button, ImageSetTwo } from "../components";
 import { useAppDispatch } from "../store/store";
 import { notifyEmergencyAlert } from "../store/emergency/emergencySlice";
+import { getAllCommunityPosts } from "../store/community/communitySlice";
 
 export const Home = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
+
+  const fetchPosts = async () => {
+    await dispatch(getAllCommunityPosts());
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   const sendUserLocation = async () => {
     let { status } = await location.requestForegroundPermissionsAsync();

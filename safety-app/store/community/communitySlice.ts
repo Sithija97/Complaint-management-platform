@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ICommunityInitialState } from "../../models";
+import { CommunityPost, ICommunityInitialState } from "../../models";
 import { RootState } from "../store";
+import communityService from "../../services/community-service";
 
 const initialState: ICommunityInitialState = {
   posts: [],
@@ -16,7 +17,7 @@ export const getAllCommunityPosts = createAsyncThunk(
   async (_, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
-      // return await emergencyService.getEmergencyHistory(user?.token!);
+      return await communityService.getCommunityPosts(user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -48,7 +49,7 @@ const communitySlice = createSlice({
       .addCase(getAllCommunityPosts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.posts = action.payload!;
+        state.posts = ([] as CommunityPost[]).concat(...action.payload);
       })
       .addCase(getAllCommunityPosts.rejected, (state, action) => {
         state.isLoading = false;

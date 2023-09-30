@@ -44,7 +44,7 @@ export interface IContactPerson {
   createdAt?: string;
 }
 
-interface CommunityPostComment {
+export interface CommunityPostComment {
   id: number;
   communityPostId: number;
   commentedBy: number;
@@ -58,7 +58,7 @@ interface CommunityPostComment {
     fullName: string;
   };
 }
-interface CommunityPost {
+export interface CommunityPost {
   id: number;
   description: string;
   title: string;

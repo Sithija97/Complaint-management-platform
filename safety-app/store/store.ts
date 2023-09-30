@@ -10,7 +10,7 @@ export const store = configureStore({
     auth: authReducer,
     complaints: complaintReducer,
     emergencies: emergencyReducer,
-    communioty: communityReducer,
+    community: communityReducer,
   },
   devTools: true,
 });

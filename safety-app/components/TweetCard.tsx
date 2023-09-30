@@ -1,26 +1,34 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants/colors";
+import { CommunityPost, CommunityPostComment } from "../models";
 
 interface TweetCardProps {
-  title: string;
-  description: string;
-  likeCount: number;
-  liked: boolean;
-  replies: { comment: string }[];
+  post: CommunityPost;
   onLikeToggle: () => void;
   onReply: () => void;
+  showReplyInput: boolean;
+  replyText: string;
+  setReplyText: (text: string) => void;
+  handlePostComment: () => void;
 }
 
 const TweetCard: React.FC<TweetCardProps> = ({
-  title,
-  description,
-  likeCount,
-  liked,
-  replies,
+  post,
   onLikeToggle,
   onReply,
+  showReplyInput,
+  replyText,
+  setReplyText,
+  handlePostComment,
 }) => {
   return (
     <View style={styles.container}>
@@ -34,8 +42,8 @@ const TweetCard: React.FC<TweetCardProps> = ({
           <Text style={styles.handle}>@sithija</Text>
           <Text style={styles.timeAgo}>5 mins ago</Text>
         </View>
-        <Text style={styles.tweetText}>{title}</Text>
-        <Text style={styles.tweetText}>{description}</Text>
+        <Text style={styles.tweetText}>{post.title}</Text>
+        <Text style={styles.tweetText}>{post.description}</Text>
 
         <View style={styles.replyContainer}>
           <TouchableOpacity onPress={onReply}>
@@ -45,21 +53,40 @@ const TweetCard: React.FC<TweetCardProps> = ({
         <View style={styles.likeContainer}>
           <TouchableOpacity onPress={onLikeToggle}>
             <Ionicons
-              name={liked ? "heart" : "heart-outline"} // Customize the icon name as needed
-              size={24} // Customize the icon size as needed
-              color={liked ? "red" : COLORS.grey} // Customize the icon color as needed
+              name={post.likedByCurrentUser === 1 ? "heart" : "heart-outline"}
+              size={24}
+              color={post.likedByCurrentUser === 1 ? "red" : COLORS.grey}
               style={styles.heartIcon}
             />
           </TouchableOpacity>
-          <Text style={styles.likeCount}>{likeCount}</Text>
+          <Text style={styles.likeCount}>{post.likeCount}</Text>
         </View>
-        {replies.length > 0 && (
+        {showReplyInput && (
+          <View style={styles.replyInputContainer}>
+            <TextInput
+              style={styles.replyInput}
+              placeholder="Add a reply..."
+              value={replyText}
+              onChangeText={setReplyText}
+            />
+            <TouchableOpacity
+              style={styles.replyButton}
+              onPress={handlePostComment}
+            >
+              <Text style={styles.replyButtonText}>Comment</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {post.CommunityPostComments?.length > 0 && (
           <View style={styles.repliesContainer}>
-            {replies.map((reply, index) => (
-              <View key={index} style={styles.reply}>
-                <Text>{reply.comment}</Text>
-              </View>
-            ))}
+            {post.CommunityPostComments.map(
+              (comment: CommunityPostComment, index: number) => (
+                <View key={index} style={styles.reply}>
+                  <Text>{comment.comment}</Text>
+                  <Text>{`Commented By: ${comment.User.fullName}`}</Text>
+                </View>
+              )
+            )}
           </View>
         )}
       </View>
@@ -128,6 +155,28 @@ const styles = StyleSheet.create({
     right: -5,
     color: COLORS.grey,
     fontSize: 12,
+  },
+  replyInputContainer: {
+    flexDirection: "row",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 5,
+  },
+  replyInput: {
+    flex: 1,
+  },
+  replyButton: {
+    backgroundColor: COLORS.secondary,
+    borderRadius: 30,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginLeft: 10,
+    alignSelf: "flex-end",
+  },
+  replyButtonText: {
+    color: "#fff",
+    fontSize: 14,
   },
   repliesContainer: {
     marginTop: 10,
