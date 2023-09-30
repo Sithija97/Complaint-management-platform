@@ -27,6 +27,8 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
+const initialState = { email: "", password: "" };
+
 export const Login = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const { user, isError, isSuccess, message } = useAppSelector(
@@ -65,14 +67,17 @@ export const Login = ({ navigation }: any) => {
           <Text style={styles.subtitle}>Connect with your friend today!</Text>
         </View>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={initialState}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values, { resetForm }) => {
+            resetForm();
+          }}
         >
           {({
             handleChange,
             handleBlur,
             handleSubmit,
+            resetForm,
             values,
             errors,
             touched,
@@ -129,9 +134,7 @@ export const Login = ({ navigation }: any) => {
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
               </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("DrawerGroup")}
-              >
+              <TouchableOpacity onPress={() => handleSubmit()}>
                 <View style={styles.submitButton}>
                   <Text style={styles.submitButtonText}>Login</Text>
                 </View>
