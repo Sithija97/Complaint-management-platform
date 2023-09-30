@@ -1,8 +1,6 @@
 import {
   View,
   Text,
-  Image,
-  Pressable,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -11,8 +9,7 @@ import {
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
-import { Button, ImageSet } from "../components";
-import { Ionicons } from "@expo/vector-icons";
+import { ImageSetTwo } from "../components";
 import TweetCard from "../components/TweetCard";
 
 export const Community = ({ navigation }: any) => {
@@ -31,15 +28,12 @@ export const Community = ({ navigation }: any) => {
     updatedTweets[index].liked = !updatedTweets[index].liked;
     setTweets(updatedTweets);
   };
+
   return (
     <LinearGradient
       style={styles.container}
       colors={[COLORS.white, COLORS.white]}
     >
-      <View style={styles.container}>
-        <ImageSet />
-      </View>
-
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -51,15 +45,19 @@ export const Community = ({ navigation }: any) => {
           <Text style={styles.addButtonText}>Tweet</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={tweets}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View style={styles.tweetContainer}>
-            <TweetCard />
-          </View>
-        )}
-      />
+
+      <View style={styles.container}>
+        <ImageSetTwo />
+        <FlatList
+          data={tweets}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <View style={styles.tweetContainer}>
+              <TweetCard />
+            </View>
+          )}
+        />
+      </View>
     </LinearGradient>
   );
 };
@@ -74,6 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
+    marginTop: 10,
     marginHorizontal: 22,
     elevation: 5,
   },

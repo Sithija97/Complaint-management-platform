@@ -3,7 +3,7 @@ import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import * as location from "expo-location";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
-import { Button, ImageSet } from "../components";
+import { Button, ImageSetTwo } from "../components";
 import { useAppDispatch } from "../store/store";
 import { notifyEmergencyAlert } from "../store/emergency/emergencySlice";
 
@@ -36,7 +36,7 @@ export const Home = ({ navigation }: any) => {
       colors={[COLORS.white, COLORS.white]}
     >
       <View style={styles.container}>
-        <ImageSet />
+        <ImageSetTwo />
         <View style={styles.buttonContainer}>
           <Button
             title="Inform your family"

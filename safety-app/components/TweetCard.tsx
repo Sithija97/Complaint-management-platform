@@ -1,13 +1,9 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
+import { COLORS } from "../constants/colors";
 
-interface IProps {
-  username: string;
-  handle: string;
-  timeAgo: string;
-  tweetText: string;
-  profileImage: string;
-}
+interface IProps {}
 
 const TweetCard = () => {
   return (
@@ -23,6 +19,20 @@ const TweetCard = () => {
           <Text style={styles.timeAgo}>5 mins ago</Text>
         </View>
         <Text style={styles.tweetText}>Hello World</Text>
+
+        <View style={styles.likeContainer}>
+          <Ionicons
+            onPress={() => {}}
+            name="heart-outline" // Customize the icon name as needed
+            size={24} // Customize the icon size as needed
+            color="red" // Customize the icon color as needed
+            style={styles.heartIcon}
+          />
+          <Text style={styles.likeCount}>12</Text>
+        </View>
+        <View style={styles.replyContainer}>
+          <Text style={styles.replyText}>Reply</Text>
+        </View>
       </View>
     </View>
   );
@@ -66,6 +76,28 @@ const styles = StyleSheet.create({
   tweetText: {
     marginTop: 5,
     fontSize: 16,
+  },
+  likeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 5,
+  },
+  replyContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  replyText: { color: "gray", fontSize: 13 },
+  heartIcon: {
+    position: "absolute",
+    bottom: 5,
+    right: 10,
+  },
+  likeCount: {
+    position: "absolute",
+    bottom: 5,
+    right: -5,
+    color: COLORS.grey,
+    fontSize: 12,
   },
 });
 
