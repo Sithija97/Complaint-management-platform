@@ -1,12 +1,9 @@
 import {
   View,
   Text,
-  Image,
   Pressable,
   TextInput,
   TouchableOpacity,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
   StyleSheet,
   ScrollView,
 } from "react-native";
@@ -46,13 +43,13 @@ export const Signup = ({ navigation }: any) => {
   const { user, isError, isSuccess, message } = useAppSelector(
     (state: RootState) => state.auth
   );
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(true);
 
   useEffect(() => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigation, dispatch]);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, resetForm: any) => {
     if (values.password !== values.confirmPassword) {
       alert("Passwords are not matching, Please check your password !");
     } else {
@@ -85,6 +82,7 @@ export const Signup = ({ navigation }: any) => {
             data.meta.requestStatus === "fulfilled" &&
             navigation.navigate("Login")
         );
+        resetForm();
       } catch (error) {
         console.log("registration error :", error);
       }
@@ -113,7 +111,9 @@ export const Signup = ({ navigation }: any) => {
               policeStationId: "",
             }}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={(values, { resetForm }) => {
+              handleSubmit(values, resetForm);
+            }}
           >
             {({
               handleChange,

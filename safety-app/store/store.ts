@@ -4,10 +4,12 @@ import authReducer from "./auth/authSlice";
 import complaintReducer from "./complaints/complaintsSlice";
 import emergencyReducer from "./emergency/emergencySlice";
 import communityReducer from "./community/communitySlice";
+import contactsReducer from "./contacts/contactsSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    contacts: contactsReducer,
     complaints: complaintReducer,
     emergencies: emergencyReducer,
     community: communityReducer,

@@ -8,6 +8,7 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   StyleSheet,
+  BackHandler,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,8 +16,9 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { COLORS } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
-import { login, reset } from "../store/auth/authSlice";
+import { login, reset, verify } from "../store/auth/authSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import { IVerifyUserData } from "../models";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -25,33 +27,63 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
+  confirmPassword: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
 });
 
-const initialState = { email: "", password: "" };
+const initialState = {
+  email: "",
+  otp: "",
+  password: "",
+  confirmPassword: "",
+};
 
-export const Login = ({ navigation }: any) => {
+export const ResetPassword = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const { user, isError, isSuccess, message } = useAppSelector(
     (state: RootState) => state.auth
   );
   const [isPasswordShown, setIsPasswordShown] = useState(true);
 
+  React.useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("Login");
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
   useEffect(() => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigation, dispatch]);
 
   const handleSubmit = async (values: any, resetForm: any) => {
-    const { email, password } = values;
-    try {
-      const user = { email, password };
-      await dispatch(login(user)).then(
-        (data: any) =>
-          data.meta.requestStatus === "fulfilled" &&
-          navigation.navigate("DrawerGroup")
-      );
-      resetForm();
-    } catch (error) {
-      console.log("login error :", error);
+    const { email, otp, password, confirmPassword } = values;
+    if (password !== confirmPassword) {
+      alert("Passwords are not matching, Please check your password !");
+    } else {
+      try {
+        const data: IVerifyUserData = {
+          email,
+          secretCode: otp,
+          password,
+        };
+        await dispatch(verify(data)).then(
+          (data: any) =>
+            data.meta.requestStatus === "fulfilled" &&
+            navigation.navigate("Login")
+        );
+        resetForm();
+      } catch (error) {
+        console.log("login error :", error);
+      }
     }
   };
 
@@ -63,7 +95,7 @@ export const Login = ({ navigation }: any) => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.baseViewContainer}>
         <View style={{ marginVertical: 22 }}>
-          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.title}>Reset Password</Text>
 
           <Text style={styles.subtitle}>Connect with your friend today!</Text>
         </View>
@@ -105,6 +137,23 @@ export const Login = ({ navigation }: any) => {
                 )}
               </View>
               <View style={styles.inputWrapper}>
+                <Text style={styles.inputTitle}>OTP</Text>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Enter your OTP code"
+                    placeholderTextColor={COLORS.black}
+                    keyboardType="numeric"
+                    style={{
+                      width: "100%",
+                    }}
+                    onChangeText={handleChange("otp")}
+                    onBlur={handleBlur("otp")}
+                    value={values.otp}
+                  />
+                </View>
+              </View>
+              <View style={styles.inputWrapper}>
                 <Text style={styles.inputTitle}>Password</Text>
 
                 <View style={styles.inputContainer}>
@@ -135,31 +184,47 @@ export const Login = ({ navigation }: any) => {
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
               </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("DrawerGroup")}
-              >
+              <View style={styles.inputWrapper}>
+                <Text style={styles.inputTitle}>Conform Password</Text>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Re-Enter your password"
+                    placeholderTextColor={COLORS.black}
+                    secureTextEntry={isPasswordShown}
+                    style={{
+                      width: "100%",
+                    }}
+                    onChangeText={handleChange("confirmPassword")}
+                    onBlur={handleBlur("confirmPassword")}
+                    value={values.confirmPassword}
+                  />
+
+                  <TouchableOpacity
+                    onPress={() => setIsPasswordShown(!isPasswordShown)}
+                    style={styles.passwordVisibleIcon}
+                  >
+                    {isPasswordShown == true ? (
+                      <Ionicons name="eye-off" size={24} color={COLORS.black} />
+                    ) : (
+                      <Ionicons name="eye" size={24} color={COLORS.black} />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+              </View>
+              <TouchableOpacity onPress={() => handleSubmit()}>
                 <View style={styles.submitButton}>
-                  <Text style={styles.submitButtonText}>Login</Text>
+                  <Text style={styles.submitButtonText}>
+                    Verify with New Password
+                  </Text>
                 </View>
               </TouchableOpacity>
             </>
           )}
-          {/* <Button title="Sign in" filled style={styles.loginButton} /> */}
         </Formik>
-        <View style={styles.forgotPasswordContainer}>
-          <Pressable onPress={() => navigation.navigate("ForgetPassword")}>
-            <Text style={styles.registerButtonTitle}>Forget Password ?</Text>
-          </Pressable>
-        </View>
-
-        <View style={styles.accountCreationContainer}>
-          <Text style={styles.accountCreationTitle}>
-            Don't have an account ?
-          </Text>
-          <Pressable onPress={() => navigation.navigate("Signup")}>
-            <Text style={styles.registerButtonTitle}>Sign up</Text>
-          </Pressable>
-        </View>
       </View>
     </SafeAreaView>
   );
@@ -209,26 +274,6 @@ const styles = StyleSheet.create({
   loginButton: {
     marginTop: 18,
     marginBottom: 4,
-  },
-  forgotPasswordContainer: {
-    display: "flex",
-    flexDirection: "row-reverse",
-    marginTop: 8,
-  },
-  accountCreationContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: 12,
-  },
-  accountCreationTitle: {
-    fontSize: 16,
-    color: COLORS.black,
-  },
-  registerButtonTitle: {
-    fontSize: 16,
-    color: COLORS.secondary,
-    fontWeight: "bold",
-    marginLeft: 6,
   },
   errorText: {
     color: "red", // You can change the color to your preferred error color

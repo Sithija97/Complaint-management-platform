@@ -4,9 +4,13 @@ import {
   ILoginData,
   IRegisterData,
   IUser,
+  IUpdateData,
+  IVerifyUserData,
+  IForgotPWData,
 } from "../../models";
 import localStorage from "react-native-expo-localstorage";
 import authService from "../../services/auth-service";
+import { RootState } from "../store";
 
 // Get user from localStorage
 const user: IUser = localStorage.getItem("user")
@@ -57,6 +61,61 @@ export const login = createAsyncThunk(
   }
 );
 
+// update user
+export const update = createAsyncThunk(
+  "auth/update",
+  async (userData: IUpdateData, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await authService.updateUser(userData, user?.token!);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// forgot password
+export const forgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+  async (data: IForgotPWData, thunkAPI) => {
+    try {
+      return await authService.forgotUserPassword(data);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// verify user
+export const verify = createAsyncThunk(
+  "auth/verify",
+  async (userData: IVerifyUserData, thunkAPI) => {
+    try {
+      return await authService.verifyUser(userData);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -66,6 +125,14 @@ const authSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.message = "";
+    },
+    logout: (state) => {
+      state.user = null;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.isError = false;
+      state.message = "";
+      localStorage.removeItem("user");
     },
   },
   extraReducers: (builder) => {
@@ -97,10 +164,24 @@ const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload as string;
         state.user = null;
+      })
+      .addCase(update.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(update.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload!;
+      })
+      .addCase(update.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        state.user = null;
       });
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, logout } = authSlice.actions;
 
 export default authSlice.reducer;

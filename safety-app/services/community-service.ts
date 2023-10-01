@@ -20,62 +20,60 @@ const getCommunityPosts = async (token: string) => {
     // const response = await axiosInstance.get("/get-community-posts");
     const response = {
       data: [
-        [
-          {
-            id: 1,
-            description: "My community post description",
-            title: "My Community Post WW",
-            userId: 2,
-            createdAt: "2023-09-28T05:17:59.000Z",
-            updatedAt: "2023-09-28T05:17:59.000Z",
-            likeCount: 1,
-            likedByCurrentUser: 1,
-            CommunityPostComments: [
-              {
-                id: 1,
+        {
+          id: 1,
+          description: "My community post description",
+          title: "My Community Post WW",
+          userId: 2,
+          createdAt: "2023-09-28T05:17:59.000Z",
+          updatedAt: "2023-09-28T05:17:59.000Z",
+          likeCount: 1,
+          likedByCurrentUser: 1,
+          CommunityPostComments: [
+            {
+              id: 1,
 
-                communityPostId: 1,
-                commentedBy: 2,
-                comment: "My comment 1",
-                createdAt: "2023-09-28T05:19:41.000Z",
-                updatedAt: "2023-09-28T05:19:41.000Z",
-                User: {
-                  id: 2,
-                  firstName: "Wonder",
-                  lastName: "Woman",
-                  fullName: "Wonder Woman",
-                },
-              },
-            ],
-          },
-          {
-            id: 2,
-            description: "My community post description",
-            title: "My Community Post WW",
-            userId: 2,
-            createdAt: "2023-09-28T05:17:59.000Z",
-            updatedAt: "2023-09-28T05:17:59.000Z",
-            likeCount: 1,
-            likedByCurrentUser: 1,
-            CommunityPostComments: [
-              {
+              communityPostId: 1,
+              commentedBy: 2,
+              comment: "My comment 1",
+              createdAt: "2023-09-28T05:19:41.000Z",
+              updatedAt: "2023-09-28T05:19:41.000Z",
+              User: {
                 id: 2,
-
-                communityPostId: 1,
-                commentedBy: 2,
-                comment: "My comment 1",
-                createdAt: "2023-09-28T05:19:41.000Z",
-                updatedAt: "2023-09-28T05:19:41.000Z",
-                User: {
-                  id: 2,
-                  firstName: "Wonder",
-                  lastName: "Woman",
-                  fullName: "Wonder Woman",
-                },
+                firstName: "Wonder",
+                lastName: "Woman",
+                fullName: "Wonder Woman",
               },
-            ],
-          },
-        ],
+            },
+          ],
+        },
+        {
+          id: 2,
+          description: "My community post description",
+          title: "My Community Post WW",
+          userId: 2,
+          createdAt: "2023-09-28T05:17:59.000Z",
+          updatedAt: "2023-09-28T05:17:59.000Z",
+          likeCount: 1,
+          likedByCurrentUser: 1,
+          CommunityPostComments: [
+            {
+              id: 2,
+
+              communityPostId: 1,
+              commentedBy: 2,
+              comment: "My comment 1",
+              createdAt: "2023-09-28T05:19:41.000Z",
+              updatedAt: "2023-09-28T05:19:41.000Z",
+              User: {
+                id: 2,
+                firstName: "Wonder",
+                lastName: "Woman",
+                fullName: "Wonder Woman",
+              },
+            },
+          ],
+        },
       ],
     };
     return response.data;
@@ -86,8 +84,50 @@ const getCommunityPosts = async (token: string) => {
   }
 };
 
+const createCommunityPost = async (token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+
+  try {
+    // const response = await axiosInstance.post("/create-community-post");
+    // return response.data;
+  } catch (error) {
+    // Handle error here
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
+
+const likeCommunityPost = async (token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+
+  try {
+    // const response = await axiosInstance.post("/like-community-post");
+    // return response.data;
+  } catch (error) {
+    // Handle error here
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
+
+const commentCommunityPost = async (token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+
+  try {
+    // const response = await axiosInstance.post("/comment-community-post");
+    // return response.data;
+  } catch (error) {
+    // Handle error here
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
+
 const communityService = {
   getCommunityPosts,
+  createCommunityPost,
+  likeCommunityPost,
+  commentCommunityPost,
 };
 
 export default communityService;

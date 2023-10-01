@@ -1,12 +1,47 @@
-import React from "react";
-import { View, Text, Image, Pressable, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
 import { Button, ImageSet } from "../components";
-import { RootState, useAppSelector } from "../store/store";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import { Formik } from "formik";
+import { IUpdateData } from "../models";
+import { update } from "../store/auth/authSlice";
 
 export const Profile = ({ navigation }: any) => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.auth.user);
+
+  const initialState: IUpdateData = {
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    fullName: user?.fullName || "",
+    address: user?.address || "",
+    contactNumber: user?.contactNumber || "",
+  };
+
+  const handleSubmit = (values: any, resetForm: any) => {
+    const { firstName, lastName, fullName, address, contactNumber } = values;
+    const updateUserData = {
+      firstName,
+      lastName,
+      fullName,
+      address,
+      contactNumber,
+    };
+    dispatch(update(updateUserData));
+  };
+
+  useEffect(() => {}, [dispatch]);
+
   return (
     <LinearGradient
       style={styles.container}
@@ -20,7 +55,84 @@ export const Profile = ({ navigation }: any) => {
       </View>
       <View style={styles.body}>
         <Text style={styles.sectionTitle}>My Profile</Text>
-        {/* <Text style={styles.sectionTitle}>Settings</Text> */}
+
+        <Formik
+          initialValues={initialState}
+          onSubmit={(values, { resetForm }) => {
+            handleSubmit(values, resetForm);
+          }}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            resetForm,
+            values,
+            errors,
+            touched,
+          }) => (
+            <>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>First Name:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your first name"
+                  onChangeText={handleChange("firstName")}
+                  onBlur={handleBlur("firstName")}
+                  value={values.firstName}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Last Name:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your last name"
+                  onChangeText={handleChange("lastName")}
+                  onBlur={handleBlur("lastName")}
+                  value={values.lastName}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Full Name:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your full name"
+                  onChangeText={handleChange("fullName")}
+                  onBlur={handleBlur("fullName")}
+                  value={values.fullName}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Address:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter your address"
+                  onChangeText={handleChange("address")}
+                  onBlur={handleBlur("address")}
+                  value={values.address}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Contact No:</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="phone-pad"
+                  placeholder="Enter your contact No"
+                  onChangeText={handleChange("contactNumber")}
+                  onBlur={handleBlur("contactNumber")}
+                  value={values.contactNumber}
+                />
+              </View>
+
+              <TouchableOpacity
+                style={styles.updateButton}
+                onPress={() => handleSubmit()}
+              >
+                <Text style={styles.updateButtonText}>Update</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </Formik>
       </View>
     </LinearGradient>
   );
@@ -31,11 +143,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userImage: {
-    width: 150, // Adjust the width and height as needed
+    width: 150,
     height: 150,
-    borderRadius: 50, // To make it a circular image
-    alignSelf: "center", // To center the image horizontally
-    marginTop: 20, // Add some top margin to separate from the text
+    borderRadius: 50,
+    alignSelf: "center",
+    marginTop: 20,
   },
   header: {
     alignItems: "center",
@@ -59,7 +171,37 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
-  // Add more styles as needed for additional content
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  label: {
+    flex: 1,
+    fontSize: 16,
+  },
+  input: {
+    flex: 2,
+    borderWidth: 1,
+    borderColor: COLORS.grey,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    fontSize: 16,
+    height: 40,
+  },
+  updateButton: {
+    backgroundColor: COLORS.secondary, // Blue color for the button
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignSelf: "flex-end", // Position the button to the right side
+  },
+  updateButtonText: {
+    color: COLORS.white, // White color for the button text
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  // Add more styles as needed for additional input fields or buttons
 });
 
 export default Profile;
