@@ -13,13 +13,18 @@ import { ImageSetTwo } from "../components";
 import TweetCard from "../components/TweetCard";
 import { CommunityPost } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import {
+  commentCommunityPosts,
+  createCommunityPosts,
+  likeCommunityPosts,
+} from "../store/community/communitySlice";
 
 export const Community = ({ navigation }: any) => {
+  const dispatch = useAppDispatch();
   const communityPosts = useAppSelector(
     (state: RootState) => state.community.posts
   );
-
-  console.log("communityPosts : ", communityPosts);
+  const user = useAppSelector((state: RootState) => state.auth.user);
 
   const [titleText, setTitleText] = useState<string>("");
   const [descriptionText, setDescriptionText] = useState<string>("");
@@ -41,6 +46,9 @@ export const Community = ({ navigation }: any) => {
         CommunityPostComments: [],
       };
 
+      dispatch(
+        createCommunityPosts({ title: titleText, description: descriptionText })
+      );
       setTweets([newPost, ...tweets]);
       setTitleText("");
       setDescriptionText("");
@@ -62,6 +70,7 @@ export const Community = ({ navigation }: any) => {
       return tweet;
     });
 
+    dispatch(likeCommunityPosts({ communityPostId: postId }));
     setTweets(updatedTweets);
   };
 
@@ -90,10 +99,10 @@ export const Community = ({ navigation }: any) => {
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
                 User: {
-                  id: 1, // Replace with the actual user ID
-                  firstName: "John", // Replace with the actual user's name
-                  lastName: "Doe",
-                  fullName: "John Doe",
+                  id: user?.id || 1, // Replace with the actual user ID
+                  firstName: user?.firstName || "Test", // Replace with the actual user's name
+                  lastName: user?.lastName || "User",
+                  fullName: user?.fullName || "Test User",
                 },
               },
             ],
@@ -102,6 +111,12 @@ export const Community = ({ navigation }: any) => {
         return tweet;
       });
 
+      dispatch(
+        commentCommunityPosts({
+          communityPostId: currentPostId,
+          comment: replyText,
+        })
+      );
       setTweets(updatedTweets);
       setCurrentPostId(null);
       setReplyText("");

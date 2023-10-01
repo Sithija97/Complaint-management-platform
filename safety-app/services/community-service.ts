@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { ICommentData, ILikeData, IPostData } from "../models";
 
 const BASE_URL = "http://192.168.8.100:3000/api";
 
@@ -84,12 +85,15 @@ const getCommunityPosts = async (token: string) => {
   }
 };
 
-const createCommunityPost = async (token: string) => {
+const createCommunityPost = async (postData: IPostData, token: string) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
-    // const response = await axiosInstance.post("/create-community-post");
-    // return response.data;
+    const response = await axiosInstance.post(
+      "/create-community-post",
+      postData
+    );
+    return response.data;
   } catch (error) {
     // Handle error here
     console.log(`error : ${error}`);
@@ -97,12 +101,12 @@ const createCommunityPost = async (token: string) => {
   }
 };
 
-const likeCommunityPost = async (token: string) => {
+const likeCommunityPost = async (likeData: ILikeData, token: string) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
-    // const response = await axiosInstance.post("/like-community-post");
-    // return response.data;
+    const response = await axiosInstance.post("/like-community-post", likeData);
+    return response.data;
   } catch (error) {
     // Handle error here
     console.log(`error : ${error}`);
@@ -110,12 +114,18 @@ const likeCommunityPost = async (token: string) => {
   }
 };
 
-const commentCommunityPost = async (token: string) => {
+const commentCommunityPost = async (
+  commentData: ICommentData,
+  token: string
+) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
-    // const response = await axiosInstance.post("/comment-community-post");
-    // return response.data;
+    const response = await axiosInstance.post(
+      "/comment-community-post",
+      commentData
+    );
+    return response.data;
   } catch (error) {
     // Handle error here
     console.log(`error : ${error}`);

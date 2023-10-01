@@ -82,7 +82,7 @@ export const ResetPassword = ({ navigation }: any) => {
         );
         resetForm();
       } catch (error) {
-        console.log("login error :", error);
+        console.log("Reset Password error :", error);
       }
     }
   };

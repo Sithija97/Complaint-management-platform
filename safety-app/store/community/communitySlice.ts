@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CommunityPost, ICommunityInitialState } from "../../models";
+import {
+  CommunityPost,
+  ICommentData,
+  ICommunityInitialState,
+  ILikeData,
+  IPostData,
+} from "../../models";
 import { RootState } from "../store";
 import communityService from "../../services/community-service";
 
@@ -31,12 +37,12 @@ export const getAllCommunityPosts = createAsyncThunk(
 );
 
 // create community posts
-export const createAllCommunityPosts = createAsyncThunk(
-  "community/createAllCommunityPosts",
-  async (_, thunkAPI) => {
+export const createCommunityPosts = createAsyncThunk(
+  "community/createCommunityPosts",
+  async (postData: IPostData, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
-      // return await communityService.createCommunityPost(user?.token!);
+      return await communityService.createCommunityPost(postData, user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -52,10 +58,10 @@ export const createAllCommunityPosts = createAsyncThunk(
 // like community posts
 export const likeCommunityPosts = createAsyncThunk(
   "community/likeCommunityPosts",
-  async (_, thunkAPI) => {
+  async (likeData: ILikeData, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
-      // return await communityService.likeCommunityPost(user?.token!);
+      return await communityService.likeCommunityPost(likeData, user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -71,10 +77,13 @@ export const likeCommunityPosts = createAsyncThunk(
 // comment community posts
 export const commentCommunityPosts = createAsyncThunk(
   "community/commentCommunityPosts",
-  async (_, thunkAPI) => {
+  async (commentData: ICommentData, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
-      // return await communityService.commentCommunityPost(user?.token!);
+      return await communityService.commentCommunityPost(
+        commentData,
+        user?.token!
+      );
     } catch (error: any) {
       const message =
         (error.response &&
