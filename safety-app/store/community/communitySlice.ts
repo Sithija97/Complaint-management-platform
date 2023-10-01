@@ -30,6 +30,63 @@ export const getAllCommunityPosts = createAsyncThunk(
   }
 );
 
+// create community posts
+export const createAllCommunityPosts = createAsyncThunk(
+  "community/createAllCommunityPosts",
+  async (_, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      // return await communityService.createCommunityPost(user?.token!);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// like community posts
+export const likeCommunityPosts = createAsyncThunk(
+  "community/likeCommunityPosts",
+  async (_, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      // return await communityService.likeCommunityPost(user?.token!);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// comment community posts
+export const commentCommunityPosts = createAsyncThunk(
+  "community/commentCommunityPosts",
+  async (_, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      // return await communityService.commentCommunityPost(user?.token!);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const communitySlice = createSlice({
   name: "community",
   initialState,

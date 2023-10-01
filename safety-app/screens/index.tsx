@@ -10,3 +10,5 @@ export * from "./Profile";
 export * from "./Complaints";
 export * from "./History";
 export * from "./Community";
+export * from "./ResetPassword";
+export * from "./ForgetPassword";

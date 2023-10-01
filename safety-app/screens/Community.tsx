@@ -12,11 +12,9 @@ import { COLORS } from "../constants/colors";
 import { ImageSetTwo } from "../components";
 import TweetCard from "../components/TweetCard";
 import { CommunityPost } from "../models";
-import { getAllCommunityPosts } from "../store/community/communitySlice";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 
 export const Community = ({ navigation }: any) => {
-  const dispatch = useAppDispatch();
   const communityPosts = useAppSelector(
     (state: RootState) => state.community.posts
   );

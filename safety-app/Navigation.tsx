@@ -16,6 +16,8 @@ import {
   Location,
   Community,
   Profile,
+  ResetPassword,
+  ForgetPassword,
 } from "./screens";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
@@ -28,6 +30,8 @@ const HomeStackGroup = () => {
       <HomeStack.Screen name="Welcome" component={Welcome} />
       <HomeStack.Screen name="Signup" component={Signup} />
       <HomeStack.Screen name="Login" component={Login} />
+      <HomeStack.Screen name="ForgetPassword" component={ForgetPassword} />
+      <HomeStack.Screen name="ResetPassword" component={ResetPassword} />
       <HomeStack.Screen name="DrawerGroup" component={DrawerGroup} />
     </HomeStack.Navigator>
   );

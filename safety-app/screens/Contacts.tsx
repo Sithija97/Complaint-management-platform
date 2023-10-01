@@ -18,7 +18,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
 import { Button, ContactCard, ImageSet } from "../components";
 import { IContactPersonData } from "../models";
-import { useAppDispatch } from "../store/store";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { createContactList } from "../store/contacts/contactsSlice";
 
 const initialState = {
@@ -37,9 +37,14 @@ const validationSchema = Yup.object().shape({
 
 export const Contacts = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
-  const [contactsGroup, setContactsGroup] = useState<IContactPersonData[]>([]);
+  const contacts = useAppSelector(
+    (state: RootState) => state.contacts.contacts
+  );
+  const [contactsGroup, setContactsGroup] = useState<IContactPersonData[]>(
+    contacts || []
+  );
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: any, resetForm: any) => {
     if (
       values.contactPersonsName &&
       values.address &&
@@ -49,6 +54,7 @@ export const Contacts = ({ navigation }: any) => {
       const { contactPersonsName, address, contactNumber, email } = values;
       const person = { contactPersonsName, address, contactNumber, email };
       setContactsGroup([...contactsGroup, person]);
+      resetForm();
 
       Keyboard.dismiss();
     }
@@ -60,6 +66,12 @@ export const Contacts = ({ navigation }: any) => {
         userContactPersonData: contactsGroup,
       })
     );
+  };
+
+  const deleteContact = (index: number) => {
+    const updatedContactsGroup = [...contactsGroup];
+    updatedContactsGroup.splice(index, 1);
+    setContactsGroup(updatedContactsGroup);
   };
 
   return (
@@ -80,7 +92,12 @@ export const Contacts = ({ navigation }: any) => {
               {contactsGroup.map((item, index) => {
                 return (
                   // <TouchableOpacity key={index}>
-                  <ContactCard key={index} item={item} />
+                  <ContactCard
+                    key={index}
+                    index={index}
+                    item={item}
+                    onDelete={() => deleteContact(index)}
+                  />
                   // </TouchableOpacity>
                 );
               })}
@@ -94,7 +111,9 @@ export const Contacts = ({ navigation }: any) => {
           <Formik
             initialValues={initialState}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={(values, { resetForm }) => {
+              handleSubmit(values, resetForm);
+            }}
           >
             {({
               handleChange,
@@ -124,7 +143,7 @@ export const Contacts = ({ navigation }: any) => {
                     <TextInput
                       style={styles.input}
                       placeholder={"Add mobile number"}
-                      keyboardType="number-pad"
+                      keyboardType="phone-pad"
                       onChangeText={handleChange("contactNumber")}
                       onBlur={handleBlur("contactNumber")}
                       value={values.contactNumber}

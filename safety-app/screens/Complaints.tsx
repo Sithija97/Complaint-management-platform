@@ -29,7 +29,7 @@ export const Complaints = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.auth.user);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, resetForm: any) => {
     const { title, policeStationId, complaint, category } = values;
     const complaintData: IComplaintData = {
       title,
@@ -39,6 +39,7 @@ export const Complaints = ({ navigation }: any) => {
       userId: user?.id,
     };
     await dispatch(createComplaints(complaintData));
+    resetForm();
   };
 
   return (
@@ -62,7 +63,9 @@ export const Complaints = ({ navigation }: any) => {
               category: "",
             }}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            onSubmit={(values, { resetForm }) => {
+              handleSubmit(values, resetForm);
+            }}
           >
             {({
               handleChange,

@@ -2,9 +2,16 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../constants/colors";
+import { IContactPersonData } from "../models";
 
-export const ContactCard = (props: any) => {
-  const { contactNumber, contactPersonsName, email } = props.item;
+interface IProps {
+  index: number;
+  item: IContactPersonData;
+  onDelete: (index: number) => void;
+}
+
+export const ContactCard = ({ index, item, onDelete }: IProps) => {
+  const { contactNumber, contactPersonsName, email } = item;
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
@@ -14,7 +21,12 @@ export const ContactCard = (props: any) => {
         </Text>
       </View>
       <View>
-        <MaterialIcons name="delete" size={24} color="black" />
+        <MaterialIcons
+          name="delete"
+          size={24}
+          color={COLORS.blue}
+          onPress={() => onDelete(index)}
+        />
       </View>
     </View>
   );

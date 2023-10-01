@@ -127,6 +127,24 @@ export interface ILoginData {
   password: string;
 }
 
+export interface IUpdateData {
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  address: string;
+  contactNumber: string;
+}
+
+export interface IVerifyUserData {
+  email: string;
+  secretCode: string;
+  password: string;
+}
+
+export interface IForgotPWData {
+  email: string;
+}
+
 export interface IComplaintData {
   title: string;
   policeStationId: number;

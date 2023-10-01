@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, Pressable, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import * as location from "expo-location";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
@@ -7,16 +14,20 @@ import { Button, ImageSetTwo } from "../components";
 import { useAppDispatch } from "../store/store";
 import { notifyEmergencyAlert } from "../store/emergency/emergencySlice";
 import { getAllCommunityPosts } from "../store/community/communitySlice";
+import { FontAwesome } from "@expo/vector-icons";
+import { logout } from "../store/auth/authSlice";
+import { getContactList } from "../store/contacts/contactsSlice";
 
 export const Home = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
 
-  const fetchPosts = async () => {
+  const fetchData = async () => {
     await dispatch(getAllCommunityPosts());
+    await dispatch(getContactList());
   };
 
   useEffect(() => {
-    fetchPosts();
+    fetchData();
   }, []);
 
   const sendUserLocation = async () => {
@@ -39,6 +50,11 @@ export const Home = ({ navigation }: any) => {
     await dispatch(notifyEmergencyAlert(emergencyData));
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigation.navigate("Login");
+  };
+
   return (
     <LinearGradient
       style={styles.container}
@@ -46,6 +62,9 @@ export const Home = ({ navigation }: any) => {
     >
       <View style={styles.container}>
         <ImageSetTwo />
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <FontAwesome name="sign-out" size={24} color="#fff" />
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <Button
             title="Inform your family"
@@ -69,5 +88,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 640,
     width: "100%",
+  },
+  logoutButton: {
+    position: "absolute",
+    top: 0,
+    right: 40,
+    backgroundColor: "grey",
+    padding: 10,
+    borderRadius: 10,
   },
 });
