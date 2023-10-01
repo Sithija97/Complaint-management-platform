@@ -159,3 +159,17 @@ export interface IContactPersonData {
   contactNumber: string;
   email: string;
 }
+
+export interface IPostData {
+  title: string;
+  description: string;
+}
+
+export interface ICommentData {
+  communityPostId: number;
+  comment: string;
+}
+
+export interface ILikeData {
+  communityPostId: number;
+}

@@ -64,7 +64,7 @@ export const ForgetPassword = ({ navigation }: any) => {
       );
       resetForm();
     } catch (error) {
-      console.log("login error :", error);
+      console.log("Forget Password error :", error);
     }
   };
 
