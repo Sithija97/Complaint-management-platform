@@ -1,59 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-// import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import loginImage from "../assets/login.svg";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      {/* <Link color="inherit" href="https://mui.com/"> */}
-      Your Website
-      {/* </Link>{" "} */}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+});
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [nic, setNic] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const InitialState = {
+    email: "",
+    password: "",
   };
 
-  // if (isLoading) {
-  //   return (
-  //     <Box sx={{ display: "flex" }}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
+  const handleSubmit = (values: any) => {
+    console.log("Form Values:", values);
+    formik.resetForm();
+  };
+
+  const formik = useFormik({
+    initialValues: InitialState,
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
+  });
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -93,20 +86,24 @@ export const Login = () => {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
               sx={{ mt: 1 }}
+              onSubmit={formik.handleSubmit}
             >
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="nic"
-                label="NIC"
-                name="nic"
-                autoComplete="nic"
-                autoFocus
-                value={nic}
-                onChange={(e) => setNic(e.target.value)}
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                error={
+                  formik.touched.email && formik.errors.email ? true : false
+                }
+                helperText={formik.errors.email}
               />
               <TextField
                 margin="normal"
@@ -117,29 +114,34 @@ export const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && formik.errors.password
+                    ? true
+                    : false
+                }
+                helperText={formik.errors.password}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled={!nic || !password}
+                disabled={!formik.values.email || !formik.values.password}
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs></Grid>
+              <Grid container justifyContent="flex-end">
+                <Grid item xs>
+                  <Link to="#">Forgot Password?</Link>
+                </Grid>
                 <Grid item>
-                  <Link to="/register">{"Don't have an account? Sign Up"}</Link>
+                  <Link to="/register">Don't have an account? Sign Up</Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

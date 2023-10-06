@@ -31,6 +31,7 @@ import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateUser } from "./create-user";
+import { BoxContainer } from "../components";
 
 type Person = {
   name: {
@@ -176,18 +177,7 @@ export const Users = () => {
 
   return (
     <Dashboard>
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: "100vh",
-          overflow: "auto",
-        }}
-      >
+      <BoxContainer>
         <Toolbar />
         <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
           <Stack
@@ -199,16 +189,16 @@ export const Users = () => {
             <Typography variant="h5" gutterBottom>
               Users
             </Typography>
-            <Button variant="contained" onClick={toggleDrawer}>
+            {/* <Button variant="contained" onClick={toggleDrawer}>
               Add User
-            </Button>
+            </Button> */}
           </Stack>
 
           <Card>
             <MaterialReactTable columns={columns} data={data} />
           </Card>
         </Container>
-      </Box>
+      </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
         <CreateUser />

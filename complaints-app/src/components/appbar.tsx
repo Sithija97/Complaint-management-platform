@@ -59,6 +59,9 @@ export const Appbar = ({ open, toggleDrawer }: IProps) => {
     navigate("/login");
   };
 
+  const handleProfile = () => {
+    navigate("/profile");
+  };
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar
@@ -119,7 +122,7 @@ export const Appbar = ({ open, toggleDrawer }: IProps) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleProfile}>
                 <ListItemIcon>
                   <AssignmentInd fontSize="small" />
                 </ListItemIcon>

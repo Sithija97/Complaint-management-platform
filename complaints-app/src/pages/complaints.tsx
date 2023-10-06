@@ -30,8 +30,8 @@ import {
 import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
-import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
+import { CreateComplaint } from "./create-complaint";
 
 type Person = {
   name: {
@@ -128,7 +128,7 @@ const data: Person[] = [
   },
 ];
 
-export const Reports = () => {
+export const Complaints = () => {
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
@@ -187,10 +187,10 @@ export const Reports = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              Reports
+              Complaints
             </Typography>
             <Button variant="contained" onClick={toggleDrawer}>
-              Create Report
+              Create Complaint
             </Button>
           </Stack>
 
@@ -201,7 +201,7 @@ export const Reports = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateReport />
+        <CreateComplaint />
       </Drawer>
     </Dashboard>
   );
