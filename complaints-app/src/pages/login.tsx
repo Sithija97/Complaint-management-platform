@@ -16,6 +16,8 @@ import { CircularProgress } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import loginImage from "../assets/login.svg";
+import { useAppDispatch } from "../store/store";
+import { login } from "../store/auth/authSlice";
 
 const defaultTheme = createTheme();
 
@@ -29,6 +31,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export const Login = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const InitialState = {
@@ -38,6 +41,15 @@ export const Login = () => {
 
   const handleSubmit = (values: any) => {
     console.log("Form Values:", values);
+    // try {
+    //   dispatch(login(values)).then((data) => {
+    //     if (data.meta.requestStatus === "fulfilled") {
+    //       navigate("/");
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.log("login error :", error);
+    // }
     formik.resetForm();
   };
 
@@ -46,6 +58,16 @@ export const Login = () => {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
+  // get isLoading from store - state.auth
+
+  // if (isLoading) {
+  //   return (
+  //     <Box sx={{ display: "flex", justifyContent:"center",padding:"15px"}}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>

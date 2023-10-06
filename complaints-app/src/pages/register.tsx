@@ -23,6 +23,8 @@ import * as Yup from "yup";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CustomDatePicker } from "../components/customDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useAppDispatch } from "../store/store";
+import { register } from "../store/auth/authSlice";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -51,6 +53,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export const Register = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const InitialState = {
@@ -71,6 +74,45 @@ export const Register = () => {
 
   const handleSubmit = (values: any) => {
     console.log("Form Values:", values);
+    if (values.password !== values.confirmPassword) {
+      alert("Passwords are not matching, Please check your password !");
+      try {
+        const {
+          firstName,
+          lastName,
+          nameWithInitials,
+          fullName,
+          address,
+          contactNumber,
+          email,
+          nic,
+          gender,
+          userRoleId,
+          policeStationId,
+          password,
+          filename,
+        } = values;
+        const user = {
+          firstName,
+          lastName,
+          nameWithInitials,
+          fullName,
+          address,
+          contactNumber,
+          email,
+          nic,
+          gender: Number(gender),
+          userRoleId: Number(userRoleId),
+          policeStationId: Number(policeStationId),
+          password,
+          filename,
+        };
+        // dispatch(register(user)).then(
+        //   (data) => data.meta.requestStatus === "fulfilled" && navigate("Login")
+        // );
+      } catch (error) {}
+    } else {
+    }
     formik.resetForm();
   };
 

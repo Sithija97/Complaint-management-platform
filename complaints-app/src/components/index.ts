@@ -7,3 +7,4 @@ export * from "./title";
 export * from "./drawer";
 export * from "./richtextEditor";
 export * from "./BoxContainer";
+export * from "./privte-route";

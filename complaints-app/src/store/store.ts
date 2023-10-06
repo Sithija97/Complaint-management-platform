@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import authReducer from "./auth/authSlice";
 import complaintsReducer from "./complaints/complaintsSlice";
 import fineReducer from "./fines/fineSlice";
+import reportsReducer from "./reports/reportSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     complaints: complaintsReducer,
     fines: fineReducer,
+    reports: reportsReducer,
   },
   devTools: true,
 });
