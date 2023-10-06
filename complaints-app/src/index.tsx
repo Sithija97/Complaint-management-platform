@@ -22,8 +22,10 @@ import {
   Users,
   UserProfile,
   VerifyUser,
+  ReportRequest,
 } from "./pages";
 import { store } from "./store/store";
+import PrivateRoute from "./components/privte-route";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -34,14 +36,31 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/users" element={<Users />} />
+      {/* </Route> */}
       <Route path="/verify-user" element={<VerifyUser />} />
+      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/cases" element={<Cases />} />
+      {/* </Route> */}
+      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/fines" element={<Fines />} />
+      {/* </Route> */}
+      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/reports" element={<Reports />} />
+      {/* </Route> */}
+      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/complaints" element={<Complaints />} />
+      {/* </Route> */}
+      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/profile" element={<UserProfile />} />
+      {/* </Route> */}
+      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/payment" element={<Payment />} />
+      {/* </Route> */}
+      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="/report-request" element={<ReportRequest />} />
+      {/* </Route> */}
     </Route>
   )
 );

@@ -28,7 +28,7 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Users" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton onClick={() => navigate("/report-request")}>
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>

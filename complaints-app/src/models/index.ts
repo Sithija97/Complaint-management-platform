@@ -48,6 +48,16 @@ export interface IFine {
   createdAt?: string;
 }
 
+export interface IReport {
+  id: number;
+  policeReportRequestId: number;
+  filename: string;
+  userId: number;
+  uploadedBy: number;
+  updatedAt?: string;
+  createdAt?: string;
+}
+
 export interface IAuthInitialState {
   user: IUser | null;
   isError: boolean;
@@ -65,6 +75,14 @@ export interface IComplaintsInitialState {
 }
 export interface IFineInitialState {
   fines: IFine[];
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: string;
+}
+
+export interface IReportsInitialState {
+  reports: IReport[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -137,4 +155,12 @@ export interface IFineData {
   statusId: number;
   tax: number;
   otherCharges: number;
+}
+
+export interface IReportRequestData {
+  title: string;
+  description: string;
+  category: number;
+  status: number;
+  fileName: File | any | null;
 }
