@@ -7,6 +7,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import HomeIcon from "@mui/icons-material/Home";
+import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router-dom";
@@ -31,13 +32,25 @@ export const MainListItems = () => {
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
-        <ListItemText primary="Cases" />
+        <ListItemText primary="Report Requests" />
       </ListItemButton>
       <ListItemButton onClick={() => navigate("/reports")}>
         <ListItemIcon>
           <DescriptionIcon />
         </ListItemIcon>
         <ListItemText primary="Reports" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/complaints")}>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Complaints" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/fines")}>
+        <ListItemIcon>
+          <PriceChangeIcon />
+        </ListItemIcon>
+        <ListItemText primary="Fines" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>

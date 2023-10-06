@@ -128,7 +128,7 @@ const data: Person[] = [
   },
 ];
 
-export const Reports = () => {
+export const Cases = () => {
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
@@ -187,10 +187,10 @@ export const Reports = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              Reports
+              Cases
             </Typography>
             <Button variant="contained" onClick={toggleDrawer}>
-              Create Report
+              Add Case
             </Button>
           </Stack>
 

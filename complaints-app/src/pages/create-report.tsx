@@ -20,7 +20,7 @@ import { jsPDF } from "jspdf";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { RichtextEditor } from "../components";
+import { BoxContainer, RichtextEditor } from "../components";
 
 export const CreateReport = () => {
   const [policeReportContent, setPoliceReportContent] = useState("");
@@ -51,15 +51,7 @@ export const CreateReport = () => {
   };
 
   return (
-    <Box
-      component="main"
-      sx={{
-        backgroundColor: "white",
-        flexGrow: 1,
-        height: "100vh",
-        overflow: "auto",
-      }}
-    >
+    <BoxContainer>
       <Container>
         <Typography sx={{ mt: 12, mb: 5 }} variant="h5" gutterBottom>
           Create Report
@@ -80,6 +72,6 @@ export const CreateReport = () => {
           Save
         </Button>
       </Container>
-    </Box>
+    </BoxContainer>
   );
 };
