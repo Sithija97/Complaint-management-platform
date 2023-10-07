@@ -30,26 +30,24 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-export const Login = () => {
-  const dispatch = useAppDispatch();
+export const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const InitialState = {
     email: "",
-    password: "",
   };
 
   const handleSubmit = (values: any) => {
     console.log("Form Values:", values);
-    try {
-      dispatch(login(values)).then((data) => {
-        if (data.meta.requestStatus === "fulfilled") {
-          navigate("/");
-        }
-      });
-    } catch (error) {
-      console.log("login error :", error);
-    }
+    // try {
+    //   dispatch(login(values)).then((data) => {
+    //     if (data.meta.requestStatus === "fulfilled") {
+    //       navigate("/");
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.log("forgot password error :", error);
+    // }
     formik.resetForm();
   };
 
@@ -103,7 +101,7 @@ export const Login = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Forgot Password
             </Typography>
             <Box
               component="form"
@@ -127,41 +125,18 @@ export const Login = () => {
                 }
                 helperText={formik.errors.email}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-                error={
-                  formik.touched.password && formik.errors.password
-                    ? true
-                    : false
-                }
-                helperText={formik.errors.password}
-              />
-
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled={!formik.values.email || !formik.values.password}
+                disabled={!formik.values.email}
               >
-                Sign In
+                Submit
               </Button>
               <Grid container justifyContent="flex-end">
-                <Grid item xs>
-                  <Link to="/forgot-password">Forgot Password?</Link>
-                </Grid>
                 <Grid item>
-                  <Link to="/register">Don't have an account? Sign Up</Link>
+                  <Link to="/login">Login</Link>
                 </Grid>
               </Grid>
             </Box>

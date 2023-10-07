@@ -32,6 +32,7 @@ import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
+import { CreateFine } from "./create-fine";
 
 type Person = {
   name: {
@@ -201,7 +202,7 @@ export const Fines = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateReport />
+        <CreateFine />
       </Drawer>
     </Dashboard>
   );

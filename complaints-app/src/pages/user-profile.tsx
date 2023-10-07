@@ -52,6 +52,12 @@ const UserProfile = () => {
   const [contactNumber, setContactNumber] = useState(
     user?.contactNumber || user_test.contactNumber
   );
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageUpload = (e: any) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  };
 
   const handleSaveClick = () => {
     const updatedUser = {
@@ -64,9 +70,28 @@ const UserProfile = () => {
       userRoleId,
       policeStationId,
     };
-    console.log("úpdated user :", updatedUser);
+
+    if (selectedImage) {
+      const formData = new FormData();
+      formData.append("avatar", selectedImage);
+
+      fetch("/api/upload-avatar", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Image uploaded:", data);
+        })
+        .catch((error) => {
+          console.error("Image upload failed:", error);
+        });
+    }
+
+    console.log("Updated user:", updatedUser);
     // dispatch(update(updatedUser));
   };
+
   return (
     <Dashboard>
       <BoxContainer>
@@ -84,10 +109,19 @@ const UserProfile = () => {
               elevation={3}
               style={{ padding: "16px", textAlign: "center" }}
             >
-              <Avatar
-                alt={`${firstName} ${lastName}`}
-                src={user_test.avatarUrl}
-                sx={{ width: 90, height: 90, margin: "0 auto" }}
+              <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
+                <Avatar
+                  alt={`${firstName} ${lastName}`}
+                  src={selectedImage ? URL.createObjectURL(selectedImage) : user_test.avatarUrl}
+                  sx={{ width: 90, height: 90, margin: "0 auto" }}
+                />
+              </label>
+              <input
+                id="image-upload"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleImageUpload}
               />
               <Typography variant="h5" gutterBottom>
                 {`${firstName} ${lastName}`}

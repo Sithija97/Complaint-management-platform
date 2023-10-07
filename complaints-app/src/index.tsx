@@ -26,6 +26,9 @@ import {
 } from "./pages";
 import { store } from "./store/store";
 import PrivateRoute from "./components/privte-route";
+import { ForgotPassword } from "./pages/forgot-password";
+import { UserComplaints } from "./pages/user-complaints";
+import { UserFines } from "./pages/user-fine";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -36,6 +39,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/users" element={<Users />} />
       {/* </Route> */}
@@ -60,6 +64,8 @@ const router = createBrowserRouter(
       {/* </Route> */}
       {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/report-request" element={<ReportRequest />} />
+      <Route path="/user-complaints" element={<UserComplaints />} />
+      <Route path="/user-fines" element={<UserFines />} />
       {/* </Route> */}
     </Route>
   )

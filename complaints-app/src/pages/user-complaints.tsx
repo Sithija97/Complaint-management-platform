@@ -74,7 +74,7 @@ const data: Person[] = [
 }
 ];
 
-export const Complaints = () => {
+export const UserComplaints = () => {
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
@@ -137,7 +137,7 @@ export const Complaints = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              Complaints
+              My Complaints
             </Typography>
             <Button variant="contained" onClick={toggleDrawer}>
               Create Complaint

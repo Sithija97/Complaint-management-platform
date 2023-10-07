@@ -139,6 +139,17 @@ export interface IComplaintData {
   statusId: number;
 }
 
+export interface IFineData {
+  title: string;
+  description: string;
+  category: number;
+  statusId: number;
+  userId: number;
+  Amount: number;
+  Tax: number;
+  OtherAmounts: number;
+}
+
 export interface IRemoveComplaintData {
   complaintId: string;
   reason: string;
