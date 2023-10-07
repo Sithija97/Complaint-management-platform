@@ -4,13 +4,15 @@ import authReducer from "./auth/authSlice";
 import complaintsReducer from "./complaints/complaintsSlice";
 import fineReducer from "./fines/fineSlice";
 import reportsReducer from "./reports/reportSlice";
+import paymentReducer from "./payments/paymentSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     complaints: complaintsReducer,
     fines: fineReducer,
-    reports: reportsReducer,
+    policeReports: reportsReducer,
+    payments: paymentReducer,
   },
   devTools: true,
 });

@@ -1,24 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { IFineData, IFineInitialState } from "../../models";
 import { RootState } from "../store";
-import fineService from "../../services/fine-service";
+import { IPaymentData, IPaymentInitialState } from "../../models";
+import paymentService from "../../services/payment-service";
 
-const initialState: IFineInitialState = {
-  fines: [],
-  userFines: [],
+const initialState: IPaymentInitialState = {
+  payments: [],
+  userPayments: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-// create complaint
-export const createFine = createAsyncThunk(
-  "fines/createFine",
-  async (fineData: IFineData, thunkAPI) => {
+// create payment
+export const createPayment = createAsyncThunk(
+  "payments/createPayment",
+  async (paymentData: IPaymentData, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
-      return await fineService.createFine(fineData, user?.token!);
+      return await paymentService.createPayment(paymentData, user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -31,13 +31,13 @@ export const createFine = createAsyncThunk(
   }
 );
 
-// get all complaint
-export const getAllFines = createAsyncThunk(
-  "fines/getAllFines",
+// get all payments
+export const getAllPayments = createAsyncThunk(
+  "payments/getAllPayments",
   async (_, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
-      return await fineService.getAllFines(user?.token!);
+      return await paymentService.getAllPayments(user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -50,13 +50,13 @@ export const getAllFines = createAsyncThunk(
   }
 );
 
-// user specific fines
-export const getFinesByUser = createAsyncThunk(
-  "fines/getFinesByUser",
+// user specific payments
+export const getPaymentsByUser = createAsyncThunk(
+  "payments/getPaymentsByUser",
   async (_, thunkAPI) => {
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
-      return await fineService.userSpecificFines(user?.token!);
+      return await paymentService.getPaymentByUser(user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -69,8 +69,8 @@ export const getFinesByUser = createAsyncThunk(
   }
 );
 
-const fineSlice = createSlice({
-  name: "fines",
+const paymentSlice = createSlice({
+  name: "paymants",
   initialState,
   reducers: {
     reset: (state) => {
@@ -82,28 +82,28 @@ const fineSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllFines.pending, (state) => {
+      .addCase(getAllPayments.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllFines.fulfilled, (state, action) => {
+      .addCase(getAllPayments.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.fines = action.payload!;
+        state.payments = action.payload!;
       })
-      .addCase(getAllFines.rejected, (state, action) => {
+      .addCase(getAllPayments.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       })
-      .addCase(getFinesByUser.pending, (state) => {
+      .addCase(getPaymentsByUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getFinesByUser.fulfilled, (state, action) => {
+      .addCase(getPaymentsByUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.userFines = action.payload!;
+        state.userPayments = action.payload!;
       })
-      .addCase(getFinesByUser.rejected, (state, action) => {
+      .addCase(getPaymentsByUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;
@@ -111,6 +111,6 @@ const fineSlice = createSlice({
   },
 });
 
-export const { reset } = fineSlice.actions;
+export const { reset } = paymentSlice.actions;
 
-export default fineSlice.reducer;
+export default paymentSlice.reducer;

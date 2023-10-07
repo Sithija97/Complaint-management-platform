@@ -46,6 +46,43 @@ const loginUser = async (userData: ILoginData) => {
   }
 };
 
+// get all users
+const getAllUsers = async (token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+  try {
+    // const response = await axiosInstance.get("/get-all-users");
+    const response = {
+      data: [
+        {
+          id: 1,
+          firstName: "kaveesha",
+          lastName: "Rathnayaka",
+          nameWithInitials: "R.M.K.G.Rathnayaka",
+          fullName: "Kaveesha Gayashan Rathnayaka",
+          address: "Borella",
+          contactNumber: "0765467890",
+          email: "doyouknowyt31@gmail.com",
+          nic: "978765435V",
+          gender: 1,
+          userRoleId: 1,
+          policeStationId: 1,
+          secretCode: null,
+          password:
+            "$2b$10$tjni9byrfZaZUxgXisE8YOVO/pdbnAVyC7yX37nr3Js5PCe1X07Qq",
+          filename: null,
+          createdAt: "2023-10-06T06:41:15.000Z",
+          updatedAt: "2023-10-06T06:41:15.000Z",
+        },
+      ],
+    };
+    return response.data;
+  } catch (error) {
+    // Handle error here
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
+
 // update user
 const updateUser = async (userData: IUpdateData, token: string) => {
   const axiosInstance = createAxiosInstance(token);
@@ -93,6 +130,7 @@ const uploadProfilePicture = () => {};
 const authService = {
   registerUser,
   loginUser,
+  getAllUsers,
   updateUser,
   forgotUserPassword,
   verifyUser,

@@ -29,7 +29,7 @@ const createFine = async (fineData: IFineData, token: string) => {
 };
 
 // get all fines
-const getFines = async (token: string) => {
+const getAllFines = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
@@ -37,36 +37,25 @@ const getFines = async (token: string) => {
     const response = {
       data: [
         {
-          id: 1,
-          title: "fine 1",
+          id: 6,
+          title: "fine 2",
           category: 1,
           description: "fine 1 des",
           issuedDate: "2023-10-06T20:44:55.000Z",
           endDate: "2023-10-06T20:44:55.000Z",
           amount: 2000,
-          inchargeId: 1,
+          inchargeId: 3,
+          userId: 4,
           status: 1,
-          userId: 2,
           tax: 100,
           otherCharges: 100,
-          updatedAt: "2023-10-06T13:53:24.234Z",
-          createdAt: "2023-10-06T13:53:24.234Z",
-        },
-        {
-          id: 2,
-          title: "fine 1",
-          category: 1,
-          description: "fine 1 des",
-          issuedDate: "2023-10-06T20:44:55.000Z",
-          endDate: "2023-10-06T20:44:55.000Z",
-          amount: 2000,
-          inchargeId: 1,
-          status: 1,
-          userId: 2,
-          tax: 100,
-          otherCharges: 100,
-          updatedAt: "2023-10-06T13:53:24.234Z",
-          createdAt: "2023-10-06T13:53:24.234Z",
+          policeStationId: 1,
+          createdAt: "2023-10-07T06:31:49.000Z",
+          updatedAt: "2023-10-07T06:31:49.000Z",
+          User: {
+            firstName: "sithija",
+            lastName: "shehara",
+          },
         },
       ],
     };
@@ -79,12 +68,43 @@ const getFines = async (token: string) => {
 };
 
 // user specific fines
-const fineByUser = () => {};
+const userSpecificFines = async (token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+  try {
+    // const response = await axiosInstance.get("/user-specific-fines");
+    const response = {
+      data: [
+        {
+          id: 6,
+          title: "fine 2",
+          category: 1,
+          description: "fine 1 des",
+          issuedDate: "2023-10-06T20:44:55.000Z",
+          endDate: "2023-10-06T20:44:55.000Z",
+          amount: 2000,
+          inchargeId: 3,
+          userId: 3,
+          status: 1,
+          tax: 100,
+          otherCharges: 100,
+          policeStationId: 1,
+          createdAt: "2023-10-07T06:31:49.000Z",
+          updatedAt: "2023-10-07T06:31:49.000Z",
+        },
+      ],
+    };
+    return response.data;
+  } catch (error) {
+    // Handle error here
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
 
 const fineService = {
   createFine,
-  getFines,
-  fineByUser,
+  getAllFines,
+  userSpecificFines,
 };
 
 export default fineService;

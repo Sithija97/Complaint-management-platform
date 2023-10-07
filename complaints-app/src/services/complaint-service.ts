@@ -44,63 +44,37 @@ const getComplaints = async (token: string) => {
       data: [
         {
           id: 1,
-          title: "Complaint 1",
+          title: "Complaint 2",
           policeStationId: 1,
-          complaint: "Complaint 3 Description",
+          complaint: "Complaint 2 Description",
           category: 1,
           statusId: 1,
-          userId: 1,
+          userId: 3,
           isDeleted: 0,
-          updatedAt: "2023-10-06T06:44:41.219Z",
-          createdAt: "2023-10-06T06:44:41.219Z",
+          createdAt: "2023-10-07T16:11:30.000Z",
+          updatedAt: "2023-10-07T16:11:30.000Z",
+          User: {
+            id: 3,
+            firstName: "sithija",
+            lastName: "shehara",
+          },
         },
         {
           id: 2,
           title: "Complaint 2",
           policeStationId: 1,
-          complaint: "Complaint 3 Description",
+          complaint: "Complaint 2 Description",
           category: 1,
           statusId: 1,
-          userId: 1,
+          userId: 3,
           isDeleted: 0,
-          updatedAt: "2023-10-06T06:44:41.219Z",
-          createdAt: "2023-10-06T06:44:41.219Z",
-        },
-        {
-          id: 3,
-          title: "Complaint 3",
-          policeStationId: 1,
-          complaint: "Complaint 3 Description",
-          category: 1,
-          statusId: 1,
-          userId: 1,
-          isDeleted: 0,
-          updatedAt: "2023-10-06T06:44:41.219Z",
-          createdAt: "2023-10-06T06:44:41.219Z",
-        },
-        {
-          id: 4,
-          title: "Complaint 4",
-          policeStationId: 1,
-          complaint: "Complaint 3 Description",
-          category: 1,
-          statusId: 1,
-          userId: 1,
-          isDeleted: 0,
-          updatedAt: "2023-10-06T06:44:41.219Z",
-          createdAt: "2023-10-06T06:44:41.219Z",
-        },
-        {
-          id: 5,
-          title: "Complaint 5",
-          policeStationId: 1,
-          complaint: "Complaint 3 Description",
-          category: 1,
-          statusId: 1,
-          userId: 1,
-          isDeleted: 0,
-          updatedAt: "2023-10-06T06:44:41.219Z",
-          createdAt: "2023-10-06T06:44:41.219Z",
+          createdAt: "2023-10-07T16:11:30.000Z",
+          updatedAt: "2023-10-07T16:11:30.000Z",
+          User: {
+            id: 3,
+            firstName: "sithija",
+            lastName: "shehara",
+          },
         },
       ],
     };
@@ -133,16 +107,39 @@ const removeComplaint = async (
 };
 
 // user specific complaints
-const userSpecificComplaints = () => {};
+const userSpecificComplaints = async (token: string) => {
+  const axiosInstance = createAxiosInstance(token);
 
-// delete complaint
-const deleteComplaint = () => {};
+  try {
+    // const response = await axiosInstance.get("/user-specific-complaints");
+    const response = {
+      data: [
+        {
+          id: 1,
+          title: "Complaint 2",
+          policeStationId: 1,
+          complaint: "Complaint 2 Description",
+          category: 1,
+          statusId: 1,
+          userId: 3,
+          isDeleted: 0,
+          createdAt: "2023-10-07T16:11:30.000Z",
+          updatedAt: "2023-10-07T16:11:30.000Z",
+        },
+      ],
+    };
+    return response.data;
+  } catch (error) {
+    // Handle error here
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
 
 const complaintService = {
   createComplaint,
   getComplaints,
   removeComplaint,
   userSpecificComplaints,
-  deleteComplaint,
 };
 export default complaintService;

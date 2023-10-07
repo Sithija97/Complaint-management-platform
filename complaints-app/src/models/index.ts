@@ -27,6 +27,24 @@ export interface IComplaint {
   statusId: number;
   userId: number;
   isDeleted: number;
+  createdAt?: string;
+  updatedAt?: string;
+  User: {
+    id: number;
+    firstName: string;
+    lastName: string;
+  };
+}
+
+export interface IComplaintUser {
+  id: number;
+  title: string;
+  policeStationId: number;
+  complaint: string;
+  category: number;
+  statusId: number;
+  userId: number;
+  isDeleted: number;
   updatedAt?: string;
   createdAt?: string;
 }
@@ -40,12 +58,36 @@ export interface IFine {
   endDate: string;
   amount: number;
   inchargeId: number;
-  status: number;
   userId: number;
+  status: number;
   tax: number;
   otherCharges: number;
-  updatedAt?: string;
+  policeStationId: number;
   createdAt?: string;
+  updatedAt?: string;
+  User: {
+    id: number;
+    firstName: string;
+    lastName: string;
+  };
+}
+
+export interface IFineUser {
+  id: number;
+  title: string;
+  category: number;
+  description: string;
+  issuedDate: string;
+  endDate: string;
+  amount: number;
+  inchargeId: number;
+  userId: number;
+  status: number;
+  tax: number;
+  otherCharges: number;
+  policeStationId: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IReport {
@@ -54,12 +96,90 @@ export interface IReport {
   filename: string;
   userId: number;
   uploadedBy: number;
+  policeStationId: number;
   updatedAt?: string;
   createdAt?: string;
+  User: {
+    id: number;
+    firstName: string;
+    lastName: string;
+  };
+}
+
+export interface IReportUser {
+  id: number;
+  policeReportRequestId: number;
+  filename: string;
+  userId: number;
+  uploadedBy: number;
+  policeStationId: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface IReportRequest {
+  id: number;
+  title: string;
+  category: number;
+  description: string;
+  userId: number;
+  status: number;
+  policeStationId: number;
+  createdAt?: string;
+  updatedAt?: string;
+  User: {
+    id: number;
+    firstName: string;
+    lastName: string;
+  };
+}
+
+export interface IReportRequestUser {
+  id: number;
+  title: string;
+  category: number;
+  description: string;
+  userId: number;
+  status: number;
+  policeStationId: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface IPayment {
+  id: number;
+  title: string;
+  description: string;
+  fineId: number;
+  userId: number;
+  amount: number;
+  createdAt?: string;
+  updatedAt?: string;
+  User: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    PoliceStation: {
+      id: number;
+      policeStationName: string;
+    };
+  };
+}
+
+export interface IPaymentUser {
+  id: number;
+  title: string;
+  description: string;
+  fineId: number;
+  userId: number;
+  amount: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IAuthInitialState {
   user: IUser | null;
+  users: IUser[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -68,6 +188,7 @@ export interface IAuthInitialState {
 
 export interface IComplaintsInitialState {
   complaints: IComplaint[];
+  userComplaints: IComplaintUser[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -75,6 +196,7 @@ export interface IComplaintsInitialState {
 }
 export interface IFineInitialState {
   fines: IFine[];
+  userFines: IFineUser[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -83,6 +205,18 @@ export interface IFineInitialState {
 
 export interface IReportsInitialState {
   reports: IReport[];
+  userReports: IReportUser[];
+  reportRequests: IReportRequest[];
+  userReportRequests: IReportRequestUser[];
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: string;
+}
+
+export interface IPaymentInitialState {
+  payments: IPayment[];
+  userPayments: IPaymentUser[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -173,5 +307,17 @@ export interface IReportRequestData {
   description: string;
   category: number;
   status: number;
-  fileName: File | any | null;
+  fileName: File | any | null; // file array
+}
+
+export interface IPaymentData {
+  title: string;
+  description: string;
+  fineId: number;
+  amount: number;
+}
+
+export interface IReportStatus {
+  id: number;
+  status: number;
 }

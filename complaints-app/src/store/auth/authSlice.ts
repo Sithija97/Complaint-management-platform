@@ -18,6 +18,7 @@ const user: IUser = localStorage.getItem("user")
 
 const initialState: IAuthInitialState = {
   user: user || null,
+  users: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -48,6 +49,25 @@ export const login = createAsyncThunk(
   async (user: ILoginData, thunkAPI) => {
     try {
       return await authService.loginUser(user);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// get all users
+export const getAllUsers = createAsyncThunk(
+  "auth/getAllUsers",
+  async (_, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await authService.getAllUsers(user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -173,6 +193,20 @@ const authSlice = createSlice({
         state.user = action.payload!;
       })
       .addCase(update.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        state.user = null;
+      })
+      .addCase(getAllUsers.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.users = action.payload!;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;
