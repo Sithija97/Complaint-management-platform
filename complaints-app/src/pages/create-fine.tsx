@@ -12,24 +12,27 @@ import {
 } from "@mui/material";
 import { BoxContainer } from "../components";
 import { useAppDispatch } from "../store/store";
-import { createComplaints } from "../store/complaints/complaintsSlice";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { CustomDatePicker } from "../components/customDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { formatDate } from "../utils/formatDate";
+import { createFine } from "../store/fines/fineSlice";
+import { IFineData } from "../models";
 
 export const CreateFine = () => {
   const dispatch = useAppDispatch();
 
   const initialState = {
-    Title: "",
-    Category: 1,
+    title: "",
+    category: 1,
+    description: "",
+    issueDate: "",
+    expireDate: "",
+    amount: 0,
+    userId: 1,
     statusId: 1,
-    Description: "",
-    userId: 0,
-    Amount: 0,
-    Tax: 0,
-    OtherAmounts: 0,
+    tax: 0,
+    otherCharges: 0,
   };
   const [formData, setFormData] = useState(initialState);
 
@@ -43,14 +46,32 @@ export const CreateFine = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(formData);
-    const data = {
-      title: formData.Title,
-      description: formData.Description,
-      category: Number(formData.Category),
-      statusId: Number(formData.statusId),
+    const {
+      title,
+      category,
+      description,
+      issueDate,
+      expireDate,
+      amount,
+      userId,
+      statusId,
+      tax,
+      otherCharges,
+    } = formData;
+    const data: IFineData = {
+      title,
+      category: Number(category),
+      description,
+      issuedDate: formatDate(issueDate),
+      endDate: formatDate(expireDate),
+      amount: Number(amount),
+      userId: Number(userId),
+      statusId: Number(statusId),
+      tax: Number(tax),
+      otherCharges: Number(otherCharges),
     };
-    // dispatch(createComplaints(data)); // IFineData model created
+    console.log(data);
+    // dispatch(createFine(data));
     setFormData(initialState);
   };
 
@@ -66,11 +87,11 @@ export const CreateFine = () => {
             <Grid item xs={12} sm={6} md={6}>
               <TextField
                 required
-                id="Title"
-                name="Title"
+                id="title"
+                name="title"
                 label="Title"
                 fullWidth
-                value={formData.Title}
+                value={formData.title}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -79,8 +100,8 @@ export const CreateFine = () => {
                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
                 <Select
                   label="Category"
-                  name="Category"
-                  value={formData.Category}
+                  name="category"
+                  value={formData.category}
                   onChange={handleInputChange}
                 >
                   <MenuItem value={1}>Category 1</MenuItem>
@@ -113,63 +134,69 @@ export const CreateFine = () => {
                   value={formData.userId}
                   onChange={handleInputChange}
                 >
-                  <MenuItem value={1}>Pending</MenuItem>
-                  <MenuItem value={2}>Inprogress</MenuItem>
-                  <MenuItem value={3}>Done</MenuItem>
+                  <MenuItem value={1}>User 1</MenuItem>
+                  <MenuItem value={2}>User 2</MenuItem>
+                  <MenuItem value={3}>User 3</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <TextField
                 required
-                id="Amount"
-                name="Amount"
+                id="amount"
+                name="amount"
                 label="Amount"
                 type="number"
                 fullWidth
-                value={formData.Amount}
+                value={formData.amount}
                 onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <TextField
                 required
-                id="Tax"
-                name="Tax"
+                id="tax"
+                name="tax"
                 label="Tax"
                 type="number"
                 fullWidth
-                value={formData.Tax}
+                value={formData.tax}
                 onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <TextField
                 required
-                id="OtherAmounts"
-                name="OtherAmounts"
+                id="otherCharges"
+                name="otherCharges"
                 label="OtherAmounts"
                 type="number"
                 fullWidth
-                value={formData.OtherAmounts}
+                value={formData.otherCharges}
                 onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={['DatePicker']}>
-                    <DatePicker label="Issued Date" />
-                  </DemoContainer>
+                  <CustomDatePicker
+                    name="issueDate"
+                    label="Issued Date"
+                    value={formData.issueDate}
+                    onChange={handleInputChange}
+                  />
                 </LocalizationProvider>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={['DatePicker']}>
-                    <DatePicker label="Expire Date" />
-                  </DemoContainer>
+                  <CustomDatePicker
+                    name="expireDate"
+                    label="Expire Date"
+                    value={formData.expireDate}
+                    onChange={handleInputChange}
+                  />
                 </LocalizationProvider>
               </FormControl>
             </Grid>
@@ -184,7 +211,7 @@ export const CreateFine = () => {
                 multiline
                 rows={12}
                 fullWidth
-                value={formData.Description}
+                value={formData.description}
                 onChange={handleInputChange}
               />
             </Grid>

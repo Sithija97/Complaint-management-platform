@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Card,
-  CardContent,
   Typography,
   TextField,
   Grid,
@@ -84,7 +83,7 @@ export const Payment: React.FC = () => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="Card Number"

@@ -20,9 +20,6 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { CustomDatePicker } from "../components/customDatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();

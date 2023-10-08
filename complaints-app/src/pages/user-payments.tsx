@@ -1,33 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Dashboard } from "../layouts";
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Stack,
-  Toolbar,
-  Typography,
-  Table,
-  TableContainer,
-  TableHead,
-  TableCell,
-  TableRow,
-  TableBody,
-  TableFooter,
-  Popover,
-  MenuItem,
-  IconButton,
-  FormControl,
-  InputLabel,
-  Select,
-  Grid,
-  ListItemIcon,
-  ListItemText,
-  Drawer,
-  DialogTitle,
-} from "@mui/material";
-import { Delete, Edit, MoreVert } from "@mui/icons-material";
+import { Card, Container, Stack, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";

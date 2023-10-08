@@ -208,6 +208,7 @@ export interface IAuthInitialState {
   dashboardData: IDashBoardDataType;
   isError: boolean;
   isSuccess: boolean;
+  isDashboardDataLoading: boolean;
   isLoading: boolean;
   message: string;
 }
@@ -215,6 +216,7 @@ export interface IAuthInitialState {
 export interface IComplaintsInitialState {
   complaints: IComplaint[];
   userComplaints: IComplaintUser[];
+  selectedComplaintId: number;
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -301,17 +303,19 @@ export interface IComplaintData {
 
 export interface IFineData {
   title: string;
-  description: string;
   category: number;
-  statusId: number;
+  description: string;
+  issuedDate: string;
+  endDate: string;
+  amount: number;
   userId: number;
-  Amount: number;
-  Tax: number;
-  OtherAmounts: number;
+  statusId: number;
+  tax: number;
+  otherCharges: number;
 }
 
 export interface IRemoveComplaintData {
-  complaintId: string;
+  complaintId: number;
   reason: string;
 }
 

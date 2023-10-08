@@ -47,6 +47,7 @@ const initialState: IAuthInitialState = {
   dashboardData: initialDashboardValues,
   isError: false,
   isSuccess: false,
+  isDashboardDataLoading: false,
   isLoading: false,
   message: "",
 };

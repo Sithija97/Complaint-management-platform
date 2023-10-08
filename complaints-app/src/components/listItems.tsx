@@ -22,17 +22,11 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItemButton>
-      <ListItemButton onClick={() => navigate("/users")}>
+      <ListItemButton onClick={() => navigate("/users-list")}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Users" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/report-request")}>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Report Requests" />
       </ListItemButton>
       <ListItemButton onClick={() => navigate("/reports")}>
         <ListItemIcon>
@@ -40,17 +34,41 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Reports" />
       </ListItemButton>
+      <ListItemButton onClick={() => navigate("/reports-list")}>
+        <ListItemIcon>
+          <DescriptionIcon />
+        </ListItemIcon>
+        <ListItemText primary="Reports List" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/report-request")}>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Report Requests" />
+      </ListItemButton>
       <ListItemButton onClick={() => navigate("/complaints")}>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
         <ListItemText primary="Complaints" />
       </ListItemButton>
+      <ListItemButton onClick={() => navigate("/complaints-list")}>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Complaints List" />
+      </ListItemButton>
       <ListItemButton onClick={() => navigate("/fines")}>
         <ListItemIcon>
           <PriceChangeIcon />
         </ListItemIcon>
         <ListItemText primary="Fines" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/fines-list")}>
+        <ListItemIcon>
+          <PriceChangeIcon />
+        </ListItemIcon>
+        <ListItemText primary="Fines List" />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>

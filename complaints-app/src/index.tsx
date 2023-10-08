@@ -16,21 +16,22 @@ import {
   Fines,
   Home,
   Login,
+  ForgotPassword,
   Payment,
   Register,
   Reports,
-  Users,
   UserProfile,
   VerifyUser,
   ReportRequest,
   UserPaymentList,
   PaymentList,
+  UsersList,
+  ComplaintList,
+  FineList,
+  ReportsList,
 } from "./pages";
 import { store } from "./store/store";
 import PrivateRoute from "./components/privte-route";
-import { ForgotPassword } from "./pages/forgot-password";
-import { UserComplaints } from "./pages/user-complaints";
-import { UserFines } from "./pages/user-fine";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -43,34 +44,21 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* <Route path="" element={<PrivateRoute />}> */}
-      <Route path="/users" element={<Users />} />
+      <Route path="/users-list" element={<UsersList />} />
       {/* </Route> */}
-      <Route path="/verify-user" element={<VerifyUser />} />
-      {/* <Route path="" element={<PrivateRoute />}> */}
-      <Route path="/cases" element={<Cases />} />
-      {/* </Route> */}
-      {/* <Route path="" element={<PrivateRoute />}> */}
-      <Route path="/fines" element={<Fines />} />
-      {/* </Route> */}
-      {/* <Route path="" element={<PrivateRoute />}> */}
-      <Route path="/reports" element={<Reports />} />
-      {/* </Route> */}
-      {/* <Route path="" element={<PrivateRoute />}> */}
-      <Route path="/complaints" element={<Complaints />} />
-      {/* </Route> */}
-      {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/profile" element={<UserProfile />} />
-      {/* </Route> */}
-      {/* <Route path="" element={<PrivateRoute />}> */}
-      <Route path="/payment" element={<Payment />} />
-      {/* </Route> */}
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="/verify-user" element={<VerifyUser />} />
+      <Route path="/cases" element={<Cases />} />
+      <Route path="/fines" element={<Fines />} />
+      <Route path="/reports" element={<Reports />} />
+      <Route path="/reports-list" element={<ReportsList />} />
       <Route path="/report-request" element={<ReportRequest />} />
-      <Route path="/user-complaints" element={<UserComplaints />} />
-      <Route path="/user-fines" element={<UserFines />} />
-      <Route path="/user-payments" element={<UserPaymentList />} />
+      <Route path="/complaints" element={<Complaints />} />
+      <Route path="/complaints-list" element={<ComplaintList />} />
+      <Route path="/payment" element={<Payment />} />
       <Route path="/payment-list" element={<PaymentList />} />
-      {/* </Route> */}
+      <Route path="/fines-list" element={<FineList />} />
+      <Route path="/user-payments" element={<UserPaymentList />} />
     </Route>
   )
 );

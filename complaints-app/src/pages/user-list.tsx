@@ -8,29 +8,9 @@ import {
   Stack,
   Toolbar,
   Typography,
-  Table,
-  TableContainer,
-  TableHead,
-  TableCell,
-  TableRow,
-  TableBody,
-  TableFooter,
-  Popover,
-  MenuItem,
-  IconButton,
-  FormControl,
-  InputLabel,
-  Select,
-  Grid,
-  ListItemIcon,
-  ListItemText,
-  Drawer,
-  DialogTitle,
 } from "@mui/material";
-import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
-import { CreateUser } from "./create-user";
 import { BoxContainer } from "../components";
 
 type Person = {
@@ -128,22 +108,7 @@ const data: Person[] = [
   },
 ];
 
-export const Users = () => {
-  const [show, setShow] = useState(false);
-  const toggleDrawer = () => setShow(!show);
-
-  const navigate = useNavigate();
-
-  const [open, setOpen] = useState(null);
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
-
-  const handleOpenMenu = (event: any) => {
-    setOpen(event.currentTarget);
-  };
-
+export const UsersList = () => {
   const columns = useMemo<MRT_ColumnDef<Person>[]>(
     () => [
       {
@@ -199,10 +164,6 @@ export const Users = () => {
           </Card>
         </Container>
       </BoxContainer>
-
-      <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateUser />
-      </Drawer>
     </Dashboard>
   );
 };

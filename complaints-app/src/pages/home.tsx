@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import { Dashboard } from "../layouts";
-import { Card } from "@mui/material";
+import { Card, CircularProgress } from "@mui/material";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,6 +18,8 @@ import {
   ArcElement,
 } from "chart.js";
 import { Bar, Doughnut } from "react-chartjs-2";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import { getDashboardData } from "../store/auth/authSlice";
 
 ChartJS.register(
   CategoryScale,
@@ -85,7 +87,7 @@ function Copyright(props: any) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Police Complaint Platform
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -94,6 +96,22 @@ function Copyright(props: any) {
 }
 
 export const Home = () => {
+  const dispatch = useAppDispatch();
+  const { dashboardData, isDashboardDataLoading } = useAppSelector(
+    (state: RootState) => state.auth
+  );
+  useEffect(() => {
+    dispatch(getDashboardData());
+  }, []);
+
+  if (isDashboardDataLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Dashboard>
       <Box
@@ -117,7 +135,9 @@ export const Home = () => {
           <Grid sx={{ mb: 3 }} container spacing={3}>
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
-                <Typography variant="h3">120</Typography>
+                <Typography variant="h3">
+                  {dashboardData.user.userCount}
+                </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
                   Users
@@ -127,7 +147,9 @@ export const Home = () => {
 
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
-                <Typography variant="h3">100</Typography>
+                <Typography variant="h3">
+                  {dashboardData.complaint.activeComplaints}
+                </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
                   Cases
@@ -137,7 +159,9 @@ export const Home = () => {
 
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
-                <Typography variant="h3">180</Typography>
+                <Typography variant="h3">
+                  {dashboardData.policeReport.allPoliceReportRequests}
+                </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
                   Reports
@@ -147,10 +171,12 @@ export const Home = () => {
 
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
-                <Typography variant="h3">160</Typography>
+                <Typography variant="h3">
+                  {dashboardData.revenue.totalFineAmount}
+                </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-                  Stations
+                  Revenue
                 </Typography>
               </Card>
             </Grid>

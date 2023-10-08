@@ -8,26 +8,7 @@ import {
   Stack,
   Toolbar,
   Typography,
-  Table,
-  TableContainer,
-  TableHead,
-  TableCell,
-  TableRow,
-  TableBody,
-  TableFooter,
-  Popover,
-  MenuItem,
-  IconButton,
-  FormControl,
-  InputLabel,
-  Select,
-  Grid,
-  ListItemIcon,
-  ListItemText,
-  Drawer,
-  DialogTitle,
 } from "@mui/material";
-import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
@@ -128,7 +109,7 @@ const data: Person[] = [
   },
 ];
 
-export const UserFines = () => {
+export const FineList = () => {
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
@@ -187,7 +168,7 @@ export const UserFines = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              My Fines
+              Fines List
             </Typography>
           </Stack>
 

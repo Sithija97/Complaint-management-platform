@@ -61,7 +61,7 @@ const data: Person[] = [
   },
 ];
 
-export const Complaints = () => {
+export const ComplaintList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -118,31 +118,31 @@ export const Complaints = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              Complaints
+              Complaints List
             </Typography>
-            <Button variant="contained" onClick={toggleDrawer}>
+            {/* <Button variant="contained" onClick={toggleDrawer}>
               Create Complaint
-            </Button>
+            </Button> */}
           </Stack>
 
           <Card>
             <MaterialReactTable
               columns={columns}
               data={data}
-              enableRowActions
-              renderRowActions={({ row, table }) => (
-                <Box sx={{ display: "flex", gap: "1rem" }}>
-                  <IconButton color="error" onClick={() => {}}>
-                    <EditIcon sx={{ color: "#2288E5" }} />
-                  </IconButton>
-                  <IconButton
-                    color="error"
-                    onClick={() => handleRemoveComplaint(row.getValue("id"))}
-                  >
-                    <DeleteIcon sx={{ color: "#e63946" }} />
-                  </IconButton>
-                </Box>
-              )}
+              // enableRowActions
+              // renderRowActions={({ row, table }) => (
+              //   <Box sx={{ display: "flex", gap: "1rem" }}>
+              //     <IconButton color="error" onClick={() => {}}>
+              //       <EditIcon sx={{ color: "#2288E5" }} />
+              //     </IconButton>
+              //     <IconButton
+              //       color="error"
+              //       onClick={() => handleRemoveComplaint(row.getValue("id"))}
+              //     >
+              //       <DeleteIcon sx={{ color: "#e63946" }} />
+              //     </IconButton>
+              //   </Box>
+              // )}
               positionActionsColumn="last"
             />
           </Card>

@@ -1,4 +1,8 @@
-import { IComplaintData, IComplaintsInitialState } from "../../models/index";
+import {
+  IComplaintData,
+  IComplaintsInitialState,
+  IRemoveComplaintData,
+} from "../../models/index";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import complaintService from "../../services/complaint-service";
@@ -6,6 +10,7 @@ import complaintService from "../../services/complaint-service";
 const initialState: IComplaintsInitialState = {
   complaints: [],
   userComplaints: [],
+  selectedComplaintId: 0,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -72,6 +77,28 @@ export const getComplaintsByUser = createAsyncThunk(
   }
 );
 
+// remove complaint
+export const removeComplaint = createAsyncThunk(
+  "complaints/removeComplaint",
+  async (complaintData: IRemoveComplaintData, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await complaintService.removeComplaint(
+        complaintData,
+        user?.token!
+      );
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const complaintSlice = createSlice({
   name: "complaints",
   initialState,
@@ -81,6 +108,9 @@ const complaintSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.message = "";
+    },
+    setSelectedComplaint(state, { payload }) {
+      state.selectedComplaintId = payload;
     },
   },
   extraReducers: (builder) => {
@@ -114,6 +144,6 @@ const complaintSlice = createSlice({
   },
 });
 
-export const { reset } = complaintSlice.actions;
+export const { reset, setSelectedComplaint } = complaintSlice.actions;
 
 export default complaintSlice.reducer;
