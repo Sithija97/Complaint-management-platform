@@ -127,6 +127,45 @@ const verifyUser = async (userData: IVerifyUserData) => {
 // upload profile picture
 const uploadProfilePicture = () => {};
 
+// get dahsboard data
+const getDashboardData = async (token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+
+  try {
+    // const response = await axiosInstance.get("/get-dasboard-data");
+    const reponse = {
+      data: {
+        user: {
+          userCount: 1,
+          policeUserCount: 1,
+        },
+        complaint: {
+          activeComplaints: 0,
+          removedComplaints: 0,
+        },
+        fine: {
+          activeFines: 2,
+          complatedFines: 0,
+        },
+        policeReport: {
+          policeReports: 1,
+          allPoliceReportRequests: 1,
+          pendingPoliceReportRequests: 0,
+        },
+        revenue: {
+          pendingFineAmount: 6000,
+          completedFineAmount: null,
+          totalFineAmount: 6000,
+        },
+      },
+    };
+    return reponse.data;
+  } catch (error) {
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
+
 const authService = {
   registerUser,
   loginUser,
@@ -135,6 +174,7 @@ const authService = {
   forgotUserPassword,
   verifyUser,
   uploadProfilePicture,
+  getDashboardData,
 };
 
 export default authService;

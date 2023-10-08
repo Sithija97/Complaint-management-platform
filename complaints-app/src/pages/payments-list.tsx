@@ -30,51 +30,105 @@ import {
 import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
+import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
-import { CreateComplaint } from "./create-complaint";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 type Person = {
-  id: number;
-  title: string;
-  category: number;
-  description: string;
-  issuedDate: string;
-  endDate: string;
-  amount: number;
-  inchargeId: number;
-  userId: number;
-  status: number;
-  tax: number;
-  otherCharges: number;
-  policeStationId: number;
-
-  createdAt: string;
-  updatedAt: string;
+  name: {
+    firstName: string;
+    lastName: string;
+  };
+  address: string;
+  city: string;
+  state: string;
 };
 
 //nested data is ok, see accessorKeys in ColumnDef below
 const data: Person[] = [
   {
-    id: 6,
-    title: "fine 2",
-    category: 1,
-    description: "fine 1 des",
-    issuedDate: "2023-10-06T20:44:55.000Z",
-    endDate: "2023-10-06T20:44:55.000Z",
-    amount: 2000,
-    inchargeId: 3,
-    userId: 4,
-    status: 1,
-    tax: 100,
-    otherCharges: 100,
-    policeStationId: 1,
-    createdAt: "2023-10-07T06:31:49.000Z",
-    updatedAt: "2023-10-07T06:31:49.000Z",
+    name: {
+      firstName: "John",
+      lastName: "Doe",
+    },
+    address: "261 Erdman Ford",
+    city: "East Daphne",
+    state: "Kentucky",
+  },
+  {
+    name: {
+      firstName: "Jane",
+      lastName: "Doe",
+    },
+    address: "769 Dominic Grove",
+    city: "Columbus",
+    state: "Ohio",
+  },
+  {
+    name: {
+      firstName: "Joe",
+      lastName: "Doe",
+    },
+    address: "566 Brakus Inlet",
+    city: "South Linda",
+    state: "West Virginia",
+  },
+  {
+    name: {
+      firstName: "Kevin",
+      lastName: "Vandy",
+    },
+    address: "722 Emie Stream",
+    city: "Lincoln",
+    state: "Nebraska",
+  },
+  {
+    name: {
+      firstName: "Joshua",
+      lastName: "Rolluffs",
+    },
+    address: "32188 Larkin Turnpike",
+    city: "Omaha",
+    state: "Nebraska",
+  },
+  {
+    name: {
+      firstName: "Joshua",
+      lastName: "Rolluffs",
+    },
+    address: "32188 Larkin Turnpike",
+    city: "Omaha",
+    state: "Nebraska",
+  },
+  {
+    name: {
+      firstName: "Joshua",
+      lastName: "Rolluffs",
+    },
+    address: "32188 Larkin Turnpike",
+    city: "Omaha",
+    state: "Nebraska",
+  },
+  {
+    name: {
+      firstName: "Joshua",
+      lastName: "Rolluffs",
+    },
+    address: "32188 Larkin Turnpike",
+    city: "Omaha",
+    state: "Nebraska",
+  },
+  {
+    name: {
+      firstName: "Joshua",
+      lastName: "Rolluffs",
+    },
+    address: "32188 Larkin Turnpike",
+    city: "Omaha",
+    state: "Nebraska",
   },
 ];
 
-export const Complaints = () => {
+export const PaymentList = () => {
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
@@ -93,33 +147,29 @@ export const Complaints = () => {
   const columns = useMemo<MRT_ColumnDef<Person>[]>(
     () => [
       {
-        accessorKey: "title", //access nested data with dot notation
+        accessorKey: "name.firstName", //access nested data with dot notation
         header: "First Name",
         size: 150,
       },
       {
-        accessorKey: "amount",
+        accessorKey: "name.lastName",
         header: "Last Name",
         size: 150,
       },
       {
-        accessorKey: "tax", //normal accessorKey
+        accessorKey: "address", //normal accessorKey
         header: "Address",
         size: 200,
       },
       {
-        accessorKey: "otherCharges",
+        accessorKey: "city",
         header: "City",
         size: 150,
       },
       {
-        accessorKey: "id",
+        accessorKey: "state",
         header: "State",
         size: 150,
-      },
-      {
-        header: "Actions",
-        size: 100,
       },
     ],
     []
@@ -137,11 +187,8 @@ export const Complaints = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              Complaints
+              Payments
             </Typography>
-            <Button variant="contained" onClick={toggleDrawer}>
-              Create Complaint
-            </Button>
           </Stack>
 
           <Card>
@@ -149,10 +196,6 @@ export const Complaints = () => {
           </Card>
         </Container>
       </BoxContainer>
-
-      <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateComplaint />
-      </Drawer>
     </Dashboard>
   );
 };

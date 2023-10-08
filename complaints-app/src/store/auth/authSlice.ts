@@ -16,9 +16,35 @@ const user: IUser = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user")!)
   : null;
 
+const initialDashboardValues = {
+  user: {
+    userCount: 0,
+    policeUserCount: 0,
+  },
+  complaint: {
+    activeComplaints: 0,
+    removedComplaints: 0,
+  },
+  fine: {
+    activeFines: 0,
+    completedFines: 0,
+  },
+  policeReport: {
+    policeReports: 0,
+    allPoliceReportRequests: 0,
+    pendingPoliceReportRequests: 0,
+  },
+  revenue: {
+    pendingFineAmount: 0,
+    completedFineAmount: null,
+    totalFineAmount: 0,
+  },
+};
+
 const initialState: IAuthInitialState = {
   user: user || null,
   users: [],
+  dashboardData: initialDashboardValues,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -68,6 +94,25 @@ export const getAllUsers = createAsyncThunk(
     const user = (thunkAPI.getState() as RootState).auth.user;
     try {
       return await authService.getAllUsers(user?.token!);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// get all users
+export const getDashboardData = createAsyncThunk(
+  "auth/getDashboardData",
+  async (_, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await authService.getDashboardData(user?.token!);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -147,6 +192,8 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
+      state.users = [];
+      state.dashboardData = initialDashboardValues;
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = false;
@@ -207,6 +254,20 @@ const authSlice = createSlice({
         state.users = action.payload!;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        state.user = null;
+      })
+      .addCase(getDashboardData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getDashboardData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.dashboardData = action.payload!;
+      })
+      .addCase(getDashboardData.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;

@@ -14,3 +14,5 @@ export * from "./create-fine";
 export * from "./user-profile";
 export * from "./payment";
 export * from "./report-request";
+export * from "./user-payments";
+export * from "./payments-list";

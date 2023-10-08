@@ -53,6 +53,7 @@ const getAllFines = async (token: string) => {
           createdAt: "2023-10-07T06:31:49.000Z",
           updatedAt: "2023-10-07T06:31:49.000Z",
           User: {
+            id: 1,
             firstName: "sithija",
             lastName: "shehara",
           },

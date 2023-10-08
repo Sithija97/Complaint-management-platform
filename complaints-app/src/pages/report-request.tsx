@@ -27,11 +27,11 @@ export const ReportRequest = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
-  const [file, setFile] = useState<File | any | null>(null); // Store the selected file object
+  const [files, setFiles] = useState<File[]>([]); // Store an array of selected file objects
 
-  const handleFileChange = (e: any) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []) as File[];
+    setFiles([...files, ...selectedFiles]);
   };
 
   const handleSubmit = () => {
@@ -40,15 +40,17 @@ export const ReportRequest = () => {
     console.log("Description:", description);
     console.log("Category:", category);
     console.log("Status:", status);
-    console.log("File:", file);
+    console.log("Files:", files);
 
     const reportData: IReportRequestData = {
       title,
       description,
       category: Number(category),
       status: Number(status),
-      fileName: file,
+      fileName: files, // Include the array of files in the report data
     };
+
+    console.log(reportData);
 
     // dispatch(createReportRequest(reportData));
   };
@@ -124,13 +126,23 @@ export const ReportRequest = () => {
                 id="file-upload"
                 type="file"
                 style={{ display: "none" }}
+                multiple // Allow multiple file selection
                 onChange={handleFileChange} // Handle file selection
               />
               <label htmlFor="file-upload">
                 <Button variant="outlined" component="span" sx={{ mt: 2 }}>
-                  Upload File
+                  Upload Files
                 </Button>
-                {file && <span>{file.name}</span>}
+                {files.length > 0 && (
+                  <div>
+                    Selected Files:
+                    <ul>
+                      {files.map((file, index) => (
+                        <li key={index}>{file.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </label>
 
               <Button

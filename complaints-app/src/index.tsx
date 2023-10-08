@@ -23,6 +23,8 @@ import {
   UserProfile,
   VerifyUser,
   ReportRequest,
+  UserPaymentList,
+  PaymentList,
 } from "./pages";
 import { store } from "./store/store";
 import PrivateRoute from "./components/privte-route";
@@ -66,6 +68,8 @@ const router = createBrowserRouter(
       <Route path="/report-request" element={<ReportRequest />} />
       <Route path="/user-complaints" element={<UserComplaints />} />
       <Route path="/user-fines" element={<UserFines />} />
+      <Route path="/user-payments" element={<UserPaymentList />} />
+      <Route path="/payment-list" element={<PaymentList />} />
       {/* </Route> */}
     </Route>
   )

@@ -177,9 +177,35 @@ export interface IPaymentUser {
   updatedAt?: string;
 }
 
+interface IDashBoardDataType {
+  user: {
+    userCount: number;
+    policeUserCount: number;
+  };
+  complaint: {
+    activeComplaints: number;
+    removedComplaints: number;
+  };
+  fine: {
+    activeFines: number;
+    completedFines?: number;
+  };
+  policeReport: {
+    policeReports: number;
+    allPoliceReportRequests: number;
+    pendingPoliceReportRequests: number;
+  };
+  revenue: {
+    pendingFineAmount: number;
+    completedFineAmount: number | null;
+    totalFineAmount: number;
+  };
+}
+
 export interface IAuthInitialState {
   user: IUser | null;
   users: IUser[];
+  dashboardData: IDashBoardDataType;
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -307,7 +333,7 @@ export interface IReportRequestData {
   description: string;
   category: number;
   status: number;
-  fileName: File | any | null; // file array
+  fileName: File[] | any | null; // file array
 }
 
 export interface IPaymentData {
