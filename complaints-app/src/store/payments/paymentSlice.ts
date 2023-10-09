@@ -9,6 +9,8 @@ const initialState: IPaymentInitialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  isGetAllPaymentsLoading: false,
+  isGetPaymentsByUserLoading: false,
   message: "",
 };
 
@@ -83,28 +85,28 @@ const paymentSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllPayments.pending, (state) => {
-        state.isLoading = true;
+        state.isGetAllPaymentsLoading = true;
       })
       .addCase(getAllPayments.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllPaymentsLoading = false;
         state.isSuccess = true;
         state.payments = action.payload!;
       })
       .addCase(getAllPayments.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllPaymentsLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       })
       .addCase(getPaymentsByUser.pending, (state) => {
-        state.isLoading = true;
+        state.isGetPaymentsByUserLoading = true;
       })
       .addCase(getPaymentsByUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGetPaymentsByUserLoading = false;
         state.isSuccess = true;
         state.userPayments = action.payload!;
       })
       .addCase(getPaymentsByUser.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetPaymentsByUserLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       });

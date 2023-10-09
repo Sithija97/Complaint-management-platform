@@ -36,16 +36,17 @@ const getAllPayments = async (token: string) => {
     const response = {
       data: [
         {
-          id: 2,
+          id: 1,
           title: "Payment 1",
           description: "Payment 1 desc",
-          fineId: 6,
-          userId: 3,
+          fineId: 2,
+          userId: 2,
           amount: 2000,
-          createdAt: "2023-10-07T17:57:30.000Z",
-          updatedAt: "2023-10-07T17:57:30.000Z",
+          policeStationId: 1,
+          createdAt: "2023-10-09T10:46:58.000Z",
+          updatedAt: "2023-10-09T10:46:58.000Z",
           User: {
-            id: 3,
+            id: 2,
             firstName: "sithija",
             lastName: "shehara",
             PoliceStation: {

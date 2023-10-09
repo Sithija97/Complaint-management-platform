@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Dashboard } from "../layouts";
 import {
   Box,
@@ -10,60 +10,32 @@ import {
   Typography,
   Drawer,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { BoxContainer } from "../components";
 import { CreateComplaint } from "./create-complaint";
-import { useAppDispatch } from "../store/store";
-import { setSelectedComplaint } from "../store/complaints/complaintsSlice";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import {
+  getComplaintsByUser,
+  setSelectedComplaint,
+} from "../store/complaints/complaintsSlice";
 import { RemoveComplaint } from "./remove-complaint";
-
-type Person = {
-  id: number;
-  title: string;
-  category: number;
-  description: string;
-  issuedDate: string;
-  endDate: string;
-  amount: number;
-  inchargeId: number;
-  userId: number;
-  status: number;
-  tax: number;
-  otherCharges: number;
-  policeStationId: number;
-
-  createdAt: string;
-  updatedAt: string;
-};
-
-//nested data is ok, see accessorKeys in ColumnDef below
-const data: Person[] = [
-  {
-    id: 6,
-    title: "fine 2",
-    category: 1,
-    description: "fine 1 des",
-    issuedDate: "2023-10-06T20:44:55.000Z",
-    endDate: "2023-10-06T20:44:55.000Z",
-    amount: 2000,
-    inchargeId: 3,
-    userId: 4,
-    status: 1,
-    tax: 100,
-    otherCharges: 100,
-    policeStationId: 1,
-    createdAt: "2023-10-07T06:31:49.000Z",
-    updatedAt: "2023-10-07T06:31:49.000Z",
-  },
-];
+import { IComplaintUser } from "../models";
 
 export const Complaints = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { isGetComplaintsByUserLoading } = useAppSelector(
+    (state: RootState) => state.complaints
+  );
+
+  useEffect(() => {
+    dispatch(getComplaintsByUser());
+  }, []);
 
   const [show, setShow] = useState(false);
   const [showRemoveDrawer, setShowRemoveDrawer] = useState(false);
@@ -75,7 +47,7 @@ export const Complaints = () => {
     toggleRemoveDrawer();
   };
 
-  const columns = useMemo<MRT_ColumnDef<Person>[]>(
+  const columns = useMemo<MRT_ColumnDef<IComplaintUser>[]>(
     () => [
       {
         accessorKey: "id",
@@ -83,28 +55,39 @@ export const Complaints = () => {
         size: 100,
       },
       {
-        accessorKey: "title", //access nested data with dot notation
+        accessorKey: "title",
         header: "Title",
         size: 150,
       },
       {
-        accessorKey: "amount",
-        header: "Amount",
+        accessorKey: "statusId",
+        header: "Status",
+        size: 100,
+      },
+      {
+        accessorKey: "complaint", //normal accessorKey
+        header: "Complaint",
         size: 150,
       },
       {
-        accessorKey: "tax", //normal accessorKey
-        header: "Tax",
-        size: 150,
-      },
-      {
-        accessorKey: "otherCharges",
-        header: "Other Charges",
+        accessorKey: "PoliceStation.policeStationName", //normal accessorKey
+        header: "Police Station",
         size: 150,
       },
     ],
     []
   );
+  const data: IComplaintUser[] = useAppSelector(
+    (state: RootState) => state.complaints.userComplaints
+  );
+
+  if (isGetComplaintsByUserLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Dashboard>
@@ -118,7 +101,7 @@ export const Complaints = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              Complaints
+              My Complaints
             </Typography>
             <Button variant="contained" onClick={toggleDrawer}>
               Create Complaint
@@ -132,9 +115,9 @@ export const Complaints = () => {
               enableRowActions
               renderRowActions={({ row, table }) => (
                 <Box sx={{ display: "flex", gap: "1rem" }}>
-                  <IconButton color="error" onClick={() => {}}>
+                  {/* <IconButton color="error" onClick={() => {}}>
                     <EditIcon sx={{ color: "#2288E5" }} />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton
                     color="error"
                     onClick={() => handleRemoveComplaint(row.getValue("id"))}

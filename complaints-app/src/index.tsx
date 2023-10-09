@@ -11,7 +11,6 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import {
-  Cases,
   Complaints,
   Fines,
   Home,
@@ -29,6 +28,9 @@ import {
   ComplaintList,
   FineList,
   ReportsList,
+  UserReportRequestList,
+  ReportRequestList,
+  UploadReport,
 } from "./pages";
 import { store } from "./store/store";
 import PrivateRoute from "./components/privte-route";
@@ -39,24 +41,26 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/users-list" element={<UsersList />} />
       {/* </Route> */}
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/verify-user" element={<VerifyUser />} />
-      <Route path="/cases" element={<Cases />} />
       <Route path="/fines" element={<Fines />} />
       <Route path="/reports" element={<Reports />} />
       <Route path="/reports-list" element={<ReportsList />} />
       <Route path="/report-request" element={<ReportRequest />} />
+      <Route path="/upload-report" element={<UploadReport />} />
+      <Route path="/report-request-list" element={<ReportRequestList />} />
+      <Route path="/user-report-requests" element={<UserReportRequestList />} />
       <Route path="/complaints" element={<Complaints />} />
       <Route path="/complaints-list" element={<ComplaintList />} />
       <Route path="/payment" element={<Payment />} />
-      <Route path="/payment-list" element={<PaymentList />} />
+      <Route path="/payments-list" element={<PaymentList />} />
       <Route path="/fines-list" element={<FineList />} />
       <Route path="/user-payments" element={<UserPaymentList />} />
     </Route>

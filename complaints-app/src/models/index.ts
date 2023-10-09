@@ -1,24 +1,24 @@
-export interface IUser {
-  id: number;
-  firstName: string;
-  lastName: string;
-  nameWithInitials: string;
-  fullName: string;
-  address: string;
-  contactNumber: string;
-  email: string;
-  gender: number;
-  nic: string;
-  userRoleId: number;
-  policeStationId: number;
-  password: string;
-  token?: string;
-  updatedAt?: string;
-  createdAt?: string;
-  filename: string | null;
-}
+// export interface IUser {
+//   id: number;
+//   firstName: string;
+//   lastName: string;
+//   nameWithInitials: string;
+//   fullName: string;
+//   address: string;
+//   contactNumber: string;
+//   email: string;
+//   gender: number;
+//   nic: string;
+//   userRoleId: number;
+//   policeStationId: number;
+//   password: string;
+//   token?: string;
+//   updatedAt?: string;
+//   createdAt?: string;
+//   filename: string | null;
+// }
 
-export interface IPerson {
+export interface IUser {
   id: number;
   firstName: string;
   lastName: string;
@@ -33,10 +33,10 @@ export interface IPerson {
   policeStationId: number;
   secretCode: any;
   password: string;
-  filename: any;
-  token: string;
-  createdAt: string;
-  updatedAt: string;
+  filename?: any;
+  token?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IComplaint {
@@ -68,6 +68,9 @@ export interface IComplaintUser {
   isDeleted: number;
   updatedAt?: string;
   createdAt?: string;
+  PoliceStation: {
+    policeStationName: string;
+  };
 }
 
 export interface IFine {
@@ -125,6 +128,9 @@ export interface IReport {
     firstName: string;
     lastName: string;
   };
+  PoliceReportRequest: {
+    title: string;
+  };
 }
 
 export interface IReportUser {
@@ -136,6 +142,9 @@ export interface IReportUser {
   policeStationId: number;
   createdAt?: string;
   updatedAt?: string;
+  PoliceReportRequest: {
+    title: string;
+  };
 }
 
 export interface IReportRequest {
@@ -174,6 +183,7 @@ export interface IPayment {
   fineId: number;
   userId: number;
   amount: number;
+  policeStationId: number;
   createdAt?: string;
   updatedAt?: string;
   User: {
@@ -230,6 +240,7 @@ export interface IAuthInitialState {
   isError: boolean;
   isSuccess: boolean;
   isDashboardDataLoading: boolean;
+  isGetAllUsersLoading: boolean;
   isLoading: boolean;
   message: string;
 }
@@ -240,14 +251,19 @@ export interface IComplaintsInitialState {
   selectedComplaintId: number;
   isError: boolean;
   isSuccess: boolean;
+  isGetAllComplaintsLoading: boolean;
+  isGetComplaintsByUserLoading: boolean;
   isLoading: boolean;
   message: string;
 }
 export interface IFineInitialState {
   fines: IFine[];
   userFines: IFineUser[];
+  selectedFineId: number;
   isError: boolean;
   isSuccess: boolean;
+  isGetAllFinesLoading: boolean;
+  isGetFinesByUserLoading: boolean;
   isLoading: boolean;
   message: string;
 }
@@ -257,8 +273,13 @@ export interface IReportsInitialState {
   userReports: IReportUser[];
   reportRequests: IReportRequest[];
   userReportRequests: IReportRequestUser[];
+  selectedReportRequestId: number;
   isError: boolean;
   isSuccess: boolean;
+  isGetAllReportsLoading: boolean;
+  isGetReportByUserLoading: boolean;
+  isGetAllReportRequestsLoading: boolean;
+  isGetReportRequestByUserLoading: boolean;
   isLoading: boolean;
   message: string;
 }
@@ -269,6 +290,8 @@ export interface IPaymentInitialState {
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
+  isGetAllPaymentsLoading: boolean;
+  isGetPaymentsByUserLoading: boolean;
   message: string;
 }
 
@@ -300,8 +323,6 @@ export interface IUpdateData {
   fullName: string;
   address: string;
   contactNumber: string;
-  userRoleId: number;
-  policeStationId: number;
 }
 
 export interface IVerifyUserData {
@@ -359,6 +380,12 @@ export interface IReportRequestData {
   category: number;
   status: number;
   fileName: File[] | any | null; // file array
+}
+
+export interface IUploadReportData {
+  fileName: File[] | any | null;
+  policeReportRequestId: number;
+  userId: number;
 }
 
 export interface IPaymentData {

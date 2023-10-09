@@ -1,152 +1,76 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Dashboard } from "../layouts";
-import { Card, Container, Stack, Toolbar, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Container,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
-
-type Person = {
-  name: {
-    firstName: string;
-    lastName: string;
-  };
-  address: string;
-  city: string;
-  state: string;
-};
-
-//nested data is ok, see accessorKeys in ColumnDef below
-const data: Person[] = [
-  {
-    name: {
-      firstName: "John",
-      lastName: "Doe",
-    },
-    address: "261 Erdman Ford",
-    city: "East Daphne",
-    state: "Kentucky",
-  },
-  {
-    name: {
-      firstName: "Jane",
-      lastName: "Doe",
-    },
-    address: "769 Dominic Grove",
-    city: "Columbus",
-    state: "Ohio",
-  },
-  {
-    name: {
-      firstName: "Joe",
-      lastName: "Doe",
-    },
-    address: "566 Brakus Inlet",
-    city: "South Linda",
-    state: "West Virginia",
-  },
-  {
-    name: {
-      firstName: "Kevin",
-      lastName: "Vandy",
-    },
-    address: "722 Emie Stream",
-    city: "Lincoln",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-];
+import { IPayment } from "../models";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import { getAllPayments } from "../store/payments/paymentSlice";
 
 export const PaymentList = () => {
+  const dispatch = useAppDispatch();
+  const { isGetAllPaymentsLoading } = useAppSelector(
+    (state: RootState) => state.payments
+  );
+
+  useEffect(() => {
+    dispatch(getAllPayments());
+  }, []);
+
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
-  const navigate = useNavigate();
-
-  const [open, setOpen] = useState(null);
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
-
-  const handleOpenMenu = (event: any) => {
-    setOpen(event.currentTarget);
-  };
-
-  const columns = useMemo<MRT_ColumnDef<Person>[]>(
+  const columns = useMemo<MRT_ColumnDef<IPayment>[]>(
     () => [
       {
-        accessorKey: "name.firstName", //access nested data with dot notation
+        accessorKey: "User.firstName", //access nested data with dot notation
         header: "First Name",
         size: 150,
       },
       {
-        accessorKey: "name.lastName",
+        accessorKey: "User.lastName",
         header: "Last Name",
         size: 150,
       },
       {
-        accessorKey: "address", //normal accessorKey
-        header: "Address",
+        accessorKey: "User.PoliceStation.policeStationName", //normal accessorKey
+        header: "Police Station",
         size: 200,
       },
       {
-        accessorKey: "city",
-        header: "City",
+        accessorKey: "title",
+        header: "Title",
         size: 150,
       },
       {
-        accessorKey: "state",
-        header: "State",
+        accessorKey: "amount",
+        header: "Amount",
         size: 150,
       },
     ],
     []
   );
+  const data: IPayment[] = useAppSelector(
+    (state: RootState) => state.payments.payments
+  );
+
+  if (isGetAllPaymentsLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Dashboard>

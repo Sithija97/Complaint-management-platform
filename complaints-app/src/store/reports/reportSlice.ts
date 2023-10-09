@@ -3,6 +3,7 @@ import {
   IReportRequestData,
   IReportStatus,
   IReportsInitialState,
+  IUploadReportData,
 } from "../../models";
 import { RootState } from "../store";
 import policeReportService from "../../services/police-reports-service";
@@ -12,7 +13,12 @@ const initialState: IReportsInitialState = {
   userReports: [],
   reportRequests: [],
   userReportRequests: [],
+  selectedReportRequestId: 0,
   isError: false,
+  isGetAllReportsLoading: false,
+  isGetReportByUserLoading: false,
+  isGetAllReportRequestsLoading: false,
+  isGetReportRequestByUserLoading: false,
   isSuccess: false,
   isLoading: false,
   message: "",
@@ -135,6 +141,28 @@ export const getReportRequestByUser = createAsyncThunk(
   }
 );
 
+// upload report
+export const uploadReport = createAsyncThunk(
+  "reports/uploadReport",
+  async (uploadReportData: IUploadReportData, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await policeReportService.uploadPoliceReport(
+        uploadReportData,
+        user?.token!
+      );
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const reportSlice = createSlice({
   name: "reports",
   initialState,
@@ -145,32 +173,35 @@ const reportSlice = createSlice({
       state.isError = false;
       state.message = "";
     },
+    setSelectedReportRequestId(state, { payload }) {
+      state.selectedReportRequestId = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllReports.pending, (state) => {
-        state.isLoading = true;
+        state.isGetAllReportsLoading = true;
       })
       .addCase(getAllReports.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllReportsLoading = false;
         state.isSuccess = true;
         state.reports = action.payload!;
       })
       .addCase(getAllReports.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllReportsLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       })
       .addCase(getReportByUser.pending, (state) => {
-        state.isLoading = true;
+        state.isGetReportByUserLoading = true;
       })
       .addCase(getReportByUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGetReportByUserLoading = false;
         state.isSuccess = true;
         state.userReports = action.payload!;
       })
       .addCase(getReportByUser.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetReportByUserLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       })
@@ -203,6 +234,6 @@ const reportSlice = createSlice({
   },
 });
 
-export const { reset } = reportSlice.actions;
+export const { reset, setSelectedReportRequestId } = reportSlice.actions;
 
 export default reportSlice.reducer;

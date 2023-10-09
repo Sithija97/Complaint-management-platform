@@ -48,6 +48,7 @@ const initialState: IAuthInitialState = {
   isError: false,
   isSuccess: false,
   isDashboardDataLoading: false,
+  isGetAllUsersLoading: false,
   isLoading: false,
   message: "",
 };
@@ -181,6 +182,25 @@ export const verify = createAsyncThunk(
   }
 );
 
+// upload profile Img user
+export const uploadProfileImg = createAsyncThunk(
+  "auth/uploadProfileImg",
+  async (data: any, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await authService.uploadProfilePicture(data, user?.token!);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -246,30 +266,44 @@ const authSlice = createSlice({
         state.message = action.payload as string;
         state.user = null;
       })
-      .addCase(getAllUsers.pending, (state) => {
+      .addCase(uploadProfileImg.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllUsers.fulfilled, (state, action) => {
+      .addCase(uploadProfileImg.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.users = action.payload!;
+        state.user = action.payload!;
       })
-      .addCase(getAllUsers.rejected, (state, action) => {
+      .addCase(uploadProfileImg.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;
         state.user = null;
       })
+      .addCase(getAllUsers.pending, (state) => {
+        state.isGetAllUsersLoading = true;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.isGetAllUsersLoading = false;
+        state.isSuccess = true;
+        state.users = action.payload!;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.isGetAllUsersLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        state.user = null;
+      })
       .addCase(getDashboardData.pending, (state) => {
-        state.isLoading = true;
+        state.isDashboardDataLoading = true;
       })
       .addCase(getDashboardData.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isDashboardDataLoading = false;
         state.isSuccess = true;
         state.dashboardData = action.payload!;
       })
       .addCase(getDashboardData.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isDashboardDataLoading = false;
         state.isError = true;
         state.message = action.payload as string;
         state.user = null;

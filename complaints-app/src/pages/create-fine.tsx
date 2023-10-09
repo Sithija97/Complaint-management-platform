@@ -71,7 +71,7 @@ export const CreateFine = () => {
       otherCharges: Number(otherCharges),
     };
     console.log(data);
-    // dispatch(createFine(data));
+    dispatch(createFine(data));
     setFormData(initialState);
   };
 

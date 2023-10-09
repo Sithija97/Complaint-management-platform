@@ -10,13 +10,16 @@ import HomeIcon from "@mui/icons-material/Home";
 import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SettingsIcon from "@mui/icons-material/Settings";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useNavigate } from "react-router-dom";
 
 export const MainListItems = () => {
   const navigate = useNavigate();
   return (
     <React.Fragment>
-      <ListItemButton onClick={() => navigate("/")}>
+      <ListItemButton onClick={() => navigate("/home")}>
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
@@ -40,11 +43,29 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Reports List" />
       </ListItemButton>
+      <ListItemButton onClick={() => navigate("/user-report-requests")}>
+        <ListItemIcon>
+          <LibraryBooksIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Requests" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/report-request-list")}>
+        <ListItemIcon>
+          <LibraryBooksIcon />
+        </ListItemIcon>
+        <ListItemText primary="Requests List" />
+      </ListItemButton>
       <ListItemButton onClick={() => navigate("/report-request")}>
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
         <ListItemText primary="Report Requests" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/upload-report")}>
+        <ListItemIcon>
+          <UploadFileIcon />
+        </ListItemIcon>
+        <ListItemText primary="Upload Report" />
       </ListItemButton>
       <ListItemButton onClick={() => navigate("/complaints")}>
         <ListItemIcon>
@@ -70,7 +91,19 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Fines List" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton onClick={() => navigate("/user-payments")}>
+        <ListItemIcon>
+          <CreditCardIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Payments" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/payments-list")}>
+        <ListItemIcon>
+          <CreditCardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Payments List" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate("/profile")}>
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>

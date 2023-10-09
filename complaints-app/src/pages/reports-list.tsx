@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Dashboard } from "../layouts";
 import {
   Box,
@@ -26,154 +26,66 @@ import {
   ListItemText,
   Drawer,
   DialogTitle,
+  CircularProgress,
 } from "@mui/material";
 import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
-
-type Person = {
-  name: {
-    firstName: string;
-    lastName: string;
-  };
-  address: string;
-  city: string;
-  state: string;
-};
-
-//nested data is ok, see accessorKeys in ColumnDef below
-const data: Person[] = [
-  {
-    name: {
-      firstName: "John",
-      lastName: "Doe",
-    },
-    address: "261 Erdman Ford",
-    city: "East Daphne",
-    state: "Kentucky",
-  },
-  {
-    name: {
-      firstName: "Jane",
-      lastName: "Doe",
-    },
-    address: "769 Dominic Grove",
-    city: "Columbus",
-    state: "Ohio",
-  },
-  {
-    name: {
-      firstName: "Joe",
-      lastName: "Doe",
-    },
-    address: "566 Brakus Inlet",
-    city: "South Linda",
-    state: "West Virginia",
-  },
-  {
-    name: {
-      firstName: "Kevin",
-      lastName: "Vandy",
-    },
-    address: "722 Emie Stream",
-    city: "Lincoln",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-];
+import { IReport } from "../models";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import { getAllReports } from "../store/reports/reportSlice";
 
 export const ReportsList = () => {
+  const dispatch = useAppDispatch();
+  const { isGetAllReportsLoading } = useAppSelector(
+    (state: RootState) => state.policeReports
+  );
+
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(getAllReports());
+  }, []);
 
-  const [open, setOpen] = useState(null);
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
-
-  const handleOpenMenu = (event: any) => {
-    setOpen(event.currentTarget);
-  };
-
-  const columns = useMemo<MRT_ColumnDef<Person>[]>(
+  const data: IReport[] = useAppSelector(
+    (state: RootState) => state.policeReports.reports
+  );
+  const columns = useMemo<MRT_ColumnDef<IReport>[]>(
     () => [
       {
-        accessorKey: "name.firstName", //access nested data with dot notation
+        accessorKey: "PoliceReportRequest.title",
+        header: "Report Title",
+        size: 150,
+      },
+      {
+        accessorKey: "User.firstName",
         header: "First Name",
         size: 150,
       },
       {
-        accessorKey: "name.lastName",
+        accessorKey: "User.lastName", //normal accessorKey
         header: "Last Name",
-        size: 150,
-      },
-      {
-        accessorKey: "address", //normal accessorKey
-        header: "Address",
         size: 200,
       },
       {
-        accessorKey: "city",
-        header: "City",
-        size: 150,
-      },
-      {
-        accessorKey: "state",
-        header: "State",
+        accessorKey: "filename",
+        header: "Report",
         size: 150,
       },
     ],
     []
   );
+
+  if (isGetAllReportsLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Dashboard>

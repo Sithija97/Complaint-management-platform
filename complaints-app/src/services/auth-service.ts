@@ -56,22 +56,46 @@ const getAllUsers = async (token: string) => {
         {
           id: 1,
           firstName: "kaveesha",
-          lastName: "Rathnayaka",
-          nameWithInitials: "R.M.K.G.Rathnayaka",
-          fullName: "Kaveesha Gayashan Rathnayaka",
-          address: "Borella",
-          contactNumber: "0765467890",
+          lastName: "rathnayaka",
+          nameWithInitials: "r.m.k.g.rathnayaka",
+          fullName: "kaveesha rathnayaka",
+          address: "borella",
+          contactNumber: "0765467891",
           email: "doyouknowyt31@gmail.com",
+          nic: "978765435V",
+          gender: 1,
+          userRoleId: 2,
+          policeStationId: 1,
+          secretCode: null,
+          password:
+            "$2b$10$C4nAKfLs13mgmCmIPMKUruyosZFCajrsoTFdo4cyHP/5aeYdmXeKO",
+          filename: null,
+          token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NjcwNzM3NCwiZXhwIjoxNzI4MjQzMzc0fQ.-5rT0Zefob8O95SJOc5mz66bhP5vEZmBpyjvKDzQwsc",
+          createdAt: "2023-10-07T19:09:39.000Z",
+          updatedAt: "2023-10-07T19:36:14.000Z",
+        },
+        {
+          id: 2,
+          firstName: "sithija",
+          lastName: "shehara",
+          nameWithInitials: "n.s.shehara",
+          fullName: "sithija shehara",
+          address: "maharagama",
+          contactNumber: "0765467890",
+          email: "nsithijashehara@gmail.com",
           nic: "978765435V",
           gender: 1,
           userRoleId: 1,
           policeStationId: 1,
           secretCode: null,
           password:
-            "$2b$10$tjni9byrfZaZUxgXisE8YOVO/pdbnAVyC7yX37nr3Js5PCe1X07Qq",
+            "$2b$10$CRcFPwF7rVTgunozTwMqw.h91T638jV8mP94wFKKr7/tYBu7KbRWC",
           filename: null,
-          createdAt: "2023-10-06T06:41:15.000Z",
-          updatedAt: "2023-10-06T06:41:15.000Z",
+          token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY5NjcwNTgzNCwiZXhwIjoxNzI4MjQxODM0fQ.eIvtEBuH5usuYEsz_e-Vk0NAsbUhmnlrPzqo9olIq7E",
+          createdAt: "2023-10-07T19:09:51.000Z",
+          updatedAt: "2023-10-07T19:10:34.000Z",
         },
       ],
     };
@@ -125,7 +149,20 @@ const verifyUser = async (userData: IVerifyUserData) => {
 };
 
 // upload profile picture
-const uploadProfilePicture = () => {};
+const uploadProfilePicture = async (data: any, token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+  try {
+    const response = await axiosInstance.post(
+      `${BASE_URL}/upload-profile-picture`,
+      data
+    );
+    localStorage.setItem("user", JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
 
 // get dahsboard data
 const getDashboardData = async (token: string) => {

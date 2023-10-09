@@ -13,32 +13,25 @@ import {
 } from "@mui/material";
 import { BoxContainer } from "../components";
 import { Dashboard } from "../layouts";
+import { IPaymentData } from "../models";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import { createPayment } from "../store/payments/paymentSlice";
 
-interface PaymentInfo {
-  name: string;
-  address: string;
-  cardNumber: string;
-  cvv: string;
-  expiryMonth: string;
-  expiryYear: string;
-}
-
-export const Payment: React.FC = () => {
-  const initialPaymentInfo: PaymentInfo = {
-    name: "",
-    address: "",
+export const Payment = () => {
+  const dispatch = useAppDispatch();
+  const initialPaymentInfo = {
+    title: "",
+    description: "",
     cardNumber: "",
-    cvv: "",
-    expiryMonth: "",
-    expiryYear: "",
+    amount: 0,
   };
 
-  const [paymentInfo, setPaymentInfo] =
-    useState<PaymentInfo>(initialPaymentInfo);
+  const selectedFineId = useAppSelector(
+    (state: RootState) => state.fines.selectedFineId
+  );
+  const [paymentInfo, setPaymentInfo] = useState(initialPaymentInfo);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
     setPaymentInfo({
       ...paymentInfo,
@@ -48,7 +41,15 @@ export const Payment: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(paymentInfo); // You can handle the payment data submission here.
+    const paymentData: IPaymentData = {
+      title: paymentInfo.title,
+      description: paymentInfo.description,
+      fineId: selectedFineId || 0,
+      amount: Number(paymentInfo.amount),
+    };
+    console.log(paymentData);
+    dispatch(createPayment(paymentData));
+    setPaymentInfo(initialPaymentInfo);
   };
 
   return (
@@ -64,22 +65,22 @@ export const Payment: React.FC = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Name"
-                    name="name"
+                    label="Title"
+                    name="title"
                     variant="outlined"
-                    value={paymentInfo.name}
-                    // onChange={handleChange}
+                    value={paymentInfo.title}
+                    onChange={handleChange}
                     required
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Address"
-                    name="address"
+                    label="Description"
+                    name="description"
                     variant="outlined"
-                    value={paymentInfo.address}
-                    // onChange={handleChange}
+                    value={paymentInfo.description}
+                    onChange={handleChange}
                     required
                   />
                 </Grid>
@@ -90,51 +91,49 @@ export const Payment: React.FC = () => {
                     name="cardNumber"
                     variant="outlined"
                     value={paymentInfo.cardNumber}
-                    // onChange={handleChange}
+                    onChange={handleChange}
                     required
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
                     fullWidth
-                    label="CVV"
-                    name="cvv"
+                    label="Amount"
+                    name="amount"
                     variant="outlined"
-                    value={paymentInfo.cvv}
-                    // onChange={handleChange}
+                    value={paymentInfo.amount}
+                    onChange={handleChange}
                     required
                   />
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel>Expiry Month</InputLabel>
                     <Select
                       label="Expiry Month"
                       name="expiryMonth"
                       value={paymentInfo.expiryMonth}
-                      //   onChange={handleChange}
+                      onChange={handleChange}
                       required
                     >
                       <MenuItem value="01">01 - January</MenuItem>
-                      {/* Add more months */}
                     </Select>
                   </FormControl>
-                </Grid>
-                <Grid item xs={6}>
+                </Grid> */}
+                {/* <Grid item xs={6}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel>Expiry Year</InputLabel>
                     <Select
                       label="Expiry Year"
                       name="expiryYear"
                       value={paymentInfo.expiryYear}
-                      //   onChange={handleChange}
+                      onChange={handleChange}
                       required
                     >
                       <MenuItem value="2023">2023</MenuItem>
-                      {/* Add more years */}
                     </Select>
                   </FormControl>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Button
                 type="submit"

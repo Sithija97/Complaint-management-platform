@@ -13,27 +13,24 @@ import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
-import { IPayment, IPaymentUser } from "../models";
+import { IReportRequestUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
-import {
-  getAllPayments,
-  getPaymentsByUser,
-} from "../store/payments/paymentSlice";
+import { getReportRequestByUser } from "../store/reports/reportSlice";
 
-export const UserPaymentList = () => {
+export const UserReportRequestList = () => {
   const dispatch = useAppDispatch();
-  const { isGetPaymentsByUserLoading } = useAppSelector(
-    (state: RootState) => state.payments
+  const { isGetReportRequestByUserLoading } = useAppSelector(
+    (state: RootState) => state.policeReports
   );
 
   useEffect(() => {
-    dispatch(getPaymentsByUser());
+    dispatch(getReportRequestByUser());
   }, []);
 
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
-  const columns = useMemo<MRT_ColumnDef<IPaymentUser>[]>(
+  const columns = useMemo<MRT_ColumnDef<IReportRequestUser>[]>(
     () => [
       {
         accessorKey: "title",
@@ -46,18 +43,18 @@ export const UserPaymentList = () => {
         size: 150,
       },
       {
-        accessorKey: "amount",
-        header: "Amount",
+        accessorKey: "category",
+        header: "Category",
         size: 200,
       },
     ],
     []
   );
-  const data: IPaymentUser[] = useAppSelector(
-    (state: RootState) => state.payments.userPayments
+  const data: IReportRequestUser[] = useAppSelector(
+    (state: RootState) => state.policeReports.userReportRequests
   );
 
-  if (isGetPaymentsByUserLoading) {
+  if (isGetReportRequestByUserLoading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
         <CircularProgress />
@@ -77,7 +74,7 @@ export const UserPaymentList = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              My Payments
+              My Report Requests
             </Typography>
           </Stack>
 

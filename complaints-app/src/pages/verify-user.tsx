@@ -59,7 +59,7 @@ export const VerifyUser = () => {
         password,
       };
 
-      // dispatch(verify(data));
+      dispatch(verify(data));
       formik.resetForm();
     }
   };

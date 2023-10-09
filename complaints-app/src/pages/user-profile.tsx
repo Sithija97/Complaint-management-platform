@@ -14,7 +14,8 @@ import {
 import { Dashboard } from "../layouts";
 import { BoxContainer } from "../components";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
-import { update } from "../store/auth/authSlice";
+import { update, uploadProfileImg } from "../store/auth/authSlice";
+import { IUpdateData } from "../models";
 
 const UserProfile = () => {
   const dispatch = useAppDispatch();
@@ -42,17 +43,12 @@ const UserProfile = () => {
   const [fullName, setFullName] = useState(
     user?.fullName || user_test.fullName
   );
-  const [userRoleId, setUserRoleId] = useState(
-    user?.userRoleId || user_test.userRoleId
-  );
-  const [policeStationId, setPoliceStationId] = useState(
-    user?.policeStationId || user_test.policeStationId
-  );
+
   const [address, setAddress] = useState(user?.address || user_test.address);
   const [contactNumber, setContactNumber] = useState(
     user?.contactNumber || user_test.contactNumber
   );
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(user?.filename || null);
 
   const handleImageUpload = (e: any) => {
     const file = e.target.files[0];
@@ -60,15 +56,13 @@ const UserProfile = () => {
   };
 
   const handleSaveClick = () => {
-    const updatedUser = {
+    const updatedUser: IUpdateData = {
       firstName,
       lastName,
       nameWithInitials,
       fullName,
       address,
       contactNumber,
-      userRoleId,
-      policeStationId,
     };
 
     if (selectedImage) {
@@ -82,6 +76,7 @@ const UserProfile = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Image uploaded:", data);
+          dispatch(uploadProfileImg(data));
         })
         .catch((error) => {
           console.error("Image upload failed:", error);
@@ -89,7 +84,7 @@ const UserProfile = () => {
     }
 
     console.log("Updated user:", updatedUser);
-    // dispatch(update(updatedUser));
+    dispatch(update(updatedUser));
   };
 
   return (
@@ -112,7 +107,11 @@ const UserProfile = () => {
               <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
                 <Avatar
                   alt={`${firstName} ${lastName}`}
-                  src={selectedImage ? URL.createObjectURL(selectedImage) : user_test.avatarUrl}
+                  src={
+                    selectedImage
+                      ? URL.createObjectURL(selectedImage)
+                      : user_test.avatarUrl
+                  }
                   sx={{ width: 90, height: 90, margin: "0 auto" }}
                 />
               </label>
@@ -147,18 +146,18 @@ const UserProfile = () => {
                   margin="normal"
                 />
                 <TextField
-                  label="Last Name"
+                  label="Name with Initials"
                   variant="outlined"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  value={nameWithInitials}
+                  onChange={(e) => setNameWithInitials(e.target.value)}
                   fullWidth
                   margin="normal"
                 />
                 <TextField
-                  label="Last Name"
+                  label="Full Name"
                   variant="outlined"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   fullWidth
                   margin="normal"
                 />

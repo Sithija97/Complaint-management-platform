@@ -105,9 +105,9 @@ export const Register = () => {
           password,
           filename,
         };
-        // dispatch(register(user)).then(
-        //   (data) => data.meta.requestStatus === "fulfilled" && navigate("Login")
-        // );
+        dispatch(register(user)).then(
+          (data) => data.meta.requestStatus === "fulfilled" && navigate("Login")
+        );
         formik.resetForm();
       } catch (error) {
         console.log("registration error :", error);

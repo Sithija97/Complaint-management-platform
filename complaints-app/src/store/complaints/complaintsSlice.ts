@@ -13,6 +13,8 @@ const initialState: IComplaintsInitialState = {
   selectedComplaintId: 0,
   isError: false,
   isSuccess: false,
+  isGetAllComplaintsLoading: false,
+  isGetComplaintsByUserLoading: false,
   isLoading: false,
   message: "",
 };
@@ -116,15 +118,15 @@ const complaintSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllComplaints.pending, (state) => {
-        state.isLoading = true;
+        state.isGetAllComplaintsLoading = true;
       })
       .addCase(getAllComplaints.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllComplaintsLoading = false;
         state.isSuccess = true;
         state.complaints = action.payload!;
       })
       .addCase(getAllComplaints.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllComplaintsLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       })

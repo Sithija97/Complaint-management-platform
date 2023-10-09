@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dashboard } from "../layouts";
 import {
   Box,
@@ -8,7 +8,6 @@ import {
   Stack,
   Toolbar,
   Typography,
-  TextField,
   FormControl,
   InputLabel,
   Select,
@@ -16,16 +15,32 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { BoxContainer } from "../components";
-import { useAppDispatch } from "../store/store";
-import { createReportRequest } from "../store/reports/reportSlice";
-import { IReportRequestData } from "../models";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
+import { getAllUsers } from "../store/auth/authSlice";
+import { IReportRequest, IUser } from "../models";
+import {
+  getAllReportRequests,
+  uploadReport,
+} from "../store/reports/reportSlice";
 
-export const ReportRequest = () => {
+export const UploadReport = () => {
   const dispatch = useAppDispatch();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [files, setFiles] = useState<File[]>([]); // Store an array of selected file objects
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getAllReportRequests());
+  }, []);
+
+  const userList: IUser[] = useAppSelector(
+    (state: RootState) => state.auth.users
+  );
+  const policeReportRequestList: IReportRequest[] = useAppSelector(
+    (state: RootState) => state.policeReports.reportRequests
+  );
+
+  const [policeReportRequestId, setPoliceReportRequestId] = useState("");
+  const [userId, setUserId] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []) as File[];
@@ -33,17 +48,18 @@ export const ReportRequest = () => {
   };
 
   const handleSubmit = () => {
-    const reportData: IReportRequestData = {
-      title,
-      description,
-      category: Number(category),
-      status: 1,
+    const uploadData = {
+      policeReportRequestId: Number(policeReportRequestId),
+      userId: Number(userId),
       fileName: files,
     };
 
-    console.log(reportData);
+    console.log(uploadData);
+    dispatch(uploadReport(uploadData));
 
-    dispatch(createReportRequest(reportData));
+    setUserId("");
+    setPoliceReportRequestId("");
+    setFiles([]);
   };
 
   return (
@@ -58,45 +74,43 @@ export const ReportRequest = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              Report Request
+              Upload Report
             </Typography>
           </Stack>
 
           <Card>
             <Box p={3}>
               <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Title"
-                  variant="outlined"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </FormControl>
-
-              <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  variant="outlined"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  multiline
-                  rows={4}
-                />
-              </FormControl>
-
-              <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-                <InputLabel htmlFor="category-select">Category</InputLabel>
+                <InputLabel htmlFor="policeReportRequestId-select">
+                  Police Report RequestId
+                </InputLabel>
                 <Select
-                  label="Category"
-                  id="category-select"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  label="Police Report RequestId"
+                  id="policeReportRequestId-select"
+                  value={policeReportRequestId}
+                  onChange={(e) => setPoliceReportRequestId(e.target.value)}
                 >
-                  <MenuItem value={1}>Category 1</MenuItem>
-                  <MenuItem value={2}>Category 2</MenuItem>
-                  <MenuItem value={3}>Category 3</MenuItem>
+                  {policeReportRequestList.map((request) => (
+                    <MenuItem key={request.id} value={request.id}>
+                      {request.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+                <InputLabel htmlFor="userId-select">User Id</InputLabel>
+                <Select
+                  label="User Id"
+                  id="userId-select"
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
+                >
+                  {userList.map((user) => (
+                    <MenuItem key={user.id} value={user.id}>
+                      {user.fullName}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
 
@@ -105,7 +119,6 @@ export const ReportRequest = () => {
                 id="file-upload"
                 type="file"
                 style={{ display: "none" }}
-                multiple // Allow multiple file selection
                 onChange={handleFileChange} // Handle file selection
               />
               <label htmlFor="file-upload">

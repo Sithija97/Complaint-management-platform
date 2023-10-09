@@ -6,8 +6,11 @@ import fineService from "../../services/fine-service";
 const initialState: IFineInitialState = {
   fines: [],
   userFines: [],
+  selectedFineId: 0,
   isError: false,
   isSuccess: false,
+  isGetAllFinesLoading: false,
+  isGetFinesByUserLoading: false,
   isLoading: false,
   message: "",
 };
@@ -79,38 +82,41 @@ const fineSlice = createSlice({
       state.isError = false;
       state.message = "";
     },
+    setSelectedFineId: (state, { payload }) => {
+      state.selectedFineId = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllFines.pending, (state) => {
-        state.isLoading = true;
+        state.isGetAllFinesLoading = true;
       })
       .addCase(getAllFines.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllFinesLoading = false;
         state.isSuccess = true;
         state.fines = action.payload!;
       })
       .addCase(getAllFines.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetAllFinesLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       })
       .addCase(getFinesByUser.pending, (state) => {
-        state.isLoading = true;
+        state.isGetFinesByUserLoading = true;
       })
       .addCase(getFinesByUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGetFinesByUserLoading = false;
         state.isSuccess = true;
         state.userFines = action.payload!;
       })
       .addCase(getFinesByUser.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGetFinesByUserLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       });
   },
 });
 
-export const { reset } = fineSlice.actions;
+export const { reset, setSelectedFineId } = fineSlice.actions;
 
 export default fineSlice.reducer;

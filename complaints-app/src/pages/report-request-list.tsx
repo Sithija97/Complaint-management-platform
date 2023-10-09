@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Dashboard } from "../layouts";
 import {
   Box,
-  Button,
   Card,
   CircularProgress,
   Container,
@@ -12,36 +11,39 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import AddCardIcon from "@mui/icons-material/AddCard";
+import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
-import { CreateFine } from "./create-fine";
-import { IFineUser } from "../models";
+import { IReportRequest } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
-import { getFinesByUser, setSelectedFineId } from "../store/fines/fineSlice";
-import { useNavigate } from "react-router-dom";
+import { getAllPayments } from "../store/payments/paymentSlice";
+import {
+  getAllReportRequests,
+  setSelectedReportRequestId,
+} from "../store/reports/reportSlice";
+import { ChangeReportStatus } from "./change-report-status";
 
-export const Fines = () => {
+export const ReportRequestList = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { isGetFinesByUserLoading } = useAppSelector(
-    (state: RootState) => state.fines
+  const { isGetAllReportRequestsLoading } = useAppSelector(
+    (state: RootState) => state.policeReports
   );
 
   useEffect(() => {
-    dispatch(getFinesByUser());
+    dispatch(getAllReportRequests());
   }, []);
 
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
 
-  const handlePayment = (row: any) => {
-    dispatch(setSelectedFineId(row));
-    navigate("/payment");
+  const handleChangeStatus = (row: any) => {
+    dispatch(setSelectedReportRequestId(row));
+    toggleDrawer();
   };
 
-  const columns = useMemo<MRT_ColumnDef<IFineUser>[]>(
+  const columns = useMemo<MRT_ColumnDef<IReportRequest>[]>(
     () => [
       {
         accessorKey: "id",
@@ -54,28 +56,28 @@ export const Fines = () => {
         size: 150,
       },
       {
-        accessorKey: "amount",
-        header: "Amount",
+        accessorKey: "description",
+        header: "Description",
         size: 150,
       },
       {
-        accessorKey: "tax", //normal accessorKey
-        header: "Tax",
+        accessorKey: "User.firstName",
+        header: "First Name",
         size: 150,
       },
       {
-        accessorKey: "otherCharges",
-        header: "Other Charges",
+        accessorKey: "User.lastName",
+        header: "Last Name",
         size: 150,
       },
     ],
     []
   );
-  const data: IFineUser[] = useAppSelector(
-    (state: RootState) => state.fines.userFines
+  const data: IReportRequest[] = useAppSelector(
+    (state: RootState) => state.policeReports.reportRequests
   );
 
-  if (isGetFinesByUserLoading) {
+  if (isGetAllReportRequestsLoading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
         <CircularProgress />
@@ -95,11 +97,8 @@ export const Fines = () => {
             mb={5}
           >
             <Typography variant="h5" gutterBottom>
-              My Fines
+              Report Request List
             </Typography>
-            {/* <Button variant="contained" onClick={toggleDrawer}>
-              Add Fine
-            </Button> */}
           </Stack>
 
           <Card>
@@ -111,9 +110,9 @@ export const Fines = () => {
                 <Box sx={{ display: "flex", gap: "1rem" }}>
                   <IconButton
                     color="error"
-                    onClick={() => handlePayment(row.getValue("id"))}
+                    onClick={() => handleChangeStatus(row.getValue("id"))}
                   >
-                    <AddCardIcon sx={{ color: "#2288E5" }} />
+                    <EditIcon sx={{ color: "#2288E5" }} />
                   </IconButton>
                 </Box>
               )}
@@ -124,7 +123,7 @@ export const Fines = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateFine />
+        <ChangeReportStatus />
       </Drawer>
     </Dashboard>
   );
