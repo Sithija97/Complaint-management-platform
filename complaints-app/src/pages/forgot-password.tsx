@@ -17,7 +17,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import loginImage from "../assets/login.svg";
 import { useAppDispatch } from "../store/store";
-import { login } from "../store/auth/authSlice";
+import { forgotPassword } from "../store/auth/authSlice";
 
 const defaultTheme = createTheme();
 
@@ -25,12 +25,10 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
 });
 
 export const ForgotPassword = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const InitialState = {
@@ -38,16 +36,11 @@ export const ForgotPassword = () => {
   };
 
   const handleSubmit = (values: any) => {
-    console.log("Form Values:", values);
-    // try {
-    //   dispatch(login(values)).then((data) => {
-    //     if (data.meta.requestStatus === "fulfilled") {
-    //       navigate("/");
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.log("forgot password error :", error);
-    // }
+    try {
+      // dispatch(forgotPassword(values));
+    } catch (error) {
+      console.log("forgot password error :", error);
+    }
     formik.resetForm();
   };
 
@@ -134,11 +127,11 @@ export const ForgotPassword = () => {
               >
                 Submit
               </Button>
-              <Grid container justifyContent="flex-end">
+              {/* <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link to="/login">Login</Link>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Box>
           </Box>
         </Grid>

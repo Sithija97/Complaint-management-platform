@@ -20,6 +20,8 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useAppDispatch } from "../store/store";
+import { verify } from "../store/auth/authSlice";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -33,17 +35,33 @@ const validationSchema = Yup.object().shape({
 });
 
 export const VerifyUser = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const InitialState = {
-    secretCode: "",
+    secretCode: 0,
     password: "",
     confirmPassword: "",
   };
 
   const handleSubmit = (values: any) => {
-    console.log("Form Values:", values);
-    formik.resetForm();
+    if (values.password !== values.confirmPassword) {
+      alert("Passwords are not matching, Please check your passwords !");
+    } else {
+      const queryParams = new URLSearchParams(window.location.search);
+      const email: string | null = queryParams.get("email") || "";
+
+      const { secretCode, password } = values;
+
+      const data = {
+        secretCode,
+        email,
+        password,
+      };
+
+      // dispatch(verify(data));
+      formik.resetForm();
+    }
   };
 
   const formik = useFormik({
@@ -93,7 +111,7 @@ export const VerifyUser = () => {
                   id="secretCode"
                   label="Secret Code"
                   name="secretCode"
-                  type="text"
+                  type="number"
                   autoComplete="secretCode"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

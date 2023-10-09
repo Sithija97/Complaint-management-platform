@@ -32,7 +32,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <DescriptionIcon />
         </ListItemIcon>
-        <ListItemText primary="Reports" />
+        <ListItemText primary="My Reports" />
       </ListItemButton>
       <ListItemButton onClick={() => navigate("/reports-list")}>
         <ListItemIcon>
@@ -50,7 +50,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Complaints" />
+        <ListItemText primary="My Complaints" />
       </ListItemButton>
       <ListItemButton onClick={() => navigate("/complaints-list")}>
         <ListItemIcon>
@@ -62,7 +62,7 @@ export const MainListItems = () => {
         <ListItemIcon>
           <PriceChangeIcon />
         </ListItemIcon>
-        <ListItemText primary="Fines" />
+        <ListItemText primary="My Fines" />
       </ListItemButton>
       <ListItemButton onClick={() => navigate("/fines-list")}>
         <ListItemIcon>

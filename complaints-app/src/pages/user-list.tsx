@@ -12,128 +12,80 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { BoxContainer } from "../components";
-
-type Person = {
-  name: {
-    firstName: string;
-    lastName: string;
-  };
-  address: string;
-  city: string;
-  state: string;
-};
+import { IPerson } from "../models";
 
 //nested data is ok, see accessorKeys in ColumnDef below
-const data: Person[] = [
+const data: IPerson[] = [
   {
-    name: {
-      firstName: "John",
-      lastName: "Doe",
-    },
-    address: "261 Erdman Ford",
-    city: "East Daphne",
-    state: "Kentucky",
+    id: 1,
+    firstName: "kaveesha",
+    lastName: "rathnayaka",
+    nameWithInitials: "r.m.k.g.rathnayaka",
+    fullName: "kaveesha rathnayaka",
+    address: "borella",
+    contactNumber: "0765467891",
+    email: "doyouknowyt31@gmail.com",
+    nic: "978765435V",
+    gender: 1,
+    userRoleId: 2,
+    policeStationId: 1,
+    secretCode: null,
+    password: "$2b$10$C4nAKfLs13mgmCmIPMKUruyosZFCajrsoTFdo4cyHP/5aeYdmXeKO",
+    filename: null,
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NjcwNzM3NCwiZXhwIjoxNzI4MjQzMzc0fQ.-5rT0Zefob8O95SJOc5mz66bhP5vEZmBpyjvKDzQwsc",
+    createdAt: "2023-10-07T19:09:39.000Z",
+    updatedAt: "2023-10-07T19:36:14.000Z",
   },
   {
-    name: {
-      firstName: "Jane",
-      lastName: "Doe",
-    },
-    address: "769 Dominic Grove",
-    city: "Columbus",
-    state: "Ohio",
-  },
-  {
-    name: {
-      firstName: "Joe",
-      lastName: "Doe",
-    },
-    address: "566 Brakus Inlet",
-    city: "South Linda",
-    state: "West Virginia",
-  },
-  {
-    name: {
-      firstName: "Kevin",
-      lastName: "Vandy",
-    },
-    address: "722 Emie Stream",
-    city: "Lincoln",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
-  },
-  {
-    name: {
-      firstName: "Joshua",
-      lastName: "Rolluffs",
-    },
-    address: "32188 Larkin Turnpike",
-    city: "Omaha",
-    state: "Nebraska",
+    id: 2,
+    firstName: "sithija",
+    lastName: "shehara",
+    nameWithInitials: "n.s.shehara",
+    fullName: "sithija shehara",
+    address: "maharagama",
+    contactNumber: "0765467890",
+    email: "nsithijashehara@gmail.com",
+    nic: "978765435V",
+    gender: 1,
+    userRoleId: 1,
+    policeStationId: 1,
+    secretCode: null,
+    password: "$2b$10$CRcFPwF7rVTgunozTwMqw.h91T638jV8mP94wFKKr7/tYBu7KbRWC",
+    filename: null,
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY5NjcwNTgzNCwiZXhwIjoxNzI4MjQxODM0fQ.eIvtEBuH5usuYEsz_e-Vk0NAsbUhmnlrPzqo9olIq7E",
+    createdAt: "2023-10-07T19:09:51.000Z",
+    updatedAt: "2023-10-07T19:10:34.000Z",
   },
 ];
 
 export const UsersList = () => {
-  const columns = useMemo<MRT_ColumnDef<Person>[]>(
+  const columns = useMemo<MRT_ColumnDef<IPerson>[]>(
     () => [
       {
-        accessorKey: "name.firstName", //access nested data with dot notation
+        accessorKey: "firstName", //access nested data with dot notation
         header: "First Name",
         size: 150,
       },
       {
-        accessorKey: "name.lastName",
+        accessorKey: "lastName",
         header: "Last Name",
         size: 150,
       },
       {
-        accessorKey: "address", //normal accessorKey
-        header: "Address",
+        accessorKey: "contactNumber", //normal accessorKey
+        header: "Contact Number",
         size: 200,
       },
       {
-        accessorKey: "city",
-        header: "City",
+        accessorKey: "nic",
+        header: "NIC",
         size: 150,
       },
       {
-        accessorKey: "state",
-        header: "State",
+        accessorKey: "email",
+        header: "Email",
         size: 150,
       },
     ],

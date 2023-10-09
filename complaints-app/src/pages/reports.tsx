@@ -189,9 +189,9 @@ export const Reports = () => {
             <Typography variant="h5" gutterBottom>
               Reports
             </Typography>
-            <Button variant="contained" onClick={toggleDrawer}>
+            {/* <Button variant="contained" onClick={toggleDrawer}>
               Create Report
-            </Button>
+            </Button> */}
           </Stack>
 
           <Card>

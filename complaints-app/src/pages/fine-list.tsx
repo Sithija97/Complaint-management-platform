@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Card,
+  Drawer,
   Container,
   Stack,
   Toolbar,
@@ -13,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
 import { BoxContainer } from "../components";
+import { CreateFine } from "./create-fine";
 
 type Person = {
   name: {
@@ -170,6 +172,9 @@ export const FineList = () => {
             <Typography variant="h5" gutterBottom>
               Fines List
             </Typography>
+            <Button variant="contained" onClick={toggleDrawer}>
+              Add Fine
+            </Button>
           </Stack>
 
           <Card>
@@ -177,6 +182,9 @@ export const FineList = () => {
           </Card>
         </Container>
       </BoxContainer>
+      <Drawer open={show} onClose={toggleDrawer} anchor="right">
+        <CreateFine />
+      </Drawer>
     </Dashboard>
   );
 };

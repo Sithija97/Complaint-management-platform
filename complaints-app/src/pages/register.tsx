@@ -72,7 +72,8 @@ export const Register = () => {
   const handleSubmit = (values: any) => {
     console.log("Form Values:", values);
     if (values.password !== values.confirmPassword) {
-      alert("Passwords are not matching, Please check your password !");
+      alert("Passwords are not matching, Please check your passwords !");
+    } else {
       try {
         const {
           firstName,
@@ -107,10 +108,11 @@ export const Register = () => {
         // dispatch(register(user)).then(
         //   (data) => data.meta.requestStatus === "fulfilled" && navigate("Login")
         // );
-      } catch (error) {}
-    } else {
+        formik.resetForm();
+      } catch (error) {
+        console.log("registration error :", error);
+      }
     }
-    formik.resetForm();
   };
 
   const formik = useFormik({

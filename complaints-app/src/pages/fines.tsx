@@ -172,9 +172,9 @@ export const Fines = () => {
             <Typography variant="h5" gutterBottom>
               Fines
             </Typography>
-            <Button variant="contained" onClick={toggleDrawer}>
+            {/* <Button variant="contained" onClick={toggleDrawer}>
               Add Fine
-            </Button>
+            </Button> */}
           </Stack>
 
           <Card>

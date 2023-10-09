@@ -18,6 +18,27 @@ export interface IUser {
   filename: string | null;
 }
 
+export interface IPerson {
+  id: number;
+  firstName: string;
+  lastName: string;
+  nameWithInitials: string;
+  fullName: string;
+  address: string;
+  contactNumber: string;
+  email: string;
+  nic: string;
+  gender: number;
+  userRoleId: number;
+  policeStationId: number;
+  secretCode: any;
+  password: string;
+  filename: any;
+  token: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IComplaint {
   id: number;
   title: string;
@@ -284,7 +305,7 @@ export interface IUpdateData {
 }
 
 export interface IVerifyUserData {
-  secretCode: string;
+  secretCode: number;
   email: string;
   password: string;
 }
