@@ -106,7 +106,7 @@ export const Register = () => {
           filename,
         };
         dispatch(register(user)).then(
-          (data) => data.meta.requestStatus === "fulfilled" && navigate("Login")
+          (data) => data.meta.requestStatus === "fulfilled" && navigate("/")
         );
         formik.resetForm();
       } catch (error) {

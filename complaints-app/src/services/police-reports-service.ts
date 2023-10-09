@@ -5,7 +5,7 @@ import {
   IUploadReportData,
 } from "../models";
 
-const BASE_URL = "http://192.168.8.100:3000/api";
+const BASE_URL = "http://localhost:3000/api";
 
 const createAxiosInstance = (token: string) => {
   const config: AxiosRequestConfig = {
@@ -78,24 +78,24 @@ const uploadPoliceReport = async (
 const getReportByUser = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    // const response = await axiosInstance.get("/get-police-reports-by-user");
-    const response = {
-      data: [
-        {
-          id: 1,
-          policeReportRequestId: 1,
-          filename: "src\\assets\\1696705947506.pdf",
-          userId: 2,
-          uploadedBy: 1,
-          policeStationId: 1,
-          createdAt: "2023-10-07T19:12:27.000Z",
-          updatedAt: "2023-10-07T19:12:27.000Z",
-          PoliceReportRequest: {
-            title: "Police repot one",
-          },
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/get-police-reports-by-user");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: 1,
+    //       policeReportRequestId: 1,
+    //       filename: "src\\assets\\1696705947506.pdf",
+    //       userId: 2,
+    //       uploadedBy: 1,
+    //       policeStationId: 1,
+    //       createdAt: "2023-10-07T19:12:27.000Z",
+    //       updatedAt: "2023-10-07T19:12:27.000Z",
+    //       PoliceReportRequest: {
+    //         title: "Police repot one",
+    //       },
+    //     },
+    //   ],
+    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -105,32 +105,32 @@ const getReportByUser = async (token: string) => {
 };
 
 // get all reports
-const getReports = (token: string) => {
+const getReports = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    // const response = await axiosInstance.get("/get-police-reports");
-    const response = {
-      data: [
-        {
-          id: 1,
-          policeReportRequestId: 1,
-          filename: "src\\assets\\1696705947506.pdf",
-          userId: 2,
-          uploadedBy: 1,
-          policeStationId: 1,
-          createdAt: "2023-10-07T19:12:27.000Z",
-          updatedAt: "2023-10-07T19:12:27.000Z",
-          User: {
-            id: 1,
-            firstName: "kaveesha",
-            lastName: "rathnayaka",
-          },
-          PoliceReportRequest: {
-            title: "Police repot one",
-          },
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/get-police-reports");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: 1,
+    //       policeReportRequestId: 1,
+    //       filename: "src\\assets\\1696705947506.pdf",
+    //       userId: 2,
+    //       uploadedBy: 1,
+    //       policeStationId: 1,
+    //       createdAt: "2023-10-07T19:12:27.000Z",
+    //       updatedAt: "2023-10-07T19:12:27.000Z",
+    //       User: {
+    //         id: 1,
+    //         firstName: "kaveesha",
+    //         lastName: "rathnayaka",
+    //       },
+    //       PoliceReportRequest: {
+    //         title: "Police repot one",
+    //       },
+    //     },
+    //   ],
+    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -140,30 +140,30 @@ const getReports = (token: string) => {
 };
 
 // police-report-request-list
-const getReportRequestList = (token: string) => {
+const getReportRequestList = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    // const response = await axiosInstance.get("/police-report-request-list");
-    const response = {
-      data: [
-        {
-          id: 1,
-          title: "Police repot one",
-          category: 1,
-          description: "Police repot one description",
-          userId: 2,
-          status: 2,
-          policeStationId: 1,
-          createdAt: "2023-10-07T19:11:17.000Z",
-          updatedAt: "2023-10-07T19:12:01.000Z",
-          User: {
-            id: 2,
-            firstName: "sithija",
-            lastName: "shehara",
-          },
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/police-report-request-list");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: 1,
+    //       title: "Police repot one",
+    //       category: 1,
+    //       description: "Police repot one description",
+    //       userId: 2,
+    //       status: 2,
+    //       policeStationId: 1,
+    //       createdAt: "2023-10-07T19:11:17.000Z",
+    //       updatedAt: "2023-10-07T19:12:01.000Z",
+    //       User: {
+    //         id: 2,
+    //         firstName: "sithija",
+    //         lastName: "shehara",
+    //       },
+    //     },
+    //   ],
+    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -173,25 +173,25 @@ const getReportRequestList = (token: string) => {
 };
 
 // police-report-request-list-by-user
-const getReportRequestListByUser = (token: string) => {
+const getReportRequestListByUser = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    // const response = await axiosInstance.get("/police-report-request-list-by-user");
-    const response = {
-      data: [
-        {
-          id: 1,
-          title: "Police repot one",
-          category: 1,
-          description: "Police repot one description",
-          userId: 2,
-          status: 2,
-          policeStationId: 1,
-          createdAt: "2023-10-07T19:11:17.000Z",
-          updatedAt: "2023-10-07T19:12:01.000Z",
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/police-report-request-list-by-user");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: 1,
+    //       title: "Police repot one",
+    //       category: 1,
+    //       description: "Police repot one description",
+    //       userId: 2,
+    //       status: 2,
+    //       policeStationId: 1,
+    //       createdAt: "2023-10-07T19:11:17.000Z",
+    //       updatedAt: "2023-10-07T19:12:01.000Z",
+    //     },
+    //   ],
+    // };
     return response.data;
   } catch (error) {
     // Handle error here

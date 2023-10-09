@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { IComplaintData, IRemoveComplaintData } from "../models";
 
-const BASE_URL = "http://192.168.8.100:3000/api";
+const BASE_URL = "http://localhost:3000/api";
 
 const createAxiosInstance = (token: string) => {
   const config: AxiosRequestConfig = {
@@ -39,28 +39,28 @@ const getComplaints = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
-    // const response = await axiosInstance.get("/get-all-complaints");
-    const response = {
-      data: [
-        {
-          id: 1,
-          title: "Complaint 1",
-          policeStationId: 1,
-          complaint: "Complaint 1 Description",
-          category: 1,
-          statusId: 1,
-          userId: 2,
-          isDeleted: 0,
-          createdAt: "2023-10-09T08:49:14.000Z",
-          updatedAt: "2023-10-09T08:49:14.000Z",
-          User: {
-            id: 2,
-            firstName: "sithija",
-            lastName: "shehara",
-          },
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/get-all-complaints");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: 1,
+    //       title: "Complaint 1",
+    //       policeStationId: 1,
+    //       complaint: "Complaint 1 Description",
+    //       category: 1,
+    //       statusId: 1,
+    //       userId: 2,
+    //       isDeleted: 0,
+    //       createdAt: "2023-10-09T08:49:14.000Z",
+    //       updatedAt: "2023-10-09T08:49:14.000Z",
+    //       User: {
+    //         id: 2,
+    //         firstName: "sithija",
+    //         lastName: "shehara",
+    //       },
+    //     },
+    //   ],
+    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -94,26 +94,26 @@ const userSpecificComplaints = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
-    // const response = await axiosInstance.get("/user-specific-complaints");
-    const response = {
-      data: [
-        {
-          id: 1,
-          title: "Complaint 1",
-          policeStationId: 1,
-          complaint: "Complaint 1 Description",
-          category: 1,
-          statusId: 1,
-          userId: 2,
-          isDeleted: 0,
-          createdAt: "2023-10-09T08:49:14.000Z",
-          updatedAt: "2023-10-09T08:49:14.000Z",
-          PoliceStation: {
-            policeStationName: "Borella",
-          },
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/user-specific-complaints");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: 1,
+    //       title: "Complaint 1",
+    //       policeStationId: 1,
+    //       complaint: "Complaint 1 Description",
+    //       category: 1,
+    //       statusId: 1,
+    //       userId: 2,
+    //       isDeleted: 0,
+    //       createdAt: "2023-10-09T08:49:14.000Z",
+    //       updatedAt: "2023-10-09T08:49:14.000Z",
+    //       PoliceStation: {
+    //         policeStationName: "Borella",
+    //       },
+    //     },
+    //   ],
+    // };
     return response.data;
   } catch (error) {
     // Handle error here

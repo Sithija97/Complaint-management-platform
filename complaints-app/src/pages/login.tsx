@@ -44,7 +44,7 @@ export const Login = () => {
     try {
       dispatch(login(values)).then((data) => {
         if (data.meta.requestStatus === "fulfilled") {
-          navigate("/");
+          navigate("/home");
         }
       });
     } catch (error) {

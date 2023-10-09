@@ -7,7 +7,9 @@ import {
   IVerifyUserData,
 } from "../models";
 
-const BASE_URL = "http://192.168.8.100:3000/api"; // Replace with your backend API URL
+// 192.168.1.4
+
+const BASE_URL = "http://localhost:3000/api"; // Replace with your backend API URL
 
 const createAxiosInstance = (token: string) => {
   const config: AxiosRequestConfig = {
@@ -50,55 +52,55 @@ const loginUser = async (userData: ILoginData) => {
 const getAllUsers = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    // const response = await axiosInstance.get("/get-all-users");
-    const response = {
-      data: [
-        {
-          id: 1,
-          firstName: "kaveesha",
-          lastName: "rathnayaka",
-          nameWithInitials: "r.m.k.g.rathnayaka",
-          fullName: "kaveesha rathnayaka",
-          address: "borella",
-          contactNumber: "0765467891",
-          email: "doyouknowyt31@gmail.com",
-          nic: "978765435V",
-          gender: 1,
-          userRoleId: 2,
-          policeStationId: 1,
-          secretCode: null,
-          password:
-            "$2b$10$C4nAKfLs13mgmCmIPMKUruyosZFCajrsoTFdo4cyHP/5aeYdmXeKO",
-          filename: null,
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NjcwNzM3NCwiZXhwIjoxNzI4MjQzMzc0fQ.-5rT0Zefob8O95SJOc5mz66bhP5vEZmBpyjvKDzQwsc",
-          createdAt: "2023-10-07T19:09:39.000Z",
-          updatedAt: "2023-10-07T19:36:14.000Z",
-        },
-        {
-          id: 2,
-          firstName: "sithija",
-          lastName: "shehara",
-          nameWithInitials: "n.s.shehara",
-          fullName: "sithija shehara",
-          address: "maharagama",
-          contactNumber: "0765467890",
-          email: "nsithijashehara@gmail.com",
-          nic: "978765435V",
-          gender: 1,
-          userRoleId: 1,
-          policeStationId: 1,
-          secretCode: null,
-          password:
-            "$2b$10$CRcFPwF7rVTgunozTwMqw.h91T638jV8mP94wFKKr7/tYBu7KbRWC",
-          filename: null,
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY5NjcwNTgzNCwiZXhwIjoxNzI4MjQxODM0fQ.eIvtEBuH5usuYEsz_e-Vk0NAsbUhmnlrPzqo9olIq7E",
-          createdAt: "2023-10-07T19:09:51.000Z",
-          updatedAt: "2023-10-07T19:10:34.000Z",
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/get-all-users");
+    // const response = {
+    //   data: [
+    //     {
+    //       id: 1,
+    //       firstName: "kaveesha",
+    //       lastName: "rathnayaka",
+    //       nameWithInitials: "r.m.k.g.rathnayaka",
+    //       fullName: "kaveesha rathnayaka",
+    //       address: "borella",
+    //       contactNumber: "0765467891",
+    //       email: "doyouknowyt31@gmail.com",
+    //       nic: "978765435V",
+    //       gender: 1,
+    //       userRoleId: 2,
+    //       policeStationId: 1,
+    //       secretCode: null,
+    //       password:
+    //         "$2b$10$C4nAKfLs13mgmCmIPMKUruyosZFCajrsoTFdo4cyHP/5aeYdmXeKO",
+    //       filename: null,
+    //       token:
+    //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NjcwNzM3NCwiZXhwIjoxNzI4MjQzMzc0fQ.-5rT0Zefob8O95SJOc5mz66bhP5vEZmBpyjvKDzQwsc",
+    //       createdAt: "2023-10-07T19:09:39.000Z",
+    //       updatedAt: "2023-10-07T19:36:14.000Z",
+    //     },
+    //     {
+    //       id: 2,
+    //       firstName: "sithija",
+    //       lastName: "shehara",
+    //       nameWithInitials: "n.s.shehara",
+    //       fullName: "sithija shehara",
+    //       address: "maharagama",
+    //       contactNumber: "0765467890",
+    //       email: "nsithijashehara@gmail.com",
+    //       nic: "978765435V",
+    //       gender: 1,
+    //       userRoleId: 1,
+    //       policeStationId: 1,
+    //       secretCode: null,
+    //       password:
+    //         "$2b$10$CRcFPwF7rVTgunozTwMqw.h91T638jV8mP94wFKKr7/tYBu7KbRWC",
+    //       filename: null,
+    //       token:
+    //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY5NjcwNTgzNCwiZXhwIjoxNzI4MjQxODM0fQ.eIvtEBuH5usuYEsz_e-Vk0NAsbUhmnlrPzqo9olIq7E",
+    //       createdAt: "2023-10-07T19:09:51.000Z",
+    //       updatedAt: "2023-10-07T19:10:34.000Z",
+    //     },
+    //   ],
+    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -169,34 +171,34 @@ const getDashboardData = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
-    // const response = await axiosInstance.get("/get-dasboard-data");
-    const reponse = {
-      data: {
-        user: {
-          userCount: 1,
-          policeUserCount: 1,
-        },
-        complaint: {
-          activeComplaints: 0,
-          removedComplaints: 0,
-        },
-        fine: {
-          activeFines: 2,
-          complatedFines: 0,
-        },
-        policeReport: {
-          policeReports: 1,
-          allPoliceReportRequests: 1,
-          pendingPoliceReportRequests: 0,
-        },
-        revenue: {
-          pendingFineAmount: 6000,
-          completedFineAmount: null,
-          totalFineAmount: 6000,
-        },
-      },
-    };
-    return reponse.data;
+    const response = await axiosInstance.get("/get-dashboard-data");
+    // const reponse = {
+    //   data: {
+    //     user: {
+    //       userCount: 1,
+    //       policeUserCount: 1,
+    //     },
+    //     complaint: {
+    //       activeComplaints: 0,
+    //       removedComplaints: 0,
+    //     },
+    //     fine: {
+    //       activeFines: 2,
+    //       complatedFines: 0,
+    //     },
+    //     policeReport: {
+    //       policeReports: 1,
+    //       allPoliceReportRequests: 1,
+    //       pendingPoliceReportRequests: 0,
+    //     },
+    //     revenue: {
+    //       pendingFineAmount: 6000,
+    //       completedFineAmount: null,
+    //       totalFineAmount: 6000,
+    //     },
+    //   },
+    // };
+    return response.data;
   } catch (error) {
     console.log(`error : ${error}`);
     throw error;

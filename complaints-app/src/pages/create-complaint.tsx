@@ -109,9 +109,8 @@ export const CreateComplaint = () => {
                   value={formData.statusId}
                   onChange={handleInputChange}
                 >
-                  <MenuItem value={1}>Pending</MenuItem>
-                  <MenuItem value={2}>Inprogress</MenuItem>
-                  <MenuItem value={3}>Done</MenuItem>
+                  <MenuItem value={1}>Active</MenuItem>
+                  <MenuItem value={2}>Removed</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
