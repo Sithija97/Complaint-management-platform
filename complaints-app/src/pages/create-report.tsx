@@ -22,7 +22,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { BoxContainer, RichtextEditor } from "../components";
 
-export const CreateReport = () => {
+interface IProps {
+  onCloseDrawer: () => void;
+}
+
+export const CreateReport = ({ onCloseDrawer }: IProps) => {
   const [policeReportContent, setPoliceReportContent] = useState("");
   const reportTemplateRef = useRef(null);
 
@@ -48,6 +52,7 @@ export const CreateReport = () => {
       );
       pdf.save(`report.pdf`);
     });
+    onCloseDrawer();
   };
 
   return (

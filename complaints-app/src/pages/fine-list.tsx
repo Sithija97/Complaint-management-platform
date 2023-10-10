@@ -14,7 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { CreateFine } from "./create-fine";
 import { IFine } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
@@ -68,11 +68,7 @@ export const FineList = () => {
   const data: IFine[] = useAppSelector((state: RootState) => state.fines.fines);
 
   if (isGetAllFinesLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (
@@ -100,7 +96,7 @@ export const FineList = () => {
         </Container>
       </BoxContainer>
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateFine />
+        <CreateFine onCloseDrawer={toggleDrawer} />
       </Drawer>
     </Dashboard>
   );

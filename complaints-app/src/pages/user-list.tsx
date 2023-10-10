@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { IUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getAllUsers } from "../store/auth/authSlice";
@@ -60,11 +60,7 @@ export const UsersList = () => {
   const data: IUser[] = useAppSelector((state: RootState) => state.auth.users);
 
   if (isGetAllUsersLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (

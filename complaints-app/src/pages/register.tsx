@@ -121,14 +121,6 @@ export const Register = () => {
     onSubmit: handleSubmit,
   });
 
-  // if (isLoading) {
-  //   return (
-  //     <Box sx={{ display: "flex", justifyContent:"center",padding:"15px"}}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="md">
@@ -392,7 +384,7 @@ export const Register = () => {
                     }
                   >
                     <MenuItem value={1}>Borella</MenuItem>
-                    <MenuItem value={2}>Mirihana</MenuItem>
+                    <MenuItem value={2}>Maharagama</MenuItem>
                     <MenuItem value={3}>Gampaha</MenuItem>
                   </Select>
                 </FormControl>

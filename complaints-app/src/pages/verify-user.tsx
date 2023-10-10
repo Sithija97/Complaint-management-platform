@@ -10,14 +10,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import {
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch } from "../store/store";
@@ -69,14 +61,6 @@ export const VerifyUser = () => {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
-
-  // if (isLoading) {
-  //   return (
-  //     <Box sx={{ display: "flex", justifyContent:"center",padding:"15px"}}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>

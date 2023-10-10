@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { IReportRequestUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getReportRequestByUser } from "../store/reports/reportSlice";
@@ -55,11 +55,7 @@ export const UserReportRequestList = () => {
   );
 
   if (isGetReportRequestByUserLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (

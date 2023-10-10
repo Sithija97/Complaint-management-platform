@@ -32,7 +32,7 @@ import { Delete, Edit, MoreVert } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { IReportUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getReportByUser } from "../store/reports/reportSlice";
@@ -70,11 +70,7 @@ export const Reports = () => {
   );
 
   if (isGetAllFinesLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (
@@ -103,7 +99,7 @@ export const Reports = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateReport />
+        {/* <CreateReport /> */}
       </Drawer>
     </Dashboard>
   );

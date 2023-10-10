@@ -15,7 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { IReportRequest } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getAllPayments } from "../store/payments/paymentSlice";
@@ -78,11 +78,7 @@ export const ReportRequestList = () => {
   );
 
   if (isGetAllReportRequestsLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (

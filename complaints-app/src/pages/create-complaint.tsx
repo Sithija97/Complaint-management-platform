@@ -12,9 +12,15 @@ import {
 } from "@mui/material";
 import { BoxContainer } from "../components";
 import { useAppDispatch } from "../store/store";
-import { createComplaints } from "../store/complaints/complaintsSlice";
+import {
+  createComplaints,
+  getComplaintsByUser,
+} from "../store/complaints/complaintsSlice";
 
-export const CreateComplaint = () => {
+interface IProps {
+  onCloseDrawer: () => void;
+}
+export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
   const dispatch = useAppDispatch();
 
   const initialState = {
@@ -46,6 +52,8 @@ export const CreateComplaint = () => {
     };
     dispatch(createComplaints(data));
     setFormData(initialState);
+    dispatch(getComplaintsByUser());
+    onCloseDrawer();
   };
 
   return (
@@ -95,8 +103,9 @@ export const CreateComplaint = () => {
                   value={formData.PoliceStation}
                   onChange={handleInputChange}
                 >
-                  <MenuItem value={1}>Maharagama</MenuItem>
-                  <MenuItem value={2}>Borella</MenuItem>
+                  <MenuItem value={1}>Borella</MenuItem>
+                  <MenuItem value={2}>Maharagama</MenuItem>
+                  <MenuItem value={3}>Gampaha</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

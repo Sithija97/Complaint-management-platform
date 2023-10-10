@@ -15,7 +15,7 @@ import {
 import AddCardIcon from "@mui/icons-material/AddCard";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { CreateFine } from "./create-fine";
 import { IFineUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
@@ -76,11 +76,7 @@ export const Fines = () => {
   );
 
   if (isGetFinesByUserLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (
@@ -124,7 +120,7 @@ export const Fines = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateFine />
+        {/* <CreateFine /> */}
       </Drawer>
     </Dashboard>
   );

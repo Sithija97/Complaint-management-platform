@@ -20,6 +20,7 @@ import {
 import { Bar, Doughnut } from "react-chartjs-2";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getDashboardData } from "../store/auth/authSlice";
+import { CustomSpinner } from "../components";
 
 ChartJS.register(
   CategoryScale,
@@ -105,11 +106,7 @@ export const Home = () => {
   }, []);
 
   if (isDashboardDataLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (

@@ -8,31 +8,11 @@ import {
   Stack,
   Toolbar,
   Typography,
-  Table,
-  TableContainer,
-  TableHead,
-  TableCell,
-  TableRow,
-  TableBody,
-  TableFooter,
-  Popover,
-  MenuItem,
-  IconButton,
-  FormControl,
-  InputLabel,
-  Select,
-  Grid,
-  ListItemIcon,
-  ListItemText,
   Drawer,
-  DialogTitle,
-  CircularProgress,
 } from "@mui/material";
-import { Delete, Edit, MoreVert } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { IReport } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getAllReports } from "../store/reports/reportSlice";
@@ -80,11 +60,7 @@ export const ReportsList = () => {
   );
 
   if (isGetAllReportsLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (
@@ -113,7 +89,7 @@ export const ReportsList = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateReport />
+        <CreateReport onCloseDrawer={toggleDrawer} />
       </Drawer>
     </Dashboard>
   );

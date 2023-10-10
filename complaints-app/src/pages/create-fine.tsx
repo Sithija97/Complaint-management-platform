@@ -16,10 +16,14 @@ import { CustomDatePicker } from "../components/customDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { formatDate } from "../utils/formatDate";
-import { createFine } from "../store/fines/fineSlice";
+import { createFine, getAllFines } from "../store/fines/fineSlice";
 import { IFineData } from "../models";
 
-export const CreateFine = () => {
+interface IProps {
+  onCloseDrawer: () => void;
+}
+
+export const CreateFine = ({ onCloseDrawer }: IProps) => {
   const dispatch = useAppDispatch();
 
   const initialState = {
@@ -73,6 +77,8 @@ export const CreateFine = () => {
     console.log(data);
     dispatch(createFine(data));
     setFormData(initialState);
+    dispatch(getAllFines());
+    onCloseDrawer();
   };
 
   return (

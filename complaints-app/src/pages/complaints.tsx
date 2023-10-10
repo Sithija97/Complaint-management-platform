@@ -15,7 +15,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
-import { BoxContainer } from "../components";
+import { BoxContainer, CustomSpinner } from "../components";
 import { CreateComplaint } from "./create-complaint";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import {
@@ -35,7 +35,7 @@ export const Complaints = () => {
 
   useEffect(() => {
     dispatch(getComplaintsByUser());
-  }, []);
+  }, [dispatch]);
 
   const [show, setShow] = useState(false);
   const [showRemoveDrawer, setShowRemoveDrawer] = useState(false);
@@ -82,11 +82,7 @@ export const Complaints = () => {
   );
 
   if (isGetComplaintsByUserLoading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "15px" }}>
-        <CircularProgress />
-      </Box>
-    );
+    return <CustomSpinner />;
   }
 
   return (
@@ -133,7 +129,7 @@ export const Complaints = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <CreateComplaint />
+        <CreateComplaint onCloseDrawer={toggleDrawer} />
       </Drawer>
       <Drawer
         open={showRemoveDrawer}

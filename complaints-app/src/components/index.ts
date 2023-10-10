@@ -7,4 +7,5 @@ export * from "./title";
 export * from "./drawer";
 export * from "./richtextEditor";
 export * from "./BoxContainer";
+export * from "./custom-spinner";
 export * from "./privte-route";

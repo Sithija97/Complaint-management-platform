@@ -50,16 +50,6 @@ export const ForgotPassword = () => {
     onSubmit: handleSubmit,
   });
 
-  // get isLoading from store - state.auth
-
-  // if (isLoading) {
-  //   return (
-  //     <Box sx={{ display: "flex", justifyContent:"center",padding:"15px"}}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>

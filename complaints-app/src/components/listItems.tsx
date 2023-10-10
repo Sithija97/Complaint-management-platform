@@ -14,9 +14,12 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useNavigate } from "react-router-dom";
+import { RootState, useAppSelector } from "../store/store";
+import { UserRoles } from "../enums";
 
 export const MainListItems = () => {
   const navigate = useNavigate();
+  const user = useAppSelector((state: RootState) => state.auth.user);
   return (
     <React.Fragment>
       <ListItemButton onClick={() => navigate("/home")}>
@@ -25,84 +28,124 @@ export const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItemButton>
-      <ListItemButton onClick={() => navigate("/users-list")}>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Users" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/reports")}>
-        <ListItemIcon>
-          <DescriptionIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Reports" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/reports-list")}>
-        <ListItemIcon>
-          <DescriptionIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reports List" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/user-report-requests")}>
-        <ListItemIcon>
-          <LibraryBooksIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Requests" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/report-request-list")}>
-        <ListItemIcon>
-          <LibraryBooksIcon />
-        </ListItemIcon>
-        <ListItemText primary="Requests List" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/report-request")}>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Report Requests" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/upload-report")}>
-        <ListItemIcon>
-          <UploadFileIcon />
-        </ListItemIcon>
-        <ListItemText primary="Upload Report" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/complaints")}>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Complaints" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/complaints-list")}>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Complaints List" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/fines")}>
-        <ListItemIcon>
-          <PriceChangeIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Fines" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/fines-list")}>
-        <ListItemIcon>
-          <PriceChangeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Fines List" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/user-payments")}>
-        <ListItemIcon>
-          <CreditCardIcon />
-        </ListItemIcon>
-        <ListItemText primary="My Payments" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/payments-list")}>
-        <ListItemIcon>
-          <CreditCardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Payments List" />
-      </ListItemButton>
+
+      {user && user.userRoleId === UserRoles.POLICE && (
+        <ListItemButton onClick={() => navigate("/users-list")}>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Users" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.DEFAULT && (
+        <ListItemButton onClick={() => navigate("/reports")}>
+          <ListItemIcon>
+            <DescriptionIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Reports" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.POLICE && (
+        <ListItemButton onClick={() => navigate("/reports-list")}>
+          <ListItemIcon>
+            <DescriptionIcon />
+          </ListItemIcon>
+          <ListItemText primary="Reports List" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.DEFAULT && (
+        <ListItemButton onClick={() => navigate("/user-report-requests")}>
+          <ListItemIcon>
+            <LibraryBooksIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Requests" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.POLICE && (
+        <ListItemButton onClick={() => navigate("/report-request-list")}>
+          <ListItemIcon>
+            <LibraryBooksIcon />
+          </ListItemIcon>
+          <ListItemText primary="Requests List" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.DEFAULT && (
+        <ListItemButton onClick={() => navigate("/report-request")}>
+          <ListItemIcon>
+            <BarChartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Report Requests" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.POLICE && (
+        <ListItemButton onClick={() => navigate("/upload-report")}>
+          <ListItemIcon>
+            <UploadFileIcon />
+          </ListItemIcon>
+          <ListItemText primary="Upload Report" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.DEFAULT && (
+        <ListItemButton onClick={() => navigate("/complaints")}>
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Complaints" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.POLICE && (
+        <ListItemButton onClick={() => navigate("/complaints-list")}>
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          <ListItemText primary="Complaints List" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.DEFAULT && (
+        <ListItemButton onClick={() => navigate("/fines")}>
+          <ListItemIcon>
+            <PriceChangeIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Fines" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.POLICE && (
+        <ListItemButton onClick={() => navigate("/fines-list")}>
+          <ListItemIcon>
+            <PriceChangeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Fines List" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.DEFAULT && (
+        <ListItemButton onClick={() => navigate("/user-payments")}>
+          <ListItemIcon>
+            <CreditCardIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Payments" />
+        </ListItemButton>
+      )}
+
+      {user && user.userRoleId === UserRoles.POLICE && (
+        <ListItemButton onClick={() => navigate("/payments-list")}>
+          <ListItemIcon>
+            <CreditCardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Payments List" />
+        </ListItemButton>
+      )}
+
       <ListItemButton onClick={() => navigate("/profile")}>
         <ListItemIcon>
           <SettingsIcon />
