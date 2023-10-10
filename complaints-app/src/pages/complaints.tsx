@@ -35,7 +35,7 @@ export const Complaints = () => {
 
   useEffect(() => {
     dispatch(getComplaintsByUser());
-  }, [dispatch]);
+  }, []);
 
   const [show, setShow] = useState(false);
   const [showRemoveDrawer, setShowRemoveDrawer] = useState(false);
