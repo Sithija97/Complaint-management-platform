@@ -24,15 +24,33 @@ const requestReport = async (
   token: string
 ) => {
   const axiosInstance = createAxiosInstance(token);
+  const formData = new FormData();
+
+  
+  if (requestData.fileName) {
+    if (Array.isArray(requestData.fileName)) {
+      requestData.fileName.forEach((file) => {
+        formData.append('fileName', file);
+      });
+    } else {
+      formData.append('fileName', requestData.fileName);
+    }
+  }
+  formData.append('title', requestData.title);
+  formData.append('description', requestData.description);
+  formData.append('category', String(requestData.category));
+  formData.append('status', String(requestData.status));
+
   try {
-    const response = await axiosInstance.post(
-      "/police-report-request",
-      requestData
-    );
+    const response = await axiosInstance.post('/police-report-request', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   } catch (error) {
     // Handle error here
-    console.log(`error : ${error}`);
+    console.error('Error:', error);
     throw error;
   }
 };

@@ -10,10 +10,13 @@ export const RemoveComplaint = () => {
     (state: RootState) => state.complaints.selectedComplaintId
   );
 
+  console.log("123", selectedComplaintId.original)
+
   const initialState = {
-    complaintId: selectedComplaintId || 0,
+    complaintId: selectedComplaintId.original.id || 0,
     reason: "",
   };
+  const complaintTitle = selectedComplaintId.original.title;
   const [formData, setFormData] = useState(initialState);
 
   const handleInputChange = (e: any) => {
@@ -35,6 +38,8 @@ export const RemoveComplaint = () => {
     setFormData(initialState);
   };
 
+  console.log("form data", formData)
+
   return (
     <BoxContainer>
       <Container>
@@ -49,10 +54,10 @@ export const RemoveComplaint = () => {
                 required
                 id="complaintId"
                 name="complaintId"
-                label="Complaint Id"
+                label="Complaint Title"
                 fullWidth
-                value={formData.complaintId}
-                onChange={handleInputChange}
+                value={complaintTitle}
+                disabled
               />
             </Grid>
           </Grid>

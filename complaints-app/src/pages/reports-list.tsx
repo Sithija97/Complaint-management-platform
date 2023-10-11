@@ -30,6 +30,30 @@ export const ReportsList = () => {
     dispatch(getAllReports());
   }, []);
 
+  // const handleDownloadClick = (url) => {
+  //   // Make an HTTP request to the backend to download the PDF
+  //   downloadPdf(url)
+  //     .then((response) => {
+  //       // Create a Blob from the response data
+  //       const blob = new Blob([response.data], { type: "application/pdf" });
+  
+  //       // Create a temporary URL for the Blob
+  //       const url = window.URL.createObjectURL(blob);
+  
+  //       // Create a temporary link element and trigger the download
+  //       const a = document.createElement("a");
+  //       a.href = url;
+  //       a.download = "report.pdf"; // Set the desired file name
+  //       a.click();
+  
+  //       // Release the URL object
+  //       window.URL.revokeObjectURL(url);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error downloading PDF:", error);
+  //     });
+  // };
+
   const data: IReport[] = useAppSelector(
     (state: RootState) => state.policeReports.reports
   );
@@ -54,6 +78,15 @@ export const ReportsList = () => {
         accessorKey: "filename",
         header: "Report",
         size: 150,
+        // Define a custom cell renderer for the "filename" column
+        Cell: ({ row }) => (
+          <a
+            href={row.original.filename} // Set the PDF file URL as the href
+            download={`report_${row.original.filename}.pdf`} // Specify the desired file name
+          >
+            Download PDF
+          </a>
+        ),
       },
     ],
     []

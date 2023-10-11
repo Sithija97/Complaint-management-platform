@@ -248,7 +248,7 @@ export interface IAuthInitialState {
 export interface IComplaintsInitialState {
   complaints: IComplaint[];
   userComplaints: IComplaintUser[];
-  selectedComplaintId: number;
+  selectedComplaintId: any;
   isError: boolean;
   isSuccess: boolean;
   isGetAllComplaintsLoading: boolean;

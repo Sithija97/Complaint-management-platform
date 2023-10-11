@@ -43,6 +43,7 @@ export const Complaints = () => {
   const toggleRemoveDrawer = () => setShowRemoveDrawer(!showRemoveDrawer);
 
   const handleRemoveComplaint = (row: any) => {
+    console.log("row", row.original)
     dispatch(setSelectedComplaint(row));
     toggleRemoveDrawer();
   };
@@ -116,7 +117,7 @@ export const Complaints = () => {
                   </IconButton> */}
                   <IconButton
                     color="error"
-                    onClick={() => handleRemoveComplaint(row.getValue("id"))}
+                    onClick={() => handleRemoveComplaint(row)}
                   >
                     <DeleteIcon sx={{ color: "#e63946" }} />
                   </IconButton>
@@ -131,6 +132,7 @@ export const Complaints = () => {
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
         <CreateComplaint onCloseDrawer={toggleDrawer} />
       </Drawer>
+
       <Drawer
         open={showRemoveDrawer}
         onClose={toggleRemoveDrawer}
