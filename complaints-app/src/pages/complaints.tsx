@@ -10,7 +10,6 @@ import {
   Typography,
   Drawer,
   IconButton,
-  CircularProgress,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
@@ -138,7 +137,7 @@ export const Complaints = () => {
         onClose={toggleRemoveDrawer}
         anchor="right"
       >
-        <RemoveComplaint />
+        <RemoveComplaint onCloseDrawer={toggleRemoveDrawer} />
       </Drawer>
     </Dashboard>
   );

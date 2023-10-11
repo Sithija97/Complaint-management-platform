@@ -4,7 +4,11 @@ import { BoxContainer } from "../components";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { removeComplaint } from "../store/complaints/complaintsSlice";
 
-export const RemoveComplaint = () => {
+interface IProps {
+  onCloseDrawer: () => void;
+}
+
+export const RemoveComplaint = ({ onCloseDrawer }: IProps) => {
   const dispatch = useAppDispatch();
   const selectedComplaintId = useAppSelector(
     (state: RootState) => state.complaints.selectedComplaintId
@@ -36,6 +40,7 @@ export const RemoveComplaint = () => {
     };
     dispatch(removeComplaint(data));
     setFormData(initialState);
+    onCloseDrawer();
   };
 
   console.log("form data", formData)

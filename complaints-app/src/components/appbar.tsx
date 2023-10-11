@@ -56,7 +56,7 @@ export const Appbar = ({ open, toggleDrawer }: IProps) => {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    navigate("/login");
+    navigate("/");
   };
 
   const handleProfile = () => {

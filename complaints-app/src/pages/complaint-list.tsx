@@ -110,7 +110,7 @@ export const ComplaintList = () => {
         onClose={toggleRemoveDrawer}
         anchor="right"
       >
-        <RemoveComplaint />
+        {/* <RemoveComplaint /> */}
       </Drawer>
     </Dashboard>
   );

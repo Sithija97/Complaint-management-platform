@@ -48,6 +48,7 @@ export const Login = () => {
         }
       });
     } catch (error) {
+      alert("Invalid User Name or Password");
       console.log("login error :", error);
     }
     formik.resetForm();

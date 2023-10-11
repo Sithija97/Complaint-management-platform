@@ -42,8 +42,16 @@ export const ReportRequest = () => {
     };
 
     console.log(reportData);
+    dispatch(createReportRequest(reportData)).then((data) => {
+      if (data.meta.requestStatus === "fulfilled") {
+        alert("Report Request sent Successfully !");
+      }
+    });
 
-    dispatch(createReportRequest(reportData));
+    setTitle("");
+    setDescription("");
+    setCategory("");
+    setFiles([]);
   };
 
   return (
