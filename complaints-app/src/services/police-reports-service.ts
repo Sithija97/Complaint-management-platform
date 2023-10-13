@@ -218,6 +218,22 @@ const getReportRequestListByUser = async (token: string) => {
   }
 };
 
+// get file 
+const downloadPdf = async (token: string, url: string) => {
+  const axiosInstance = createAxiosInstance(token);
+  try {
+    console.log("hwgdwjdqwvd", url)
+    const data = {
+      filePath: url
+    }
+    const response = await axiosInstance.post("/get-file", data);
+    return response.data;
+  } catch (error) {
+    console.log(`error : ${error}`);
+    throw error;
+  }
+}
+
 const policeReportService = {
   requestReport,
   changeReportStatus,
@@ -226,6 +242,7 @@ const policeReportService = {
   getReports,
   getReportRequestList,
   getReportRequestListByUser,
+  downloadPdf
 };
 
 export default policeReportService;

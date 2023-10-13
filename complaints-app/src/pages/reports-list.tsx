@@ -13,15 +13,20 @@ import {
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
 import { BoxContainer, CustomSpinner } from "../components";
-import { IReport } from "../models";
+import { IReport, IUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getAllReports } from "../store/reports/reportSlice";
+import policeReportService from "../services/police-reports-service";
+import { saveAs } from 'file-saver';
+import * as BlobUtil from 'blob-util';
 
 export const ReportsList = () => {
   const dispatch = useAppDispatch();
   const { isGetAllReportsLoading } = useAppSelector(
     (state: RootState) => state.policeReports
   );
+
+  const user = useAppSelector((state: RootState) => state.auth.user)
 
   const [show, setShow] = useState(false);
   const toggleDrawer = () => setShow(!show);
@@ -30,29 +35,45 @@ export const ReportsList = () => {
     dispatch(getAllReports());
   }, []);
 
-  // const handleDownloadClick = (url) => {
-  //   // Make an HTTP request to the backend to download the PDF
-  //   downloadPdf(url)
-  //     .then((response) => {
-  //       // Create a Blob from the response data
-  //       const blob = new Blob([response.data], { type: "application/pdf" });
+  // useEffect(() => {
+  //   handleDownloadClick("src\\assets\\1697227065151.pdf")
+  // }, []);
+
+  const handleDownloadClick = (url: string) => {
+    // Make an HTTP request to the backend to download the PDF
+    policeReportService.downloadPdf(user?.token!, url)
+      .then((response) => {
+        console.log("res head", response)
+        // const blob = new Blob([response.data], { type: 'application/pdf' });
+
+        // saveAs(blob, 'your_filename.pdf');
+
+        const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'sample.pdf'; // Set the desired file name
+        a.click();
+        window.URL.revokeObjectURL(url);
+        // // Create a Blob from the response data
+        // const blob = new Blob([response.data], { type: "application/pdf" });
+
+        // // Create a temporary URL for the Blob
+        // const url = window.URL.createObjectURL(blob);
+
+        // // Create a temporary link element and trigger the download
+        // const a = document.createElement("a");
+        // a.href = url;
+        // a.download = "report.pdf"; // Set the desired file name
+        // a.click();
+
+        // // Release the URL object
+        // window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Error downloading PDF:", error);
+      });
+  };
   
-  //       // Create a temporary URL for the Blob
-  //       const url = window.URL.createObjectURL(blob);
-  
-  //       // Create a temporary link element and trigger the download
-  //       const a = document.createElement("a");
-  //       a.href = url;
-  //       a.download = "report.pdf"; // Set the desired file name
-  //       a.click();
-  
-  //       // Release the URL object
-  //       window.URL.revokeObjectURL(url);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error downloading PDF:", error);
-  //     });
-  // };
 
   const data: IReport[] = useAppSelector(
     (state: RootState) => state.policeReports.reports

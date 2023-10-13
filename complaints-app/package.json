@@ -18,9 +18,11 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "axios": "^1.4.0",
+    "blob-util": "^2.0.2",
     "chart.js": "^4.3.2",
     "dayjs": "^1.11.9",
     "faker": "^6.6.6",
+    "file-saver": "^2.0.5",
     "formik": "^2.4.5",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
@@ -41,6 +43,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "@types/file-saver": "^2.0.5",
     "@types/recharts": "^2.0.0"
   },
   "scripts": {
