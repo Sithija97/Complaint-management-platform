@@ -19,6 +19,7 @@ interface ButtonProps {
   textStyle?: StyleProp<TextStyle>; // Optional: additional styles for the button text
   textcolor?: string;
   disabled?: boolean;
+  selected?: boolean; // Add a "selected" prop to indicate whether the button is selected
 }
 
 export const Button = (props: ButtonProps) => {
@@ -36,11 +37,16 @@ export const Button = (props: ButtonProps) => {
   return (
     <TouchableOpacity
       disabled={props.disabled}
-      style={{
-        ...styles.button,
-        ...{ backgroundColor: bgColor },
-        ...props.style,
-      }}
+      // style={{
+      //   ...styles.button,
+      //   ...{ backgroundColor: bgColor },
+      //   ...props.style,
+      // }}
+      style={[
+        styles.button,
+        { backgroundColor: props.selected ? bgColor : COLORS.grey }, // Change color based on the "selected" prop
+        props.style,
+      ]}
       onPress={props.onPress}
     >
       <Text style={{ fontSize: 18, ...{ color: textColor } }}>

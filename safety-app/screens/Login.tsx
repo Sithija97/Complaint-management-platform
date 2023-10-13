@@ -63,7 +63,7 @@ export const Login = ({ navigation }: any) => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.baseViewContainer}>
         <View style={{ marginVertical: 22 }}>
-          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.title}>Login</Text>
 
           <Text style={styles.subtitle}>Connect with your friend today!</Text>
         </View>
