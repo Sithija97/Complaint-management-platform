@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import { View, Text, StyleSheet } from "react-native";
 import { IComplaint, IEmergency } from "../models";
+import { ComplaintCategory } from "../enums";
 
 interface IProps {
   type: "complaint" | "emergency";
@@ -10,14 +11,29 @@ interface IProps {
 }
 
 export const HistoryCard = ({ type, complaint, emergency }: IProps) => {
+  const getCategoryText = (categoryValue: number) => {
+    switch (categoryValue) {
+      case ComplaintCategory.DomesticViolence:
+        return "Domestic violence";
+      case ComplaintCategory.VerbalAndPhysicalAggression:
+        return "Verbal and physical aggression";
+      case ComplaintCategory.SexualHarassment:
+        return "Sexual harassment";
+      case ComplaintCategory.AttemptToRape:
+        return "Attempt to Rape";
+      default:
+        return "Unknown Category";
+    }
+  };
+
   return (
     <View style={styles.card}>
       {type === "complaint" ? (
         <>
           <Text style={styles.title}>{complaint?.title}</Text>
-          <Text
-            style={styles.category}
-          >{`Category: ${complaint?.category}`}</Text>
+          <Text style={styles.category}>{`Category: ${getCategoryText(
+            complaint?.category!
+          )}`}</Text>
           <Text style={styles.createdAt}>{`Created At: ${moment(
             complaint?.createdAt
           ).format("YYYY.MM.DD")}`}</Text>
