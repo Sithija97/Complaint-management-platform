@@ -32,8 +32,18 @@ export const Community = ({ navigation }: any) => {
   // Assuming tweets is now an array of CommunityPost objects
   const [tweets, setTweets] = useState<CommunityPost[]>(communityPosts || []);
 
+  const badWords = ["badword1", "badword2", "badword3"]; // Replace with your list of bad words
+
   const handleAddTweet = () => {
     if (titleText && descriptionText) {
+      const hasBadWordsInTitle = badWords.some(badWord => titleText.includes(badWord));
+      const hasBadWordsInDescription = badWords.some(badWord => descriptionText.includes(badWord));
+
+      if (hasBadWordsInTitle || hasBadWordsInDescription) {
+        alert("Your title or description contains bad words. Please remove them.");
+        return; // Terminate the process
+      }
+
       const newPost: CommunityPost = {
         id: tweets?.length + 1, // Generate a unique ID here
         title: titleText,
@@ -49,6 +59,7 @@ export const Community = ({ navigation }: any) => {
       dispatch(
         createCommunityPosts({ title: titleText, description: descriptionText })
       );
+
       setTweets([newPost, ...tweets]);
       setTitleText("");
       setDescriptionText("");

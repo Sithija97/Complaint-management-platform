@@ -9,8 +9,9 @@ import {
   ScrollView,
   Platform,
   Image,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,7 +20,10 @@ import { COLORS } from "../constants/colors";
 import { Button, ContactCard, ImageSet } from "../components";
 import { IContactPersonData } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
-import { createContactList } from "../store/contacts/contactsSlice";
+import {
+  createContactList,
+  getContactList,
+} from "../store/contacts/contactsSlice";
 
 const initialState = {
   contactPersonsName: "",
@@ -37,9 +41,18 @@ const validationSchema = Yup.object().shape({
 
 export const Contacts = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
-  const contacts = useAppSelector(
-    (state: RootState) => state.contacts.contacts
+  const { contacts, isLoading } = useAppSelector(
+    (state: RootState) => state.contacts
   );
+
+  const fetchData = async () => {
+    await dispatch(getContactList());
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const [contactsGroup, setContactsGroup] = useState<IContactPersonData[]>(
     contacts || []
   );
@@ -65,6 +78,10 @@ export const Contacts = ({ navigation }: any) => {
       createContactList({
         userContactPersonData: contactsGroup,
       })
+    ).then(
+      (data: any) =>
+        data.meta.requestStatus === "fulfilled" &&
+        alert("Contacts added Successfully!")
     );
   };
 
@@ -73,6 +90,14 @@ export const Contacts = ({ navigation }: any) => {
     updatedContactsGroup.splice(index, 1);
     setContactsGroup(updatedContactsGroup);
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+  }
 
   return (
     <LinearGradient
@@ -165,6 +190,7 @@ export const Contacts = ({ navigation }: any) => {
                 <View style={styles.submitButtonContainer}>
                   <Button
                     title={"Save Contacts"}
+                    selected
                     filled
                     disabled={contactsGroup.length < 5}
                     onPress={() => saveContactDetails()}
@@ -240,5 +266,10 @@ const styles = StyleSheet.create({
   submitButtonContainer: {
     marginHorizontal: 16,
     marginVertical: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

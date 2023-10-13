@@ -10,6 +10,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants/colors";
 import { CommunityPost, CommunityPostComment } from "../models";
+import { RootState, useAppSelector } from "../store/store";
+import moment from "moment";
 
 interface TweetCardProps {
   post: CommunityPost;
@@ -30,6 +32,9 @@ const TweetCard: React.FC<TweetCardProps> = ({
   setReplyText,
   handlePostComment,
 }) => {
+  const user = useAppSelector((state: RootState) => state.auth.user);
+  const postTimestamp = moment(post.createdAt);
+  const relativeTime = postTimestamp.fromNow();
   return (
     <View style={styles.container}>
       <Image
@@ -38,9 +43,19 @@ const TweetCard: React.FC<TweetCardProps> = ({
       />
       <View style={styles.tweetContent}>
         <View style={styles.header}>
-          <Text style={styles.username}>Sithija Shehara</Text>
-          <Text style={styles.handle}>@sithija</Text>
-          <Text style={styles.timeAgo}>5 mins ago</Text>
+          <Text style={styles.username}>
+            {user ? user.fullName : "test user"}
+          </Text>
+          {/* <Text style={styles.handle}>
+            {user ? `@${user.email}` : "@user.mail"}
+          </Text> */}
+          <Text style={styles.timeAgo}>
+            {
+              <Text style={styles.timeAgo}>
+                {user ? relativeTime : "2 mins ago"}
+              </Text>
+            }
+          </Text>
         </View>
         <Text style={styles.tweetText}>{post.title}</Text>
         <Text style={styles.tweetText}>{post.description}</Text>

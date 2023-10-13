@@ -51,10 +51,16 @@ export const History = ({ navigation }: any) => {
           <Button
             title="Complaints History"
             filled
+            selected={isComplaintsActive}
             onPress={toggleComplaints}
           />
 
-          <Button title="Emergency History" filled onPress={toggleEmergency} />
+          <Button
+            title="Emergency History"
+            filled
+            selected={isEmergencyActive}
+            onPress={toggleEmergency}
+          />
         </View>
         <ImageSet />
         <View style={{ paddingHorizontal: 30 }}>

@@ -94,45 +94,45 @@ const getAllFines = async (token: string) => {
 const userSpecificFines = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    const response = await axiosInstance.get("/user-specific-fines");
-    // const response = {
-    //   data: [
-    //     {
-    //       id: 2,
-    //       title: "fine 2",
-    //       category: 1,
-    //       description: "fine 1 des",
-    //       issuedDate: "2023-10-06T20:44:55.000Z",
-    //       endDate: "2023-10-06T20:44:55.000Z",
-    //       amount: 2000,
-    //       inchargeId: 1,
-    //       userId: 2,
-    //       status: 1,
-    //       tax: 100,
-    //       otherCharges: 100,
-    //       policeStationId: 1,
-    //       createdAt: "2023-10-07T19:50:10.000Z",
-    //       updatedAt: "2023-10-07T19:50:10.000Z",
-    //     },
-    //     {
-    //       id: 3,
-    //       title: "fine 1",
-    //       category: 1,
-    //       description: "fine 1 des",
-    //       issuedDate: "2023-10-06T20:44:55.000Z",
-    //       endDate: "2023-10-06T20:44:55.000Z",
-    //       amount: 4000,
-    //       inchargeId: 1,
-    //       userId: 2,
-    //       status: 1,
-    //       tax: 100,
-    //       otherCharges: 100,
-    //       policeStationId: 1,
-    //       createdAt: "2023-10-07T19:50:24.000Z",
-    //       updatedAt: "2023-10-07T19:50:24.000Z",
-    //     },
-    //   ],
-    // };
+    // const response = await axiosInstance.get("/user-specific-fines");
+    const response = {
+      data: [
+        {
+          id: 2,
+          title: "fine 2",
+          category: 1,
+          description: "fine 1 des",
+          issuedDate: "2023-10-06T20:44:55.000Z",
+          endDate: "2023-10-06T20:44:55.000Z",
+          amount: 2000,
+          inchargeId: 1,
+          userId: 2,
+          status: 1,
+          tax: 100,
+          otherCharges: 100,
+          policeStationId: 1,
+          createdAt: "2023-10-07T19:50:10.000Z",
+          updatedAt: "2023-10-07T19:50:10.000Z",
+        },
+        {
+          id: 3,
+          title: "fine 1",
+          category: 1,
+          description: "fine 1 des",
+          issuedDate: "2023-10-06T20:44:55.000Z",
+          endDate: "2023-10-06T20:44:55.000Z",
+          amount: 4000,
+          inchargeId: 1,
+          userId: 2,
+          status: 1,
+          tax: 100,
+          otherCharges: 100,
+          policeStationId: 1,
+          createdAt: "2023-10-07T19:50:24.000Z",
+          updatedAt: "2023-10-07T19:50:24.000Z",
+        },
+      ],
+    };
     return response.data;
   } catch (error) {
     // Handle error here

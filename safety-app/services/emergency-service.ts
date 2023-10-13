@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const BASE_URL = "http://192.168.8.100:3000/api";
+const BASE_URL = "http://192.168.1.6:3000/api";
 
 const createAxiosInstance = (token: string) => {
   const config: AxiosRequestConfig = {
@@ -37,35 +37,7 @@ const getEmergencyHistory = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
 
   try {
-    // const response = await axiosInstance.get("/emergency-history");
-    const response = {
-      data: [
-        {
-          id: 1,
-          lat: "6.9123",
-          long: "79.8829",
-          userId: 3,
-          createdAt: "2023-09-29T09:12:14.000Z",
-          updatedAt: "2023-09-29T09:12:14.000Z",
-        },
-        {
-          id: 2,
-          lat: "6.4123",
-          long: "79.8829",
-          userId: 3,
-          createdAt: "2023-09-29T09:12:28.000Z",
-          updatedAt: "2023-09-29T09:12:28.000Z",
-        },
-        {
-          id: 3,
-          lat: "6.4123",
-          long: "79.9829",
-          userId: 3,
-          createdAt: "2023-09-29T09:13:02.000Z",
-          updatedAt: "2023-09-29T09:13:02.000Z",
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/emergency-history");
     return response.data;
   } catch (error) {
     // Handle error here

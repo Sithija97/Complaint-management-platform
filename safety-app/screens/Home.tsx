@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import * as location from "expo-location";
 import { LinearGradient } from "expo-linear-gradient";
@@ -30,6 +31,20 @@ export const Home = ({ navigation }: any) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("DrawerGroup");
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
   const sendUserLocation = async () => {
     let { status } = await location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
@@ -47,7 +62,11 @@ export const Home = ({ navigation }: any) => {
       long: String(userLocation.coords.longitude),
     };
 
-    await dispatch(notifyEmergencyAlert(emergencyData));
+    await dispatch(notifyEmergencyAlert(emergencyData)).then(
+      (data) =>
+        data.meta.requestStatus === "fulfilled" &&
+        alert("Notified your family!")
+    );
   };
 
   const handleLogout = () => {
@@ -70,6 +89,7 @@ export const Home = ({ navigation }: any) => {
             title="Inform your family"
             color={COLORS.secondary}
             filled
+            selected
             onPress={sendUserLocation}
             style={{ marginTop: 22, width: "100%" }}
           />

@@ -77,11 +77,13 @@ export const Signup = ({ navigation }: any) => {
           policeStationId: Number(policeStationId),
         };
         console.log(user);
-        await dispatch(register(user)).then(
-          (data) =>
-            data.meta.requestStatus === "fulfilled" &&
-            navigation.navigate("Login")
-        );
+        await dispatch(register(user)).then((data) => {
+          if (data.meta.requestStatus === "fulfilled") {
+            alert("User Registration Successful!");
+            navigation.navigate("Login");
+          }
+        });
+
         resetForm();
       } catch (error) {
         console.log("registration error :", error);
