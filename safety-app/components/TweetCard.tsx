@@ -46,9 +46,9 @@ const TweetCard: React.FC<TweetCardProps> = ({
           <Text style={styles.username}>
             {user ? user.fullName : "test user"}
           </Text>
-          <Text style={styles.handle}>
+          {/* <Text style={styles.handle}>
             {user ? `@${user.email}` : "@user.mail"}
-          </Text>
+          </Text> */}
           <Text style={styles.timeAgo}>
             {
               <Text style={styles.timeAgo}>

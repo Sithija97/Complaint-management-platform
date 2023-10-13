@@ -7,14 +7,26 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ScrollView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS } from "../constants/colors";
 import { Button, ImageSet } from "../components";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { Formik } from "formik";
+import * as Yup from "yup";
 import { IUpdateData } from "../models";
 import { update } from "../store/auth/authSlice";
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required(),
+  lastName: Yup.string().required(),
+  fullName: Yup.string().required(),
+  address: Yup.string().required(),
+  contactNumber: Yup.string().min(10).max(10).required("Contact No. is required"),
+});
 
 export const Profile = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
@@ -37,10 +49,10 @@ export const Profile = ({ navigation }: any) => {
       address,
       contactNumber,
     };
-    dispatch(update(updateUserData));
+    dispatch(update(updateUserData)).then(data => data.meta.requestStatus === 'fulfilled' ? alert('Profile Updated Successfully!') : alert('Update Error Occured'))
   };
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => { }, [dispatch]);
 
   return (
     <LinearGradient
@@ -58,6 +70,7 @@ export const Profile = ({ navigation }: any) => {
 
         <Formik
           initialValues={initialState}
+          validationSchema={validationSchema}
           onSubmit={(values, { resetForm }) => {
             handleSubmit(values, resetForm);
           }}
@@ -72,6 +85,8 @@ export const Profile = ({ navigation }: any) => {
             touched,
           }) => (
             <>
+             <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View>
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>First Name:</Text>
                 <TextInput
@@ -82,46 +97,81 @@ export const Profile = ({ navigation }: any) => {
                   value={values.firstName}
                 />
               </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Last Name:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your last name"
-                  onChangeText={handleChange("lastName")}
-                  onBlur={handleBlur("lastName")}
-                  value={values.lastName}
-                />
+              {errors.firstName && (
+                  <Text style={styles.errorText}>
+                    {errors.firstName}
+                  </Text>
+                )}
               </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Full Name:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your full name"
-                  onChangeText={handleChange("fullName")}
-                  onBlur={handleBlur("fullName")}
-                  value={values.fullName}
-                />
+              <View>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Last Name:</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter your last name"
+                    onChangeText={handleChange("lastName")}
+                    onBlur={handleBlur("lastName")}
+                    value={values.lastName}
+                  />
+                </View>
+                {errors.lastName && (
+                  <Text style={styles.errorText}>
+                    {errors.lastName}
+                  </Text>
+                )}
               </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Address:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your address"
-                  onChangeText={handleChange("address")}
-                  onBlur={handleBlur("address")}
-                  value={values.address}
-                />
+              <View>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Full Name:</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter your full name"
+                    onChangeText={handleChange("fullName")}
+                    onBlur={handleBlur("fullName")}
+                    value={values.fullName}
+                  />
+                </View>
+                {errors.fullName && (
+                  <Text style={styles.errorText}>
+                    {errors.fullName}
+                  </Text>
+                )}
               </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Contact No:</Text>
-                <TextInput
-                  style={styles.input}
-                  keyboardType="phone-pad"
-                  placeholder="Enter your contact No"
-                  onChangeText={handleChange("contactNumber")}
-                  onBlur={handleBlur("contactNumber")}
-                  value={values.contactNumber}
-                />
+              <View>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Address:</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter your address"
+                    onChangeText={handleChange("address")}
+                    onBlur={handleBlur("address")}
+                    value={values.address}
+                  />
+                </View>
+                {errors.address && (
+                  <Text style={styles.errorText}>
+                    {errors.address}
+                  </Text>
+                )}
+              </View>
+
+              <View>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Contact No:</Text>
+                  <TextInput
+                    style={styles.input}
+                    keyboardType="phone-pad"
+                    placeholder="Enter your contact No"
+                    onChangeText={handleChange("contactNumber")}
+                    onBlur={handleBlur("contactNumber")}
+                    value={values.contactNumber}
+                  />
+                </View>
+                {touched.contactNumber && errors.contactNumber && (
+                  <Text style={styles.errorText}>
+                    {errors.contactNumber}
+                  </Text>
+                )}
               </View>
 
               <TouchableOpacity
@@ -130,6 +180,7 @@ export const Profile = ({ navigation }: any) => {
               >
                 <Text style={styles.updateButtonText}>Update</Text>
               </TouchableOpacity>
+              </ScrollView>
             </>
           )}
         </Formik>
@@ -139,6 +190,9 @@ export const Profile = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
   },
@@ -201,7 +255,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  // Add more styles as needed for additional input fields or buttons
+  errorText: {
+    marginLeft: 117,
+    color: "red", // You can change the color to your preferred error color
+    fontSize: 14, // You can adjust the font size as needed
+    marginBottom: 5
+  },
 });
 
 export default Profile;

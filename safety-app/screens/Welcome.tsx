@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   button: {
+    backgroundColor:COLORS.white,
     marginTop: 22,
     width: "100%",
   },

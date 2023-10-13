@@ -89,6 +89,7 @@ export const Home = ({ navigation }: any) => {
             title="Inform your family"
             color={COLORS.secondary}
             filled
+            selected
             onPress={sendUserLocation}
             style={{ marginTop: 22, width: "100%" }}
           />
