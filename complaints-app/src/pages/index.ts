@@ -22,3 +22,4 @@ export * from "./remove-complaint";
 export * from "./payment";
 export * from "./payments-list";
 export * from "./user-payments";
+export * from "./police-contact-info";
