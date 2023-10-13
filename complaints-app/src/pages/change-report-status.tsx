@@ -20,10 +20,16 @@ export const ChangeReportStatus = () => {
   const selectedReportRequestId = useAppSelector(
     (state: RootState) => state.policeReports.selectedReportRequestId
   );
+  const reportRequestList = useAppSelector(
+    (state: RootState) => state.policeReports.reportRequests
+  );
+  const filteredReportRequest = reportRequestList.find(
+    (reportRequest) => reportRequest.id === selectedReportRequestId
+  );
 
   const initialState = {
     reportId: selectedReportRequestId || 0,
-    status: "",
+    status: filteredReportRequest?.status || "",
   };
   const [formData, setFormData] = useState(initialState);
 

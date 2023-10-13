@@ -48,7 +48,7 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
       policeStationId: Number(formData.PoliceStation),
       complaint: formData.Complaint,
       category: Number(formData.Category),
-      statusId: Number(formData.statusId),
+      statusId: 1,
     };
     dispatch(createComplaints(data));
     setFormData(initialState);
@@ -109,7 +109,7 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            {/* <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Status</InputLabel>
                 <Select
@@ -122,7 +122,7 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
                   <MenuItem value={2}>Removed</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
           </Grid>
 
           <Grid sx={{ mt: 1 }} container spacing={2}>

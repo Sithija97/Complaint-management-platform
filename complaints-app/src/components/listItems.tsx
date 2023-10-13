@@ -13,6 +13,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
 import { useNavigate } from "react-router-dom";
 import { RootState, useAppSelector } from "../store/store";
 import { UserRoles } from "../enums";
@@ -143,6 +144,15 @@ export const MainListItems = () => {
           <CreditCardIcon />
         </ListItemIcon>
         <ListItemText primary="Payments List" />
+      </ListItemButton>
+      {/* )} */}
+
+      {/* {user && user.userRoleId === UserRoles.POLICE && ( */}
+      <ListItemButton onClick={() => navigate("/contact-info")}>
+        <ListItemIcon>
+          <LocalPoliceIcon />
+        </ListItemIcon>
+        <ListItemText primary="Contact Info" />
       </ListItemButton>
       {/* )} */}
 

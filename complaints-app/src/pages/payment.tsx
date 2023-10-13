@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Typography,
@@ -17,18 +17,40 @@ import { IPaymentData } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { createPayment } from "../store/payments/paymentSlice";
 
+const months = [
+  { name: "January", number: 1 },
+  { name: "February", number: 2 },
+  { name: "March", number: 3 },
+  { name: "April", number: 4 },
+  { name: "May", number: 5 },
+  { name: "June", number: 6 },
+  { name: "July", number: 7 },
+  { name: "August", number: 8 },
+  { name: "September", number: 9 },
+  { name: "October", number: 10 },
+  { name: "November", number: 11 },
+  { name: "December", number: 12 },
+];
+
 export const Payment = () => {
   const dispatch = useAppDispatch();
+  const selectedFineId = useAppSelector(
+    (state: RootState) => state.fines.selectedFineId
+  );
+  const { userFines } = useAppSelector((state: RootState) => state.fines);
+  const filteredFine = userFines.find((fine) => fine.id === selectedFineId);
+
+  console.log(filteredFine);
+
   const initialPaymentInfo = {
     title: "",
     description: "",
     cardNumber: "",
     amount: 0,
+    expiryMonth: "",
+    expiryYear: "",
   };
 
-  const selectedFineId = useAppSelector(
-    (state: RootState) => state.fines.selectedFineId
-  );
   const [paymentInfo, setPaymentInfo] = useState(initialPaymentInfo);
 
   const handleChange = (event: any) => {
@@ -47,9 +69,19 @@ export const Payment = () => {
       fineId: selectedFineId || 0,
       amount: Number(paymentInfo.amount),
     };
-    console.log(paymentData);
-    dispatch(createPayment(paymentData));
-    setPaymentInfo(initialPaymentInfo);
+
+    if (filteredFine?.amount !== paymentData.amount) {
+      alert(
+        `Your Fine amount is ${filteredFine?.amount}. Please make the full payment.`
+      );
+    } else if (filteredFine?.amount < paymentData.amount) {
+      alert(
+        `Your Fine amount is ${filteredFine?.amount}. Please pay the coorect amount.`
+      );
+    } else {
+      dispatch(createPayment(paymentData));
+      setPaymentInfo(initialPaymentInfo);
+    }
   };
 
   return (
@@ -106,7 +138,7 @@ export const Payment = () => {
                     required
                   />
                 </Grid>
-                {/* <Grid item xs={6}>
+                <Grid item xs={6}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel>Expiry Month</InputLabel>
                     <Select
@@ -116,11 +148,13 @@ export const Payment = () => {
                       onChange={handleChange}
                       required
                     >
-                      <MenuItem value="01">01 - January</MenuItem>
+                      {months.map((month) => (
+                        <MenuItem value={month.number}>{month.name}</MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
-                </Grid> */}
-                {/* <Grid item xs={6}>
+                </Grid>
+                <Grid item xs={6}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel>Expiry Year</InputLabel>
                     <Select
@@ -131,14 +165,20 @@ export const Payment = () => {
                       required
                     >
                       <MenuItem value="2023">2023</MenuItem>
+                      <MenuItem value="2023">2022</MenuItem>
+                      <MenuItem value="2023">2021</MenuItem>
+                      <MenuItem value="2023">2020</MenuItem>
+                      <MenuItem value="2023">2019</MenuItem>
+                      <MenuItem value="2023">2018</MenuItem>
                     </Select>
                   </FormControl>
-                </Grid> */}
+                </Grid>
               </Grid>
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
+                disabled={filteredFine?.status === 2}
                 sx={{ mt: 2 }}
               >
                 Submit Payment

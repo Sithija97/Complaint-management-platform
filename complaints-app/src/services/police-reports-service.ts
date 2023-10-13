@@ -26,31 +26,34 @@ const requestReport = async (
   const axiosInstance = createAxiosInstance(token);
   const formData = new FormData();
 
-  
   if (requestData.fileName) {
     if (Array.isArray(requestData.fileName)) {
       requestData.fileName.forEach((file) => {
-        formData.append('fileName', file);
+        formData.append("fileName", file);
       });
     } else {
-      formData.append('fileName', requestData.fileName);
+      formData.append("fileName", requestData.fileName);
     }
   }
-  formData.append('title', requestData.title);
-  formData.append('description', requestData.description);
-  formData.append('category', String(requestData.category));
-  formData.append('status', String(requestData.status));
+  formData.append("title", requestData.title);
+  formData.append("description", requestData.description);
+  formData.append("category", String(requestData.category));
+  formData.append("status", String(requestData.status));
 
   try {
-    const response = await axiosInstance.post('/police-report-request', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await axiosInstance.post(
+      "/police-report-request",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     // Handle error here
-    console.error('Error:', error);
+    console.error("Error:", error);
     throw error;
   }
 };
@@ -161,27 +164,27 @@ const getReports = async (token: string) => {
 const getReportRequestList = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    const response = await axiosInstance.get("/police-report-request-list");
-    // const response = {
-    //   data: [
-    //     {
-    //       id: 1,
-    //       title: "Police repot one",
-    //       category: 1,
-    //       description: "Police repot one description",
-    //       userId: 2,
-    //       status: 2,
-    //       policeStationId: 1,
-    //       createdAt: "2023-10-07T19:11:17.000Z",
-    //       updatedAt: "2023-10-07T19:12:01.000Z",
-    //       User: {
-    //         id: 2,
-    //         firstName: "sithija",
-    //         lastName: "shehara",
-    //       },
-    //     },
-    //   ],
-    // };
+    // const response = await axiosInstance.get("/police-report-request-list");
+    const response = {
+      data: [
+        {
+          id: 1,
+          title: "Police repot one",
+          category: 1,
+          description: "Police repot one description",
+          userId: 2,
+          status: 2,
+          policeStationId: 1,
+          createdAt: "2023-10-07T19:11:17.000Z",
+          updatedAt: "2023-10-07T19:12:01.000Z",
+          User: {
+            id: 2,
+            firstName: "sithija",
+            lastName: "shehara",
+          },
+        },
+      ],
+    };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -194,7 +197,9 @@ const getReportRequestList = async (token: string) => {
 const getReportRequestListByUser = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    const response = await axiosInstance.get("/police-report-request-list-by-user");
+    const response = await axiosInstance.get(
+      "/police-report-request-list-by-user"
+    );
     // const response = {
     //   data: [
     //     {

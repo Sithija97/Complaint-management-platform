@@ -19,7 +19,7 @@ import {
 } from "chart.js";
 import { Bar, Doughnut } from "react-chartjs-2";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
-import { getDashboardData } from "../store/auth/authSlice";
+import { getAllUsers, getDashboardData } from "../store/auth/authSlice";
 import { CustomSpinner } from "../components";
 
 ChartJS.register(
@@ -51,7 +51,7 @@ const data2 = {
   datasets: [
     {
       label: "My First Dataset",
-      data: [300, 50, 100],
+      data: [1, 3, 2],
       backgroundColor: [
         "rgb(255, 99, 132)",
         "rgb(54, 162, 235)",
@@ -103,6 +103,7 @@ export const Home = () => {
   );
   useEffect(() => {
     dispatch(getDashboardData());
+    dispatch(getAllUsers());
   }, []);
 
   if (isDashboardDataLoading) {
