@@ -190,6 +190,7 @@ export const Contacts = ({ navigation }: any) => {
                 <View style={styles.submitButtonContainer}>
                   <Button
                     title={"Save Contacts"}
+                    selected
                     filled
                     disabled={contactsGroup.length < 5}
                     onPress={() => saveContactDetails()}

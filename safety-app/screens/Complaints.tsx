@@ -38,7 +38,7 @@ export const Complaints = ({ navigation }: any) => {
       category: Number(category),
       userId: user?.id,
     };
-    await dispatch(createComplaints(complaintData));
+    await dispatch(createComplaints(complaintData)).then(data => data.meta.requestStatus === 'fulfilled' && alert('Complaint added Successfully!'))
     resetForm();
   };
 
@@ -150,6 +150,7 @@ export const Complaints = ({ navigation }: any) => {
                   <Button
                     title="Send Complaint"
                     filled
+                    selected
                     disabled={!values.title || !values.complaint}
                     onPress={() => handleSubmit()}
                   />
