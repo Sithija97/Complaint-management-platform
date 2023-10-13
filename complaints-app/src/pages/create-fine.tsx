@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { BoxContainer } from "../components";
-import { useAppDispatch } from "../store/store";
+import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { CustomDatePicker } from "../components/customDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -25,6 +25,7 @@ interface IProps {
 
 export const CreateFine = ({ onCloseDrawer }: IProps) => {
   const dispatch = useAppDispatch();
+  const users = useAppSelector((state: RootState) => state.auth.users);
 
   const initialState = {
     title: "",
@@ -140,9 +141,11 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
                   value={formData.userId}
                   onChange={handleInputChange}
                 >
-                  <MenuItem value={1}>User 1</MenuItem>
-                  <MenuItem value={2}>User 2</MenuItem>
-                  <MenuItem value={3}>User 3</MenuItem>
+                  {users.map((user) => (
+                    <MenuItem key={user.id} value={user.id}>
+                      {user.fullName}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>

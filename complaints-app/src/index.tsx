@@ -31,6 +31,7 @@ import {
   UserReportRequestList,
   ReportRequestList,
   UploadReport,
+  ContactInfo,
 } from "./pages";
 import { store } from "./store/store";
 import PrivateRoute from "./components/privte-route";
@@ -110,6 +111,10 @@ const router = createBrowserRouter(
 
       {/* <Route path="" element={<PrivateRoute />}> */}
       <Route path="/user-payments" element={<UserPaymentList />} />
+      {/* </Route> */}
+
+      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="/contact-info" element={<ContactInfo />} />
       {/* </Route> */}
     </Route>
   )

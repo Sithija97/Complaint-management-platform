@@ -93,9 +93,6 @@ export const Fines = () => {
             <Typography variant="h5" gutterBottom>
               My Fines
             </Typography>
-            {/* <Button variant="contained" onClick={toggleDrawer}>
-              Add Fine
-            </Button> */}
           </Stack>
 
           <Card>
@@ -118,10 +115,6 @@ export const Fines = () => {
           </Card>
         </Container>
       </BoxContainer>
-
-      <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        {/* <CreateFine /> */}
-      </Drawer>
     </Dashboard>
   );
 };
