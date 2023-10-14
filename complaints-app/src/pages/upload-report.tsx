@@ -55,7 +55,7 @@ export const UploadReport = () => {
     };
 
     console.log(uploadData);
-    dispatch(uploadReport(uploadData)).then((data)=> data.meta.requestStatus === "fulfilled" ? alert('Report uploaded Successfully!') : alert('Something went wrong.. Please try again'))
+    dispatch(uploadReport(uploadData)).then((data:any)=> data.meta.requestStatus === "fulfilled" ? alert('Report uploaded Successfully!') : alert('Something went wrong.. Please try again'))
 
     setUserId("");
     setPoliceReportRequestId("");

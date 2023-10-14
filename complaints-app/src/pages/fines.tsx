@@ -44,11 +44,6 @@ export const Fines = () => {
   const columns = useMemo<MRT_ColumnDef<IFineUser>[]>(
     () => [
       {
-        accessorKey: "id",
-        header: "Id",
-        size: 100,
-      },
-      {
         accessorKey: "title",
         header: "Title",
         size: 150,
@@ -104,7 +99,7 @@ export const Fines = () => {
                 <Box sx={{ display: "flex", gap: "1rem" }}>
                   <IconButton
                     color="error"
-                    onClick={() => handlePayment(row.getValue("id"))}
+                    onClick={() => handlePayment(row)}
                   >
                     <AddCardIcon sx={{ color: "#2288E5" }} />
                   </IconButton>

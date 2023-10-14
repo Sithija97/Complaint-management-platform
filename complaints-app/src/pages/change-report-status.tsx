@@ -24,15 +24,18 @@ export const ChangeReportStatus = ({onCloseDrawer}:IProps) => {
   const selectedReportRequestId = useAppSelector(
     (state: RootState) => state.policeReports.selectedReportRequestId
   );
+  console.log("selectedReportRequestId", selectedReportRequestId)
   const reportRequestList = useAppSelector(
     (state: RootState) => state.policeReports.reportRequests
   );
   const filteredReportRequest = reportRequestList.find(
-    (reportRequest) => reportRequest.id === selectedReportRequestId
+    (reportRequest) => reportRequest.id === selectedReportRequestId.original.id
   );
 
+  const title = selectedReportRequestId.original.title
+
   const initialState = {
-    reportId: selectedReportRequestId || 0,
+    reportId: selectedReportRequestId.original.id || 0,
     status: filteredReportRequest?.status || "",
   };
   const [formData, setFormData] = useState(initialState);
@@ -46,6 +49,7 @@ export const ChangeReportStatus = ({onCloseDrawer}:IProps) => {
   };
 
   const handleSubmit = (e: any) => {
+    console.log("formData", formData)
     e.preventDefault();
     const data = {
       id: Number(formData.reportId),
@@ -74,7 +78,8 @@ export const ChangeReportStatus = ({onCloseDrawer}:IProps) => {
                   name="reportId"
                   label="Report Id"
                   fullWidth
-                  value={formData.reportId}
+                  disabled
+                  value={title}
                   onChange={handleInputChange}
                 />
               </FormControl>

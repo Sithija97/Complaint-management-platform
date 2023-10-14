@@ -36,9 +36,12 @@ import { BoxContainer, CustomSpinner } from "../components";
 import { IReportUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getReportByUser } from "../store/reports/reportSlice";
+import policeReportService from "../services/police-reports-service";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 export const Reports = () => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state: RootState) => state.auth.user)
   const { isGetAllFinesLoading } = useAppSelector(
     (state: RootState) => state.fines
   );
@@ -57,11 +60,6 @@ export const Reports = () => {
         header: "Police Report Request",
         size: 150,
       },
-      {
-        accessorKey: "filename",
-        header: "Report",
-        size: 150,
-      },
     ],
     []
   );
@@ -72,6 +70,23 @@ export const Reports = () => {
   if (isGetAllFinesLoading) {
     return <CustomSpinner />;
   }
+
+  const handleDownloadClick = (url: string) => {
+    policeReportService.downloadPdf(user?.token!, url)
+      .then((response) => {
+        console.log("res head", response);
+
+        const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'sample.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Error downloading PDF:", error);
+      });
+  };
 
   return (
     <Dashboard>
@@ -93,7 +108,18 @@ export const Reports = () => {
           </Stack>
 
           <Card>
-            <MaterialReactTable columns={columns} data={data} />
+            <MaterialReactTable columns={columns} data={data} enableRowActions
+              renderRowActions={({ row, table }) => (
+                <Box sx={{ display: "flex", gap: "1rem" }}>
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDownloadClick(`${row.original.filename}`)}
+                  >
+                    <CloudDownloadIcon sx={{ color: "#2288E5" }} />
+                  </IconButton>
+                </Box>
+              )}
+              positionActionsColumn="last" />
           </Card>
         </Container>
       </BoxContainer>

@@ -38,7 +38,6 @@ export const ReportsList = () => {
   }, []);
 
   const handleDownloadClick = (url: string) => {
-    console.log("url", url);
     policeReportService.downloadPdf(user?.token!, url)
       .then((response) => {
         console.log("res head", response);
@@ -76,20 +75,6 @@ export const ReportsList = () => {
         header: "Last Name",
         size: 200,
       },
-      // {
-      //   accessorKey: "filename",
-      //   header: "Report",
-      //   size: 150,
-      //   // Define a custom cell renderer for the "filename" column
-      //   Cell: ({ row }) => (
-      //     <a
-      //       href={row.original.filename} // Set the PDF file URL as the href
-      //       download={`report_${row.original.filename}.pdf`} // Specify the desired file name
-      //     >
-      //       Download PDF
-      //     </a>
-      //   ),
-      // },
     ],
     []
   );

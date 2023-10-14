@@ -74,23 +74,39 @@ const changeReportStatus = async (statusData: IReportStatus, token: string) => {
   }
 };
 
-// upload police report
-
-// { fileName, policeReportRequestId, userId }
 const uploadPoliceReport = async (
-  uploadData: IUploadReportData,
+  requestData: IUploadReportData,
   token: string
 ) => {
   const axiosInstance = createAxiosInstance(token);
+  const formData = new FormData();
+
+  if (requestData.fileName) {
+    if (Array.isArray(requestData.fileName)) {
+      requestData.fileName.forEach((file) => {
+        formData.append("fileName", file);
+      });
+    } else {
+      formData.append("fileName", requestData.fileName);
+    }
+  }
+  formData.append("policeReportRequestId", requestData.policeReportRequestId);
+  formData.append("userId", requestData.userId);
 
   try {
     const response = await axiosInstance.post(
       "/upload-police-report",
-      uploadData
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   } catch (error) {
-    console.log(`error : ${error}`);
+    // Handle error here
+    console.error("Error:", error);
     throw error;
   }
 };
@@ -100,23 +116,6 @@ const getReportByUser = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
     const response = await axiosInstance.get("/get-police-reports-by-user");
-    // const response = {
-    //   data: [
-    //     {
-    //       id: 1,
-    //       policeReportRequestId: 1,
-    //       filename: "src\\assets\\1696705947506.pdf",
-    //       userId: 2,
-    //       uploadedBy: 1,
-    //       policeStationId: 1,
-    //       createdAt: "2023-10-07T19:12:27.000Z",
-    //       updatedAt: "2023-10-07T19:12:27.000Z",
-    //       PoliceReportRequest: {
-    //         title: "Police repot one",
-    //       },
-    //     },
-    //   ],
-    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -130,28 +129,6 @@ const getReports = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
     const response = await axiosInstance.get("/get-police-reports");
-    // const response = {
-    //   data: [
-    //     {
-    //       id: 1,
-    //       policeReportRequestId: 1,
-    //       filename: "src\\assets\\1696705947506.pdf",
-    //       userId: 2,
-    //       uploadedBy: 1,
-    //       policeStationId: 1,
-    //       createdAt: "2023-10-07T19:12:27.000Z",
-    //       updatedAt: "2023-10-07T19:12:27.000Z",
-    //       User: {
-    //         id: 1,
-    //         firstName: "kaveesha",
-    //         lastName: "rathnayaka",
-    //       },
-    //       PoliceReportRequest: {
-    //         title: "Police repot one",
-    //       },
-    //     },
-    //   ],
-    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -164,27 +141,7 @@ const getReports = async (token: string) => {
 const getReportRequestList = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
-    // const response = await axiosInstance.get("/police-report-request-list");
-    const response = {
-      data: [
-        {
-          id: 1,
-          title: "Police repot one",
-          category: 1,
-          description: "Police repot one description",
-          userId: 2,
-          status: 2,
-          policeStationId: 1,
-          createdAt: "2023-10-07T19:11:17.000Z",
-          updatedAt: "2023-10-07T19:12:01.000Z",
-          User: {
-            id: 2,
-            firstName: "sithija",
-            lastName: "shehara",
-          },
-        },
-      ],
-    };
+    const response = await axiosInstance.get("/police-report-request-list");
     return response.data;
   } catch (error) {
     // Handle error here
@@ -200,21 +157,6 @@ const getReportRequestListByUser = async (token: string) => {
     const response = await axiosInstance.get(
       "/police-report-request-list-by-user"
     );
-    // const response = {
-    //   data: [
-    //     {
-    //       id: 1,
-    //       title: "Police repot one",
-    //       category: 1,
-    //       description: "Police repot one description",
-    //       userId: 2,
-    //       status: 2,
-    //       policeStationId: 1,
-    //       createdAt: "2023-10-07T19:11:17.000Z",
-    //       updatedAt: "2023-10-07T19:12:01.000Z",
-    //     },
-    //   ],
-    // };
     return response.data;
   } catch (error) {
     // Handle error here

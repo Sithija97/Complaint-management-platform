@@ -32,7 +32,7 @@ export const Complaints = () => {
     (state: RootState) => state.complaints
   );
 
-  const fetchData =async () => {
+  const fetchData = async () => {
     await dispatch(getComplaintsByUser());
   }
 
@@ -115,9 +115,6 @@ export const Complaints = () => {
               enableRowActions
               renderRowActions={({ row, table }) => (
                 <Box sx={{ display: "flex", gap: "1rem" }}>
-                  {/* <IconButton color="error" onClick={() => {}}>
-                    <EditIcon sx={{ color: "#2288E5" }} />
-                  </IconButton> */}
                   <IconButton
                     color="error"
                     onClick={() => handleRemoveComplaint(row)}

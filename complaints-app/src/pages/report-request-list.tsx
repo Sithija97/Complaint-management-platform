@@ -24,6 +24,8 @@ import {
   setSelectedReportRequestId,
 } from "../store/reports/reportSlice";
 import { ChangeReportStatus } from "./change-report-status";
+import policeReportService from "../services/police-reports-service";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 export const ReportRequestList = () => {
   const dispatch = useAppDispatch();
@@ -43,13 +45,30 @@ export const ReportRequestList = () => {
     toggleDrawer();
   };
 
+  const user = useAppSelector((state: RootState) => state.auth.user)
+
+  const download = (row: any) => {
+    console.log("download", row);
+    row.original.PoliceReportRequestAttachmets.forEach((item: any) => {
+      policeReportService.downloadPdf(user?.token!, item.filename)
+      .then((response) => {
+        console.log("res head", response);
+
+        const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'sample.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Error downloading PDF:", error);
+      });
+    })
+  };
+
   const columns = useMemo<MRT_ColumnDef<IReportRequest>[]>(
     () => [
-      {
-        accessorKey: "id",
-        header: "Id",
-        size: 100,
-      },
       {
         accessorKey: "title",
         header: "Title",
@@ -58,16 +77,6 @@ export const ReportRequestList = () => {
       {
         accessorKey: "description",
         header: "Description",
-        size: 150,
-      },
-      {
-        accessorKey: "User.firstName",
-        header: "First Name",
-        size: 150,
-      },
-      {
-        accessorKey: "User.lastName",
-        header: "Last Name",
         size: 150,
       },
     ],
@@ -106,9 +115,15 @@ export const ReportRequestList = () => {
                 <Box sx={{ display: "flex", gap: "1rem" }}>
                   <IconButton
                     color="error"
-                    onClick={() => handleChangeStatus(row.getValue("id"))}
+                    onClick={() => handleChangeStatus(row)}
                   >
                     <EditIcon sx={{ color: "#2288E5" }} />
+                  </IconButton>
+                  <IconButton
+                    color="error"
+                    onClick={() => download(row)}
+                  >
+                    <CloudDownloadIcon sx={{ color: "#2288E5" }} />
                   </IconButton>
                 </Box>
               )}

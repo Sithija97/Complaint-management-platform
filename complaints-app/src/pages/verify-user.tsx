@@ -51,7 +51,11 @@ export const VerifyUser = () => {
         password,
       };
 
-      dispatch(verify(data));
+      dispatch(verify(data)).then((data) => {
+        if (data.meta.requestStatus === "fulfilled") {
+          navigate("/");
+        }
+      });
       formik.resetForm();
     }
   };

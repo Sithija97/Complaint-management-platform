@@ -300,7 +300,7 @@ export interface IComplaintsInitialState {
 export interface IFineInitialState {
   fines: IFine[];
   userFines: IFineUser[];
-  selectedFineId: number;
+  selectedFineId: any;
   isError: boolean;
   isSuccess: boolean;
   isGetAllFinesLoading: boolean;
@@ -314,7 +314,7 @@ export interface IReportsInitialState {
   userReports: IReportUser[];
   reportRequests: IReportRequest[];
   userReportRequests: IReportRequestUser[];
-  selectedReportRequestId: number;
+  selectedReportRequestId: any;
   isError: boolean;
   isSuccess: boolean;
   isGetAllReportsLoading: boolean;
@@ -425,8 +425,8 @@ export interface IReportRequestData {
 
 export interface IUploadReportData {
   fileName: File[] | any | null;
-  policeReportRequestId: number;
-  userId: number;
+  policeReportRequestId: any;
+  userId: any;
 }
 
 export interface IPaymentData {

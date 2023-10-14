@@ -37,7 +37,9 @@ export const ForgotPassword = () => {
 
   const handleSubmit = (values: any) => {
     try {
-      dispatch(forgotPassword(values));
+      dispatch(forgotPassword(values)).then((data) => {
+        alert("Please check you email!");
+      });
     } catch (error) {
       console.log("forgot password error :", error);
     }

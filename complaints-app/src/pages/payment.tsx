@@ -35,12 +35,13 @@ const months = [
 export const Payment = () => {
   const dispatch = useAppDispatch();
   const selectedFineId = useAppSelector(
-    (state: RootState) => state.fines.selectedFineId
+    (state: RootState) => state.fines.selectedFineId.original.id
   );
   const { userFines } = useAppSelector((state: RootState) => state.fines);
   const filteredFine = userFines.find((fine) => fine.id === selectedFineId);
 
   console.log(filteredFine);
+  console.log(selectedFineId);
 
   const initialPaymentInfo = {
     title: "",
@@ -165,11 +166,11 @@ export const Payment = () => {
                       required
                     >
                       <MenuItem value="2023">2023</MenuItem>
-                      <MenuItem value="2023">2022</MenuItem>
-                      <MenuItem value="2023">2021</MenuItem>
-                      <MenuItem value="2023">2020</MenuItem>
-                      <MenuItem value="2023">2019</MenuItem>
-                      <MenuItem value="2023">2018</MenuItem>
+                      <MenuItem value="2022">2022</MenuItem>
+                      <MenuItem value="2021">2021</MenuItem>
+                      <MenuItem value="2020">2020</MenuItem>
+                      <MenuItem value="2019">2019</MenuItem>
+                      <MenuItem value="2018">2018</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
