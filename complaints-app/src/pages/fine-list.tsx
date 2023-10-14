@@ -26,8 +26,12 @@ export const FineList = () => {
     (state: RootState) => state.fines
   );
 
+  const fetchData = async () => {
+    await dispatch(getAllFines());
+  }
+
   useEffect(() => {
-    dispatch(getAllFines());
+    fetchData()
   }, []);
 
   const [show, setShow] = useState(false);

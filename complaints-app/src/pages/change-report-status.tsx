@@ -14,7 +14,11 @@ import { BoxContainer } from "../components";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { changeReportStatus } from "../store/reports/reportSlice";
 
-export const ChangeReportStatus = () => {
+interface IProps {
+  onCloseDrawer:()=>void
+}
+
+export const ChangeReportStatus = ({onCloseDrawer}:IProps) => {
   const dispatch = useAppDispatch();
 
   const selectedReportRequestId = useAppSelector(
@@ -50,6 +54,7 @@ export const ChangeReportStatus = () => {
     console.log(data);
     dispatch(changeReportStatus(data));
     setFormData(initialState);
+    onCloseDrawer()
   };
 
   return (

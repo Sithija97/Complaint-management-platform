@@ -40,7 +40,7 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async(e: any) => {
     e.preventDefault();
     console.log(formData);
     const data = {
@@ -50,9 +50,9 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
       category: Number(formData.Category),
       statusId: 1,
     };
-    dispatch(createComplaints(data));
+    await dispatch(createComplaints(data));
+    await dispatch(getComplaintsByUser());
     setFormData(initialState);
-    dispatch(getComplaintsByUser());
     onCloseDrawer();
   };
 

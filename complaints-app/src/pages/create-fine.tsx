@@ -49,7 +49,7 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async(e: any) => {
     e.preventDefault();
     const {
       title,
@@ -71,14 +71,14 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
       endDate: formatDate(expireDate),
       amount: Number(amount),
       userId: Number(userId),
-      statusId: Number(statusId),
+      statusId: 1,
       tax: Number(tax),
       otherCharges: Number(otherCharges),
     };
     console.log(data);
-    dispatch(createFine(data));
+    await dispatch(createFine(data));
+    await dispatch(getAllFines());
     setFormData(initialState);
-    dispatch(getAllFines());
     onCloseDrawer();
   };
 
@@ -117,7 +117,7 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            {/* <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Status</InputLabel>
                 <Select
@@ -131,7 +131,7 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
                   <MenuItem value={3}>Done</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">User</InputLabel>

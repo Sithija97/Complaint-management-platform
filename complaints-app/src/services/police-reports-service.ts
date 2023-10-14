@@ -231,7 +231,12 @@ const downloadPdf = async (token: string, url: string) => {
     const data = {
       filePath: url
     }
-    const response = await axiosInstance.post("/get-file", data);
+    const response = await axiosInstance.post(
+      "/get-file", data,
+      {
+        responseType: "blob",
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(`error : ${error}`);

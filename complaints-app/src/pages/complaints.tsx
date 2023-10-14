@@ -32,9 +32,13 @@ export const Complaints = () => {
     (state: RootState) => state.complaints
   );
 
+  const fetchData =async () => {
+    await dispatch(getComplaintsByUser());
+  }
+
   useEffect(() => {
-    dispatch(getComplaintsByUser());
-  }, []);
+    fetchData()
+  }, [dispatch]);
 
   const [show, setShow] = useState(false);
   const [showRemoveDrawer, setShowRemoveDrawer] = useState(false);

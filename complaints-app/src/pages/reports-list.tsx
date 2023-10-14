@@ -9,6 +9,7 @@ import {
   Toolbar,
   Typography,
   Drawer,
+  IconButton,
 } from "@mui/material";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { CreateReport } from "./create-report";
@@ -17,6 +18,7 @@ import { IReport, IUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getAllReports } from "../store/reports/reportSlice";
 import policeReportService from "../services/police-reports-service";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { saveAs } from 'file-saver';
 import * as BlobUtil from 'blob-util';
 
@@ -35,39 +37,18 @@ export const ReportsList = () => {
     dispatch(getAllReports());
   }, []);
 
-  // useEffect(() => {
-  //   handleDownloadClick("src\\assets\\1697227065151.pdf")
-  // }, []);
-
   const handleDownloadClick = (url: string) => {
-    // Make an HTTP request to the backend to download the PDF
+    console.log("url", url);
     policeReportService.downloadPdf(user?.token!, url)
       .then((response) => {
-        console.log("res head", response)
-        // const blob = new Blob([response.data], { type: 'application/pdf' });
-
-        // saveAs(blob, 'your_filename.pdf');
+        console.log("res head", response);
 
         const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'sample.pdf'; // Set the desired file name
+        a.download = 'sample.pdf';
         a.click();
         window.URL.revokeObjectURL(url);
-        // // Create a Blob from the response data
-        // const blob = new Blob([response.data], { type: "application/pdf" });
-
-        // // Create a temporary URL for the Blob
-        // const url = window.URL.createObjectURL(blob);
-
-        // // Create a temporary link element and trigger the download
-        // const a = document.createElement("a");
-        // a.href = url;
-        // a.download = "report.pdf"; // Set the desired file name
-        // a.click();
-
-        // // Release the URL object
-        // window.URL.revokeObjectURL(url);
       })
       .catch((error) => {
         console.error("Error downloading PDF:", error);
@@ -95,20 +76,20 @@ export const ReportsList = () => {
         header: "Last Name",
         size: 200,
       },
-      {
-        accessorKey: "filename",
-        header: "Report",
-        size: 150,
-        // Define a custom cell renderer for the "filename" column
-        Cell: ({ row }) => (
-          <a
-            href={row.original.filename} // Set the PDF file URL as the href
-            download={`report_${row.original.filename}.pdf`} // Specify the desired file name
-          >
-            Download PDF
-          </a>
-        ),
-      },
+      // {
+      //   accessorKey: "filename",
+      //   header: "Report",
+      //   size: 150,
+      //   // Define a custom cell renderer for the "filename" column
+      //   Cell: ({ row }) => (
+      //     <a
+      //       href={row.original.filename} // Set the PDF file URL as the href
+      //       download={`report_${row.original.filename}.pdf`} // Specify the desired file name
+      //     >
+      //       Download PDF
+      //     </a>
+      //   ),
+      // },
     ],
     []
   );
@@ -137,7 +118,18 @@ export const ReportsList = () => {
           </Stack>
 
           <Card>
-            <MaterialReactTable columns={columns} data={data} />
+            <MaterialReactTable columns={columns} data={data} enableRowActions
+              renderRowActions={({ row, table }) => (
+                <Box sx={{ display: "flex", gap: "1rem" }}>
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDownloadClick(`${row.original.filename}`)}
+                  >
+                    <CloudDownloadIcon sx={{ color: "#2288E5" }} />
+                  </IconButton>
+                </Box>
+              )}
+              positionActionsColumn="last" />
           </Card>
         </Container>
       </BoxContainer>

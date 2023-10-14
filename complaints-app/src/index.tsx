@@ -45,77 +45,77 @@ const router = createBrowserRouter(
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/home" element={<Home />} />
-      {/* </Route> */}
+      </Route>
 
       <Route path="/forgot-password" element={<ForgotPassword />} />
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/users-list" element={<UsersList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/profile" element={<UserProfile />} />
-      {/* </Route> */}
+      </Route>
 
       <Route path="/verify-user" element={<VerifyUser />} />
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/fines" element={<Fines />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/reports" element={<Reports />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/reports-list" element={<ReportsList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/report-request" element={<ReportRequest />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/upload-report" element={<UploadReport />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/report-request-list" element={<ReportRequestList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/user-report-requests" element={<UserReportRequestList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/complaints" element={<Complaints />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/complaints-list" element={<ComplaintList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/payment" element={<Payment />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/payments-list" element={<PaymentList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/fines-list" element={<FineList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/user-payments" element={<UserPaymentList />} />
-      {/* </Route> */}
+      </Route>
 
-      {/* <Route path="" element={<PrivateRoute />}> */}
+      <Route path="" element={<PrivateRoute />}>
       <Route path="/contact-info" element={<ContactInfo />} />
-      {/* </Route> */}
+      </Route>
     </Route>
   )
 );
