@@ -119,7 +119,7 @@ export const ReportRequestList = () => {
       </BoxContainer>
 
       <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        <ChangeReportStatus />
+        <ChangeReportStatus onCloseDrawer={toggleDrawer} />
       </Drawer>
     </Dashboard>
   );

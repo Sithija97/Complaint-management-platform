@@ -21,6 +21,7 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getAllUsers, getDashboardData } from "../store/auth/authSlice";
 import { CustomSpinner } from "../components";
+import { UserRoles } from "../enums";
 
 ChartJS.register(
   CategoryScale,
@@ -46,21 +47,7 @@ export const options = {
   },
 };
 
-const data2 = {
-  labels: ["Red", "Blue", "Yellow"],
-  datasets: [
-    {
-      label: "My First Dataset",
-      data: [1, 3, 2],
-      backgroundColor: [
-        "rgb(255, 99, 132)",
-        "rgb(54, 162, 235)",
-        "rgb(255, 205, 86)",
-      ],
-      hoverOffset: 4,
-    },
-  ],
-};
+
 
 const labels = ["January", "February", "March", "April", "May", "June", "July"];
 const data = {
@@ -98,7 +85,7 @@ function Copyright(props: any) {
 
 export const Home = () => {
   const dispatch = useAppDispatch();
-  const { dashboardData, isDashboardDataLoading } = useAppSelector(
+  const { dashboardData, user, isDashboardDataLoading } = useAppSelector(
     (state: RootState) => state.auth
   );
   useEffect(() => {
@@ -108,6 +95,36 @@ export const Home = () => {
 
   if (isDashboardDataLoading) {
     return <CustomSpinner />;
+  }
+
+  const data2 = user && user.userRoleId === UserRoles.DEFAULT ? {
+    labels: ["Active Complaints", "Active Fines", "Police Reports"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [dashboardData?.user?.complaint?.activeComplaints || 0, dashboardData?.user?.fine?.activeFines || 0, dashboardData?.user?.policeReport?.policeReports || 0],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverOffset: 4,
+      },
+    ],
+  } : {
+    labels: ["Complaints", "Fines", "Revenue"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [dashboardData?.police?.complaint?.activeComplaints, dashboardData?.police?.fine?.activeFines || 0, dashboardData?.police?.revenue?.totalFineAmount || 0],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverOffset: 4,
+      },
+    ],
   }
 
   return (
@@ -130,11 +147,61 @@ export const Home = () => {
             {` Hi, Welcome Back `}
           </Typography>
 
-          <Grid sx={{ mb: 3 }} container spacing={3}>
+          {user && user.userRoleId === UserRoles.DEFAULT && <Grid sx={{ mb: 3 }} container spacing={3}>
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
                 <Typography variant="h3">
-                  {dashboardData.user.userCount}
+                  {dashboardData?.user?.complaint?.activeComplaints || 0}
+                </Typography>
+
+                <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+                  Active Complaints
+                </Typography>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
+                <Typography variant="h3">
+                  {dashboardData?.user?.fine?.activeFines || 0}
+                </Typography>
+
+                <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+                  Active Fines
+                </Typography>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
+                <Typography variant="h3">
+                  {dashboardData?.user?.policeReport?.policeReports || 0}
+                </Typography>
+
+                <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+                  Police Reports
+                </Typography>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
+                <Typography variant="h3">
+                  {dashboardData?.user?.policeReport?.allPoliceReportRequests || 0}
+                </Typography>
+
+                <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+                  Police Report Requests
+                </Typography>
+              </Card>
+            </Grid>
+          </Grid>}
+
+          {user && user.userRoleId === UserRoles.POLICE && <Grid sx={{ mb: 3 }} container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
+                <Typography variant="h3">
+                  {dashboardData?.police?.user?.userCount || 0}
                 </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
@@ -146,11 +213,11 @@ export const Home = () => {
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
                 <Typography variant="h3">
-                  {dashboardData.complaint.activeComplaints}
+                  {dashboardData?.police?.complaint?.activeComplaints || 0}
                 </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-                  Cases
+                  Complaints
                 </Typography>
               </Card>
             </Grid>
@@ -158,11 +225,11 @@ export const Home = () => {
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
                 <Typography variant="h3">
-                  {dashboardData.policeReport.allPoliceReportRequests}
+                  {dashboardData?.police?.fine?.activeFines || 0}
                 </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-                  Reports
+                  Fines
                 </Typography>
               </Card>
             </Grid>
@@ -170,7 +237,7 @@ export const Home = () => {
             <Grid item xs={12} sm={6} md={3}>
               <Card sx={{ py: 5, boxShadow: 0, textAlign: "center" }}>
                 <Typography variant="h3">
-                  {dashboardData.revenue.totalFineAmount}
+                  {dashboardData?.police?.revenue?.totalFineAmount || 0}
                 </Typography>
 
                 <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
@@ -178,16 +245,16 @@ export const Home = () => {
                 </Typography>
               </Card>
             </Grid>
-          </Grid>
+          </Grid>}
 
           <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
+            <Grid item xs={12} md={6} lg={6}>
               <Card sx={{ p: 4, boxShadow: 0 }}>
                 <Bar options={options} data={data} />;
               </Card>
             </Grid>
 
-            <Grid item xs={12} md={4} lg={3}>
+            <Grid item xs={12} md={6} lg={6}>
               <Card sx={{ p: 4, boxShadow: 0 }}>
                 <Doughnut data={data2} />
               </Card>

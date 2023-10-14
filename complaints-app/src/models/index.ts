@@ -208,35 +208,76 @@ export interface IPaymentUser {
   updatedAt?: string;
 }
 
-interface IDashBoardDataType {
-  user: {
-    userCount: number;
-    policeUserCount: number;
+// interface IDashBoardDataType {
+//   user: {
+//     userCount: number;
+//     policeUserCount: number;
+//   };
+//   complaint: {
+//     activeComplaints: number;
+//     removedComplaints: number;
+//   };
+//   fine: {
+//     activeFines: number;
+//     completedFines?: number;
+//   };
+//   policeReport: {
+//     policeReports: number;
+//     allPoliceReportRequests: number;
+//     pendingPoliceReportRequests: number;
+//   };
+//   revenue: {
+//     pendingFineAmount: number;
+//     completedFineAmount: number | null;
+//     totalFineAmount: number;
+//   };
+// }
+
+export interface IDashBoardDataType {
+  police: null | {
+    user: {
+      userCount: number;
+      policeUserCount: number;
+    };
+    complaint: {
+      activeComplaints: number;
+      removedComplaints: number;
+    };
+    fine: {
+      activeFines: number;
+      completedFines: number;
+    };
+    policeReport: {
+      policeReports: number;
+      allPoliceReportRequests: number;
+      pendingPoliceReportRequests?: number;
+    };
+    revenue: {
+      pendingFineAmount: number;
+      completedFineAmount: number;
+      totalFineAmount: number;
+    };
   };
-  complaint: {
-    activeComplaints: number;
-    removedComplaints: number;
-  };
-  fine: {
-    activeFines: number;
-    completedFines?: number;
-  };
-  policeReport: {
-    policeReports: number;
-    allPoliceReportRequests: number;
-    pendingPoliceReportRequests: number;
-  };
-  revenue: {
-    pendingFineAmount: number;
-    completedFineAmount: number | null;
-    totalFineAmount: number;
+  user: null | {
+    complaint: {
+      activeComplaints: number;
+      removedComplaints: number;
+    };
+    fine: {
+      activeFines: number;
+      complatedFines: number;
+    };
+    policeReport: {
+      policeReports: number;
+      allPoliceReportRequests: number;
+    };
   };
 }
 
 export interface IAuthInitialState {
   user: IUser | null;
   users: IUser[];
-  dashboardData: IDashBoardDataType;
+  dashboardData: any;
   isError: boolean;
   isSuccess: boolean;
   isDashboardDataLoading: boolean;

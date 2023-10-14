@@ -45,6 +45,8 @@ export const ReportRequest = () => {
     dispatch(createReportRequest(reportData)).then((data) => {
       if (data.meta.requestStatus === "fulfilled") {
         alert("Report Request sent Successfully !");
+      } else {
+        alert('Something went wrong.. Please try again')
       }
     });
 

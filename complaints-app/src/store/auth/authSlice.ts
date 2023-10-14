@@ -7,6 +7,7 @@ import {
   IUpdateData,
   IVerifyUserData,
   IForgotPWData,
+  IDashBoardDataType,
 } from "../../models";
 import authService from "../../services/auth-service";
 import { RootState } from "../store";
@@ -16,29 +17,44 @@ const user: IUser = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user")!)
   : null;
 
-const initialDashboardValues = {
-  user: {
-    userCount: 0,
-    policeUserCount: 0,
+const initialDashboardValues : IDashBoardDataType = {
+  police: null || {
+    user: {
+      userCount: 0,
+      policeUserCount: 0,
+    },
+    complaint: {
+      activeComplaints: 0,
+      removedComplaints: 0,
+    },
+    fine: {
+      activeFines: 0,
+      completedFines: 0,
+    },
+    policeReport: {
+      policeReports: 0,
+      allPoliceReportRequests: 0,
+      pendingPoliceReportRequests: 0,
+    },
+    revenue: {
+      pendingFineAmount: 0,
+      completedFineAmount: 0,
+      totalFineAmount: 0
+    }
   },
-  complaint: {
+  user: null || {
+    complaint: {
     activeComplaints: 0,
-    removedComplaints: 0,
+    removedComplaints: 0
   },
   fine: {
     activeFines: 0,
-    completedFines: 0,
+    complatedFines: 0
   },
   policeReport: {
     policeReports: 0,
-    allPoliceReportRequests: 0,
-    pendingPoliceReportRequests: 0,
-  },
-  revenue: {
-    pendingFineAmount: 0,
-    completedFineAmount: null,
-    totalFineAmount: 0,
-  },
+    allPoliceReportRequests: 0
+  }}
 };
 
 const initialState: IAuthInitialState = {
