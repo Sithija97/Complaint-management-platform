@@ -60,11 +60,11 @@ export const ComplaintList = () => {
         header: "Title",
         size: 150,
       },
-      {
-        accessorKey: "statusId",
-        header: "Status",
-        size: 150,
-      },
+      // {
+      //   accessorKey: "statusId",
+      //   header: "Status",
+      //   size: 150,
+      // },
     ],
     []
   );

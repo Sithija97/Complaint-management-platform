@@ -88,13 +88,8 @@ export const Appbar = ({ open, toggleDrawer }: IProps) => {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          Dashboard
+          Police Information System Management
         </Typography>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
         {true && (
           <div>
             <IconButton

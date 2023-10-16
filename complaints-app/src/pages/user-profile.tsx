@@ -69,7 +69,7 @@ const UserProfile = () => {
       const formData = new FormData();
       formData.append("avatar", selectedImage);
 
-      fetch("/api/upload-avatar", {
+      fetch("/upload-profile-picture", {
         method: "POST",
         body: formData,
       })
@@ -105,7 +105,7 @@ const UserProfile = () => {
               style={{ padding: "16px", textAlign: "center" }}
             >
               <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
-                <Avatar
+                {/* <Avatar
                   alt={`${firstName} ${lastName}`}
                   src={
                     selectedImage
@@ -113,15 +113,15 @@ const UserProfile = () => {
                       : user_test.avatarUrl
                   }
                   sx={{ width: 90, height: 90, margin: "0 auto" }}
-                />
+                /> */}
               </label>
-              <input
+              {/* <input
                 id="image-upload"
                 type="file"
                 accept="image/*"
                 style={{ display: "none" }}
                 onChange={handleImageUpload}
-              />
+              /> */}
               <Typography variant="h5" gutterBottom>
                 {`${firstName} ${lastName}`}
               </Typography>

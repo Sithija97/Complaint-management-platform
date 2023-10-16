@@ -41,16 +41,16 @@ export const FineList = () => {
 
   const columns = useMemo<MRT_ColumnDef<IFine>[]>(
     () => [
-      {
-        accessorKey: "User.firstName", //access nested data with dot notation
-        header: "First Name",
-        size: 150,
-      },
-      {
-        accessorKey: "User.lastName",
-        header: "Last Name",
-        size: 150,
-      },
+      // {
+      //   accessorKey: "User.firstName", //access nested data with dot notation
+      //   header: "First Name",
+      //   size: 150,
+      // },
+      // {
+      //   accessorKey: "User.lastName",
+      //   header: "Last Name",
+      //   size: 150,
+      // },
       {
         accessorKey: "title", //normal accessorKey
         header: "Title",

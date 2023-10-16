@@ -63,11 +63,11 @@ export const Complaints = () => {
         header: "Title",
         size: 150,
       },
-      {
-        accessorKey: "statusId",
-        header: "Status",
-        size: 100,
-      },
+      // {
+      //   accessorKey: "statusId",
+      //   header: "Status",
+      //   size: 100,
+      // },
       {
         accessorKey: "complaint", //normal accessorKey
         header: "Complaint",

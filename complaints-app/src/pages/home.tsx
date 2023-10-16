@@ -248,11 +248,6 @@ export const Home = () => {
           </Grid>}
 
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={6}>
-              <Card sx={{ p: 4, boxShadow: 0 }}>
-                <Bar options={options} data={data} />;
-              </Card>
-            </Grid>
 
             <Grid item xs={12} md={6} lg={6}>
               <Card sx={{ p: 4, boxShadow: 0 }}>

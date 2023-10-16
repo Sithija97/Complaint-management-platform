@@ -65,16 +65,16 @@ export const ReportsList = () => {
         header: "Report Title",
         size: 150,
       },
-      {
-        accessorKey: "User.firstName",
-        header: "First Name",
-        size: 150,
-      },
-      {
-        accessorKey: "User.lastName", //normal accessorKey
-        header: "Last Name",
-        size: 200,
-      },
+      // {
+      //   accessorKey: "User.firstName",
+      //   header: "First Name",
+      //   size: 150,
+      // },
+      // {
+      //   accessorKey: "User.lastName", //normal accessorKey
+      //   header: "Last Name",
+      //   size: 200,
+      // },
     ],
     []
   );

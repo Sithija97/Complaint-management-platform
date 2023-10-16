@@ -40,13 +40,13 @@ export const UserReportRequestList = () => {
       {
         accessorKey: "description",
         header: "Description",
-        size: 150,
+        size: 400,
       },
-      {
-        accessorKey: "category",
-        header: "Category",
-        size: 200,
-      },
+      // {
+      //   accessorKey: "category",
+      //   header: "Category",
+      //   size: 200,
+      // },
     ],
     []
   );
