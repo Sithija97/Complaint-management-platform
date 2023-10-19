@@ -119,11 +119,6 @@ export const ForgotPassword = () => {
               >
                 Submit
               </Button>
-              {/* <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link to="/login">Login</Link>
-                </Grid>
-              </Grid> */}
             </Box>
           </Box>
         </Grid>

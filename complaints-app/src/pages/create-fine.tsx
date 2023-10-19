@@ -49,7 +49,7 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
     });
   };
 
-  const handleSubmit = async(e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const {
       title,
@@ -117,21 +117,7 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
                 </Select>
               </FormControl>
             </Grid>
-            {/* <Grid item xs={12} sm={6} md={6}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Status</InputLabel>
-                <Select
-                  label="Status"
-                  name="statusId"
-                  value={formData.statusId}
-                  onChange={handleInputChange}
-                >
-                  <MenuItem value={1}>Pending</MenuItem>
-                  <MenuItem value={2}>Inprogress</MenuItem>
-                  <MenuItem value={3}>Done</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid> */}
+
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">User</InputLabel>

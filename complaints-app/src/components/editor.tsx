@@ -12,12 +12,6 @@ import { $generateHtmlFromNodes } from "@lexical/html";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getRoot, EditorState } from "lexical";
 
-// import TreeViewPlugin from "./plugins/TreeViewPlugin";
-// import ToolbarPlugin from "./plugins/ToolbarPlugin";
-// import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
-// import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
-// import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
-
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>;
 }

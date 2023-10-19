@@ -33,30 +33,6 @@ const getAllPayments = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
     const response = await axiosInstance.get("/get-all-payments");
-    // const response = {
-    //   data: [
-    //     {
-    //       id: 1,
-    //       title: "Payment 1",
-    //       description: "Payment 1 desc",
-    //       fineId: 2,
-    //       userId: 2,
-    //       amount: 2000,
-    //       policeStationId: 1,
-    //       createdAt: "2023-10-09T10:46:58.000Z",
-    //       updatedAt: "2023-10-09T10:46:58.000Z",
-    //       User: {
-    //         id: 2,
-    //         firstName: "sithija",
-    //         lastName: "shehara",
-    //         PoliceStation: {
-    //           id: 1,
-    //           policeStationName: "Borella",
-    //         },
-    //       },
-    //     },
-    //   ],
-    // };
     return response.data;
   } catch (error) {
     // Handle error here
@@ -70,20 +46,6 @@ const getPaymentByUser = async (token: string) => {
   const axiosInstance = createAxiosInstance(token);
   try {
     const response = await axiosInstance.get("/get-payments-by-user");
-    // const response = {
-    //   data: [
-    //     {
-    //       id: 1,
-    //       title: "Payment 1",
-    //       description: "Payment 1 desc",
-    //       fineId: 6,
-    //       userId: 3,
-    //       amount: 2000,
-    //       createdAt: "2023-10-07T17:57:30.000Z",
-    //       updatedAt: "2023-10-07T17:57:30.000Z",
-    //     },
-    //   ],
-    // };
     return response.data;
   } catch (error) {
     // Handle error here

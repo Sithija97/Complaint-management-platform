@@ -37,11 +37,11 @@ import { IReportUser } from "../models";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getReportByUser } from "../store/reports/reportSlice";
 import policeReportService from "../services/police-reports-service";
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 export const Reports = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state: RootState) => state.auth.user)
+  const user = useAppSelector((state: RootState) => state.auth.user);
   const { isGetAllFinesLoading } = useAppSelector(
     (state: RootState) => state.fines
   );
@@ -72,14 +72,17 @@ export const Reports = () => {
   }
 
   const handleDownloadClick = (url: string) => {
-    policeReportService.downloadPdf(user?.token!, url)
+    policeReportService
+      .downloadPdf(user?.token!, url)
       .then((response) => {
         console.log("res head", response);
 
-        const url = window.URL.createObjectURL(new Blob([response], { type: 'application/pdf' }));
-        const a = document.createElement('a');
+        const url = window.URL.createObjectURL(
+          new Blob([response], { type: "application/pdf" })
+        );
+        const a = document.createElement("a");
         a.href = url;
-        a.download = 'sample.pdf';
+        a.download = "sample.pdf";
         a.click();
         window.URL.revokeObjectURL(url);
       })
@@ -102,31 +105,30 @@ export const Reports = () => {
             <Typography variant="h5" gutterBottom>
               My Reports
             </Typography>
-            {/* <Button variant="contained" onClick={toggleDrawer}>
-              Create Report
-            </Button> */}
           </Stack>
 
           <Card>
-            <MaterialReactTable columns={columns} data={data} enableRowActions
+            <MaterialReactTable
+              columns={columns}
+              data={data}
+              enableRowActions
               renderRowActions={({ row, table }) => (
                 <Box sx={{ display: "flex", gap: "1rem" }}>
                   <IconButton
                     color="error"
-                    onClick={() => handleDownloadClick(`${row.original.filename}`)}
+                    onClick={() =>
+                      handleDownloadClick(`${row.original.filename}`)
+                    }
                   >
                     <CloudDownloadIcon sx={{ color: "#2288E5" }} />
                   </IconButton>
                 </Box>
               )}
-              positionActionsColumn="last" />
+              positionActionsColumn="last"
+            />
           </Card>
         </Container>
       </BoxContainer>
-
-      <Drawer open={show} onClose={toggleDrawer} anchor="right">
-        {/* <CreateReport /> */}
-      </Drawer>
     </Dashboard>
   );
 };

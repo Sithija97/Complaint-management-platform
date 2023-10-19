@@ -40,7 +40,7 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
     });
   };
 
-  const handleSubmit = async(e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(formData);
     const data = {
@@ -109,20 +109,6 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
                 </Select>
               </FormControl>
             </Grid>
-            {/* <Grid item xs={12} sm={6} md={6}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Status</InputLabel>
-                <Select
-                  label="Status"
-                  name="statusId"
-                  value={formData.statusId}
-                  onChange={handleInputChange}
-                >
-                  <MenuItem value={1}>Active</MenuItem>
-                  <MenuItem value={2}>Removed</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid> */}
           </Grid>
 
           <Grid sx={{ mt: 1 }} container spacing={2}>

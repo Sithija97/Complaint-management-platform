@@ -291,7 +291,7 @@ export const Register = () => {
                   required
                   fullWidth
                   id="nic"
-                  label="nic"
+                  label="NIC"
                   name="nic"
                   type="text"
                   autoComplete="nic"

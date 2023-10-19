@@ -77,9 +77,6 @@ export const UsersList = () => {
             <Typography variant="h5" gutterBottom>
               Users
             </Typography>
-            {/* <Button variant="contained" onClick={toggleDrawer}>
-              Add User
-            </Button> */}
           </Stack>
 
           <Card>

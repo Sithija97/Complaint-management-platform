@@ -53,6 +53,10 @@ const UserProfile = () => {
   const handleImageUpload = (e: any) => {
     const file = e.target.files[0];
     setSelectedImage(file);
+    const data = {
+      filename: file,
+    };
+    dispatch(uploadProfileImg(data));
   };
 
   const handleSaveClick = () => {

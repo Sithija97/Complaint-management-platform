@@ -34,10 +34,10 @@ export const Complaints = () => {
 
   const fetchData = async () => {
     await dispatch(getComplaintsByUser());
-  }
+  };
 
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, [dispatch]);
 
   const [show, setShow] = useState(false);
@@ -46,7 +46,7 @@ export const Complaints = () => {
   const toggleRemoveDrawer = () => setShowRemoveDrawer(!showRemoveDrawer);
 
   const handleRemoveComplaint = (row: any) => {
-    console.log("row", row.original)
+    console.log("row", row.original);
     dispatch(setSelectedComplaint(row));
     toggleRemoveDrawer();
   };
@@ -63,18 +63,13 @@ export const Complaints = () => {
         header: "Title",
         size: 150,
       },
-      // {
-      //   accessorKey: "statusId",
-      //   header: "Status",
-      //   size: 100,
-      // },
       {
-        accessorKey: "complaint", //normal accessorKey
+        accessorKey: "complaint",
         header: "Complaint",
         size: 150,
       },
       {
-        accessorKey: "PoliceStation.policeStationName", //normal accessorKey
+        accessorKey: "PoliceStation.policeStationName",
         header: "Police Station",
         size: 150,
       },

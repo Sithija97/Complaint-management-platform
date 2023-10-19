@@ -54,7 +54,7 @@ export const Fines = () => {
         size: 150,
       },
       {
-        accessorKey: "tax", //normal accessorKey
+        accessorKey: "tax",
         header: "Tax",
         size: 150,
       },
@@ -97,10 +97,7 @@ export const Fines = () => {
               enableRowActions
               renderRowActions={({ row, table }) => (
                 <Box sx={{ display: "flex", gap: "1rem" }}>
-                  <IconButton
-                    color="error"
-                    onClick={() => handlePayment(row)}
-                  >
+                  <IconButton color="error" onClick={() => handlePayment(row)}>
                     <AddCardIcon sx={{ color: "#2288E5" }} />
                   </IconButton>
                 </Box>
