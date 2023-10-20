@@ -38,7 +38,11 @@ export const Complaints = ({ navigation }: any) => {
       category: Number(category),
       userId: user?.id,
     };
-    await dispatch(createComplaints(complaintData)).then(data => data.meta.requestStatus === 'fulfilled' && alert('Complaint added Successfully!'))
+    await dispatch(createComplaints(complaintData)).then(
+      (data) =>
+        data.meta.requestStatus === "fulfilled" &&
+        alert("Complaint added Successfully!")
+    );
     resetForm();
   };
 

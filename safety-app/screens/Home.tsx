@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   BackHandler,
+  Linking,
 } from "react-native";
 import * as location from "expo-location";
 import { LinearGradient } from "expo-linear-gradient";
@@ -74,6 +75,10 @@ export const Home = ({ navigation }: any) => {
     navigation.navigate("Login");
   };
 
+  const makePhoneCall = (phoneNumber: string) => {
+    Linking.openURL(`tel:${phoneNumber}`);
+  };
+
   return (
     <LinearGradient
       style={styles.container}
@@ -93,6 +98,30 @@ export const Home = ({ navigation }: any) => {
             onPress={sendUserLocation}
             style={{ marginTop: 22, width: "100%" }}
           />
+          <Button
+            title="Womens Help Line"
+            color={COLORS.secondary}
+            filled
+            selected
+            onPress={() => makePhoneCall("1938")}
+            style={{ marginTop: 22, width: "100%" }}
+          />
+          <Button
+            title="Child Protection"
+            color={COLORS.secondary}
+            filled
+            selected
+            onPress={() => makePhoneCall("1929")}
+            style={{ marginTop: 22, width: "100%" }}
+          />
+          <Button
+            title="Police Emergency"
+            color={COLORS.secondary}
+            filled
+            selected
+            onPress={() => makePhoneCall("119")}
+            style={{ marginTop: 22, width: "100%" }}
+          />
         </View>
       </View>
     </LinearGradient>
@@ -106,7 +135,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: 22,
     position: "absolute",
-    top: 640,
+    top: 440,
     width: "100%",
   },
   logoutButton: {

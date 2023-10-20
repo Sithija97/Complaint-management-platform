@@ -84,10 +84,10 @@ export const Welcome = ({ navigation }: any) => {
           <Text style={styles.subTitle}>Started</Text>
           <View style={{ marginVertical: 22 }}>
             <Text style={styles.description}>
-              Connect with each other with chatting
+              Connect with SafeHer and ensure your safety.
             </Text>
             <Text style={styles.description}>
-              Calling, Enjoy Safe and private texting
+              Because every women deserves to feel safe.
             </Text>
           </View>
           <Button
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   button: {
-    backgroundColor:COLORS.white,
+    backgroundColor: COLORS.white,
     marginTop: 22,
     width: "100%",
   },

@@ -65,7 +65,7 @@ export const Login = ({ navigation }: any) => {
         <View style={{ marginVertical: 22 }}>
           <Text style={styles.title}>Login</Text>
 
-          <Text style={styles.subtitle}>Connect with your friend today!</Text>
+          <Text style={styles.subtitle}>Connect with SafeHer today!</Text>
         </View>
         <Formik
           initialValues={initialState}
@@ -135,7 +135,9 @@ export const Login = ({ navigation }: any) => {
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
               </View>
-              <TouchableOpacity onPress={() => handleSubmit()}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("DrawerGroup")}
+              >
                 <View style={styles.submitButton}>
                   <Text style={styles.submitButtonText}>Login</Text>
                 </View>

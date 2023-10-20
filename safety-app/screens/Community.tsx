@@ -36,11 +36,17 @@ export const Community = ({ navigation }: any) => {
 
   const handleAddTweet = () => {
     if (titleText && descriptionText) {
-      const hasBadWordsInTitle = badWords.some(badWord => titleText.includes(badWord));
-      const hasBadWordsInDescription = badWords.some(badWord => descriptionText.includes(badWord));
+      const hasBadWordsInTitle = badWords.some((badWord) =>
+        titleText.includes(badWord)
+      );
+      const hasBadWordsInDescription = badWords.some((badWord) =>
+        descriptionText.includes(badWord)
+      );
 
       if (hasBadWordsInTitle || hasBadWordsInDescription) {
-        alert("Your title or description contains bad words. Please remove them.");
+        alert(
+          "Your title or description contains bad words. Please remove them."
+        );
         return; // Terminate the process
       }
 
@@ -133,6 +139,14 @@ export const Community = ({ navigation }: any) => {
       setReplyText("");
     }
   };
+
+  const handleDeleteTweet = (postId: number) => {
+    // dispatch(deleteCommunityPosts({ communityPostId: postId }));
+
+    // Update the state to remove the deleted tweet
+    const updatedTweets = tweets.filter((tweet) => tweet.id !== postId);
+    setTweets(updatedTweets);
+  };
   return (
     <LinearGradient
       style={styles.container}
@@ -169,6 +183,7 @@ export const Community = ({ navigation }: any) => {
                 post={item}
                 onLikeToggle={() => handleLikeToggle(item.id)}
                 onReply={() => handleReply(item.id)}
+                onDelete={() => handleDeleteTweet(item.id)}
                 showReplyInput={showReplyInput && currentPostId === item.id}
                 replyText={replyText}
                 setReplyText={setReplyText}

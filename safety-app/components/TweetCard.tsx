@@ -17,6 +17,7 @@ interface TweetCardProps {
   post: CommunityPost;
   onLikeToggle: () => void;
   onReply: () => void;
+  onDelete: () => void;
   showReplyInput: boolean;
   replyText: string;
   setReplyText: (text: string) => void;
@@ -27,6 +28,7 @@ const TweetCard: React.FC<TweetCardProps> = ({
   post,
   onLikeToggle,
   onReply,
+  onDelete,
   showReplyInput,
   replyText,
   setReplyText,
@@ -37,6 +39,9 @@ const TweetCard: React.FC<TweetCardProps> = ({
   const relativeTime = postTimestamp.fromNow();
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
+        <Ionicons name="close-circle" size={24} color="red" />
+      </TouchableOpacity>
       <Image
         source={{ uri: "https://i.ibb.co/4pDNDk1/avatar.png" }}
         style={styles.profileImage}
@@ -46,9 +51,6 @@ const TweetCard: React.FC<TweetCardProps> = ({
           <Text style={styles.username}>
             {user ? user.fullName : "test user"}
           </Text>
-          {/* <Text style={styles.handle}>
-            {user ? `@${user.email}` : "@user.mail"}
-          </Text> */}
           <Text style={styles.timeAgo}>
             {
               <Text style={styles.timeAgo}>
@@ -201,6 +203,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginTop: 5,
+  },
+  deleteButton: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    zIndex: 1,
   },
 });
 
