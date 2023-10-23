@@ -75,11 +75,27 @@ const commentCommunityPost = async (
   }
 };
 
+const deleteCommunityPosts = async (deleteData: any, token: string) => {
+  const axiosInstance = createAxiosInstance(token);
+  try {
+    const response = await axiosInstance.post(
+      "/delete-community-post",
+      deleteData
+    );
+    return response.data;
+  } catch (error) {
+    // Handle error here
+    console.log(`error : ${error}`);
+    throw error;
+  }
+};
+
 const communityService = {
   getCommunityPosts,
   createCommunityPost,
   likeCommunityPost,
   commentCommunityPost,
+  deleteCommunityPosts,
 };
 
 export default communityService;

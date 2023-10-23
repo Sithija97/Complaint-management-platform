@@ -46,7 +46,7 @@ export const ReportRequest = () => {
       if (data.meta.requestStatus === "fulfilled") {
         alert("Report Request sent Successfully !");
       } else {
-        alert('Something went wrong.. Please try again')
+        alert("Something went wrong.. Please try again");
       }
     });
 
@@ -54,6 +54,16 @@ export const ReportRequest = () => {
     setDescription("");
     setCategory("");
     setFiles([]);
+  };
+
+  const handleDownloadClick = () => {
+    const pdfUrl = "clearance_application.pdf";
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "application.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -70,6 +80,9 @@ export const ReportRequest = () => {
             <Typography variant="h5" gutterBottom>
               Report Request
             </Typography>
+            <Button variant="contained" onClick={handleDownloadClick}>
+              Download Application
+            </Button>
           </Stack>
 
           <Card>

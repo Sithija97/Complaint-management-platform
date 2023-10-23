@@ -96,6 +96,27 @@ export const commentCommunityPosts = createAsyncThunk(
   }
 );
 
+export const deleteCommunityPost = createAsyncThunk(
+  "community/deleteCommunityPost",
+  async (deleteData: any, thunkAPI) => {
+    const user = (thunkAPI.getState() as RootState).auth.user;
+    try {
+      return await communityService.deleteCommunityPosts(
+        deleteData,
+        user?.token!
+      );
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const communitySlice = createSlice({
   name: "community",
   initialState,

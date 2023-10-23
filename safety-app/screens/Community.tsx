@@ -16,6 +16,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import {
   commentCommunityPosts,
   createCommunityPosts,
+  deleteCommunityPost,
   likeCommunityPosts,
 } from "../store/community/communitySlice";
 
@@ -141,11 +142,9 @@ export const Community = ({ navigation }: any) => {
   };
 
   const handleDeleteTweet = (postId: number) => {
-    // dispatch(deleteCommunityPosts({ communityPostId: postId }));
-
-    // Update the state to remove the deleted tweet
     const updatedTweets = tweets.filter((tweet) => tweet.id !== postId);
     setTweets(updatedTweets);
+    dispatch(deleteCommunityPost({ id: postId }));
   };
   return (
     <LinearGradient
