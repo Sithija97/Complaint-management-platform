@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Typography,
@@ -16,8 +16,11 @@ import { BoxContainer } from "../components";
 import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { update, uploadProfileImg } from "../store/auth/authSlice";
 import { IUpdateData } from "../models";
+import policeReportService from "../services/police-reports-service";
+import authService from "../services/auth-service";
 
 const UserProfile = () => {
+
   const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.auth.user);
   const user_test = {
@@ -31,6 +34,18 @@ const UserProfile = () => {
     address: "123 Main St, City, Country",
     contactNumber: "+1 (123) 456-7890",
   };
+
+  useEffect(() => {
+    if (user?.filename) {
+      authService
+        .getImage(user?.token!, user.filename)
+        .then((response) => {
+          console.log("res head", response);
+          setSelectedImage(response)
+        })
+    }
+  }, []);
+
   const [firstName, setFirstName] = useState(
     user?.firstName || user_test.firstName
   );
@@ -48,7 +63,7 @@ const UserProfile = () => {
   const [contactNumber, setContactNumber] = useState(
     user?.contactNumber || user_test.contactNumber
   );
-  const [selectedImage, setSelectedImage] = useState(user?.filename || null);
+  const [selectedImage, setSelectedImage] = useState(user?.filename || null || Blob);
 
   const handleImageUpload = (e: any) => {
     const file = e.target.files[0];
@@ -109,23 +124,24 @@ const UserProfile = () => {
               style={{ padding: "16px", textAlign: "center" }}
             >
               <label htmlFor="image-upload" style={{ cursor: "pointer" }}>
-                {/* <Avatar
+                <Avatar
                   alt={`${firstName} ${lastName}`}
                   src={
-                    selectedImage
+                    selectedImage instanceof Blob
                       ? URL.createObjectURL(selectedImage)
                       : user_test.avatarUrl
                   }
                   sx={{ width: 90, height: 90, margin: "0 auto" }}
-                /> */}
+                />
               </label>
-              {/* <input
+
+              <input
                 id="image-upload"
                 type="file"
                 accept="image/*"
                 style={{ display: "none" }}
                 onChange={handleImageUpload}
-              /> */}
+              />
               <Typography variant="h5" gutterBottom>
                 {`${firstName} ${lastName}`}
               </Typography>

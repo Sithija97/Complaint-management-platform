@@ -101,17 +101,54 @@ const verifyUser = async (userData: IVerifyUserData) => {
 };
 
 // upload profile picture
-const uploadProfilePicture = async (data: any, token: string) => {
+// const uploadProfilePicture = async (data: any, token: string) => {
+//   const axiosInstance = createAxiosInstance(token);
+//   try {
+//     const response = await axiosInstance.post(
+//       `${BASE_URL}/upload-profile-picture`,
+//       data
+//     );
+//     localStorage.setItem("user", JSON.stringify(response.data));
+//     return response.data;
+//   } catch (error) {
+//     console.log(`error : ${error}`);
+//     throw error;
+//   }
+// };
+
+const uploadProfilePicture = async (
+  requestData: any,
+  token: string
+) => {
   const axiosInstance = createAxiosInstance(token);
+  const formData = new FormData();
+
+  console.log("requestData", requestData)
+  if (requestData.filename) {
+    console.log("requestData", requestData)
+    if (Array.isArray(requestData.filename)) {
+      requestData.filename.forEach((file: any) => {
+        formData.append("fileName", file);
+      });
+    } else {
+      formData.append("fileName", requestData.filename);
+    }
+  }
+
   try {
     const response = await axiosInstance.post(
-      `${BASE_URL}/upload-profile-picture`,
-      data
+      "/upload-profile-picture",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
-    localStorage.setItem("user", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
-    console.log(`error : ${error}`);
+    // Handle error here
+    console.error("Error:", error);
     throw error;
   }
 };
@@ -129,6 +166,27 @@ const getDashboardData = async (token: string) => {
   }
 };
 
+// get image 
+const getImage = async (token: string, url: string) => {
+  const axiosInstance = createAxiosInstance(token);
+  try {
+    console.log("jjjjjjjjjjj", url)
+    const data = {
+      filePath: url
+    }
+    const response = await axiosInstance.post(
+      "/get-image", data,
+      {
+        responseType: "blob",
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(`error : ${error}`);
+    throw error;
+  }
+}
+
 const authService = {
   registerUser,
   loginUser,
@@ -138,6 +196,7 @@ const authService = {
   verifyUser,
   uploadProfilePicture,
   getDashboardData,
+  getImage,
 };
 
 export default authService;
