@@ -72,9 +72,11 @@ export const UserPaymentList = () => {
             justifyContent="space-between"
             mb={5}
           >
-            <Typography variant="h5" gutterBottom>
-              My Payments
-            </Typography>
+            <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px", width: "100%" }}>
+              <Typography variant="h5">
+                {`My Payments`}
+              </Typography>
+            </div>
           </Stack>
 
           <Card>

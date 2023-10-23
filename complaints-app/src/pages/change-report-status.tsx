@@ -15,10 +15,10 @@ import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { changeReportStatus } from "../store/reports/reportSlice";
 
 interface IProps {
-  onCloseDrawer:()=>void
+  onCloseDrawer: () => void
 }
 
-export const ChangeReportStatus = ({onCloseDrawer}:IProps) => {
+export const ChangeReportStatus = ({ onCloseDrawer }: IProps) => {
   const dispatch = useAppDispatch();
 
   const selectedReportRequestId = useAppSelector(
@@ -64,9 +64,11 @@ export const ChangeReportStatus = ({onCloseDrawer}:IProps) => {
   return (
     <BoxContainer>
       <Container>
-        <Typography sx={{ mt: 12, mb: 5 }} variant="h5" gutterBottom>
-          Change Report Request Status
-        </Typography>
+        <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px" }}>
+          <Typography variant="h5">
+            {` Change Report Request Status `}
+          </Typography>
+        </div>
 
         <form onSubmit={handleSubmit}>
           <Grid sx={{ mt: 1 }} container spacing={2}>

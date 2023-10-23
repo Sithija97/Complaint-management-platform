@@ -86,9 +86,11 @@ export const ReportsList = () => {
             justifyContent="space-between"
             mb={5}
           >
-            <Typography variant="h5" gutterBottom>
-              Reports List
-            </Typography>
+             <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px", width: "70%" }}>
+              <Typography variant="h5">
+                {`Reports List`}
+              </Typography>
+            </div>
             <Button variant="contained" onClick={toggleDrawer}>
               Create Report
             </Button>

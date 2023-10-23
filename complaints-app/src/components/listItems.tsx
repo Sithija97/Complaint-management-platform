@@ -28,7 +28,7 @@ export const MainListItems = () => {
   };
 
   const activeTabStyle = {
-    backgroundColor: "#104cb4", // Change this to the desired color for active tabs
+    backgroundColor: "#34b7eb", // Change this to the desired color for active tabs
     color: "white",
   };
 

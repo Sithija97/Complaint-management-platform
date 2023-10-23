@@ -87,9 +87,11 @@ export const ComplaintList = () => {
             justifyContent="space-between"
             mb={5}
           >
-            <Typography variant="h5" gutterBottom>
-              Complaints List
-            </Typography>
+             <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px", width: "100%" }}>
+              <Typography variant="h5">
+                {`Complaints List`}
+              </Typography>
+            </div>
           </Stack>
 
           <Card>

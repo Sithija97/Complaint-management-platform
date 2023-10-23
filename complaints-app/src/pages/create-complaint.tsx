@@ -85,9 +85,11 @@ export const CreateComplaint = ({ onCloseDrawer }: IProps) => {
                   value={formData.Category}
                   onChange={handleInputChange}
                 >
-                  <MenuItem value={1}>Category 1</MenuItem>
-                  <MenuItem value={2}>Category 2</MenuItem>
-                  <MenuItem value={3}>Category 3</MenuItem>
+                  <MenuItem value={1}>Abuse of Authority</MenuItem>
+                  <MenuItem value={2}>Corruption</MenuItem>
+                  <MenuItem value={3}>Harassment</MenuItem>
+                  <MenuItem value={4}>Failure to Provide Information</MenuItem>
+                  <MenuItem value={5}>Sexual Misconduc</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

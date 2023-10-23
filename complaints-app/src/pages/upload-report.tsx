@@ -73,9 +73,11 @@ export const UploadReport = () => {
             justifyContent="space-between"
             mb={5}
           >
-            <Typography variant="h5" gutterBottom>
-              Upload Report
-            </Typography>
+             <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px", width: "100%" }}>
+              <Typography variant="h5">
+                {`Upload Report`}
+              </Typography>
+            </div>
           </Stack>
 
           <Card>

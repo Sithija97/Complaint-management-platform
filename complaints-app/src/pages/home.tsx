@@ -22,6 +22,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../store/store";
 import { getAllUsers, getDashboardData } from "../store/auth/authSlice";
 import { CustomSpinner } from "../components";
 import { UserRoles } from "../enums";
+import { backgroundImage } from "html2canvas/dist/types/css/property-descriptors/background-image";
 
 ChartJS.register(
   CategoryScale,
@@ -143,9 +144,11 @@ export const Home = () => {
       >
         <Toolbar />
         <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
-          <Typography variant="h5" sx={{ mb: 4 }}>
-            {` Hi, Welcome Back `}
-          </Typography>
+          <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px" }}>
+            <Typography variant="h5">
+              {` Hi, Welcome Back `}
+            </Typography>
+          </div>
 
           {user && user.userRoleId === UserRoles.DEFAULT && <Grid sx={{ mb: 3 }} container spacing={3}>
             <Grid item xs={12} sm={6} md={3}>
