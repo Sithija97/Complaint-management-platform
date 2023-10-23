@@ -85,9 +85,11 @@ export const Fines = () => {
             justifyContent="space-between"
             mb={5}
           >
-            <Typography variant="h5" gutterBottom>
-              My Fines
-            </Typography>
+            <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px", width: "100%" }}>
+              <Typography variant="h5">
+                {`My Fines`}
+              </Typography>
+            </div>
           </Stack>
 
           <Card>

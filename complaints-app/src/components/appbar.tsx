@@ -68,6 +68,7 @@ export const Appbar = ({ open, toggleDrawer }: IProps) => {
         sx={{
           pr: "24px", // keep right padding when drawer closed
         }}
+        style={{backgroundColor: "#34b7eb"}}
       >
         <IconButton
           edge="start"

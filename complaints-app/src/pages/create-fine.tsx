@@ -111,9 +111,9 @@ export const CreateFine = ({ onCloseDrawer }: IProps) => {
                   value={formData.category}
                   onChange={handleInputChange}
                 >
-                  <MenuItem value={1}>Category 1</MenuItem>
-                  <MenuItem value={2}>Category 2</MenuItem>
-                  <MenuItem value={3}>Category 3</MenuItem>
+                  <MenuItem value={1}>Traffic Violations</MenuItem>
+                  <MenuItem value={2}>Public Nuisance</MenuItem>
+                  <MenuItem value={3}>Assault and Battery</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

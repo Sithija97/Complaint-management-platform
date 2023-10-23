@@ -76,9 +76,11 @@ export const FineList = () => {
             justifyContent="space-between"
             mb={5}
           >
-            <Typography variant="h5" gutterBottom>
-              Fines List
-            </Typography>
+             <div style={{ backgroundColor: "red", backgroundImage: "linear-gradient(to right, #34b7eb , #ffffff)", padding: "20px", marginBottom: "10px", width: "80%" }}>
+              <Typography variant="h5">
+                {`Fines List`}
+              </Typography>
+            </div>
             <Button variant="contained" onClick={toggleDrawer}>
               Add Fine
             </Button>
