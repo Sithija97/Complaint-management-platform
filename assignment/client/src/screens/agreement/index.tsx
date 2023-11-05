@@ -243,6 +243,7 @@ export const Agreement = () => {
               }}
             />
             <Button
+              isDisabled={acceptance === ""}
               bg={"blue.400"}
               rounded={"full"}
               color={"white"}
