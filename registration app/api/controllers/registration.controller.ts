@@ -115,3 +115,23 @@ export const markAttendance = asyncHandler(
     }
   }
 );
+
+export const getRegisteredCountsByDepartment = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      const departmentCounts = await User.aggregate([
+        {
+          $group: {
+            _id: "$departmentName", // Grouping by departmentName
+            count: { $sum: 1 }, // Counting the number of users in each department
+          },
+        },
+      ]);
+
+      res.status(200).json(departmentCounts);
+    } catch (error) {
+      console.error("Error retrieving user counts by department:", error);
+      throw error;
+    }
+  }
+);
