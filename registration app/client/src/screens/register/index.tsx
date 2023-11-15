@@ -48,7 +48,10 @@ export const Register = () => {
         position: "top-right",
         duration: 5000,
       });
-    } else if (Number(values.userNumber) > 17) {
+    } else if (
+      Number(values.departmentNumber) !== 8 &&
+      Number(values.userNumber) > 17
+    ) {
       toast({
         title: "Maximum 17 users only",
         status: "error",
