@@ -1,5 +1,4 @@
 import mongoose, { Schema, model } from "mongoose";
-import bcrypt from "bcryptjs";
 import { IUser } from "../interfaces/index.js";
 
 const userSchema = new Schema<IUser>(
@@ -15,6 +14,10 @@ const userSchema = new Schema<IUser>(
     departmentName: {
       type: String,
       required: true,
+    },
+    attendance: {
+      type: Boolean,
+      default: false,
     },
   },
   {

@@ -29,10 +29,15 @@ export const registerUser = asyncHandler(
     });
 
     if (user) {
-      const { _id, userNumber, departmentNumber, departmentName } = user;
-      res
-        .status(201)
-        .json({ _id, userNumber, departmentNumber, departmentName });
+      const { _id, userNumber, departmentNumber, departmentName, attendance } =
+        user;
+      res.status(201).json({
+        _id,
+        userNumber,
+        departmentNumber,
+        departmentName,
+        attendance,
+      });
     } else {
       res.status(400);
       throw new Error(`Invalid user data`);
@@ -52,14 +57,19 @@ export const getRegisteredUsers = asyncHandler(
   }
 );
 
-export const getCountsByDepartment = asyncHandler(
+export const getAttendanceCountsByDepartment = asyncHandler(
   async (re: Request, res: Response) => {
     try {
       const departmentCounts = await User.aggregate([
         {
+          $match: {
+            attendance: true, // Filter users where attendance is true
+          },
+        },
+        {
           $group: {
-            _id: "$departmentName", // Group by departmentName field
-            count: { $sum: 1 }, // Count the occurrences of each department
+            _id: "$departmentName", // Grouping by departmentName
+            count: { $sum: 1 }, // Counting the number of users in each department
           },
         },
       ]);
@@ -68,6 +78,40 @@ export const getCountsByDepartment = asyncHandler(
     } catch (error) {
       console.error("Error retrieving user counts by department:", error);
       throw error;
+    }
+  }
+);
+
+export const markAttendance = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { userNumber, departmentName, departmentNumber, attendance } =
+      req.body;
+
+    if (!userNumber || !departmentName || !departmentNumber || !attendance) {
+      res.status(400);
+      throw new Error(`Please fill in all required fields`);
+    }
+
+    // Check if the user exists in the specified department
+    const user = await User.findOneAndUpdate(
+      { userNumber, departmentNumber },
+      { $set: { attendance } },
+      { new: true }
+    );
+
+    if (user) {
+      const { _id, userNumber, departmentNumber, departmentName, attendance } =
+        user;
+      res.status(200).json({
+        _id,
+        userNumber,
+        departmentNumber,
+        departmentName,
+        attendance,
+      });
+    } else {
+      res.status(404);
+      throw new Error(`User not found in this department`);
     }
   }
 );
